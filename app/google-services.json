@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "832077670785",
+    "project_id": "residencias-c0ce5",
+    "storage_bucket": "residencias-c0ce5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832077670785:android:587953c55434f28fcf6080",
+        "android_client_info": {
+          "package_name": "com.residencias.es"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "832077670785-cth2tfn66oi5gnbvb08o92rcbfhbb75h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGpgwmiBSIbseQ_REuGO3hcdqD25v8xps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "832077670785-cth2tfn66oi5gnbvb08o92rcbfhbb75h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

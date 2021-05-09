@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#5A452A</color> <!-- menu principal   C4DD91      B6DC64              -->
+    <color name="colorBgPrimary">#99CD11</color>
+    <color name="colorBgSecondary">#CFF87D</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <color name="cardView">#f6f7f2</color>
+    <color name="text">#151414</color>
+    <color name="error">#FF0000</color>
+
+    <color name="gray">#393737</color>
+
+
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorSecondary">#03DAC5</color>
+    <color name="colorSurface">@color/colorBgPrimary</color>
+    <color name="colorOnPrimary">@color/white</color>
+    <color name="colorOnSecondary">@color/black</color>
+    <color name="colorOnBackground">@color/black</color>
+    <color name="colorOnError">@color/white</color>
+
+</resources>

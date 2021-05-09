@@ -1,0 +1,133 @@
+<resources>
+    <string name="app_name">Residencias</string>
+    <string name="login_button">Login</string>
+    <string name="activity_login_title">Login</string>
+    <string name="activity_oauth_title">Login</string>
+    <string name="activity_residences_title">Residences</string>
+    <string name="activity_profile_title">Residences</string>
+
+    <string name="menu_user">Profile</string>
+
+    <string name="hint_user_description">Description</string>
+    <string name="button_save_description">Update Description</string>
+    <string name="button_logout">Log out</string>
+    <string name="action_notification">Notificación</string>
+
+    <string name="error_oauth">Login with Failed</string>
+    <string name="error_residences">Error getting Residences</string>
+    <string name="error_profile">Error getting Profile</string>
+    <string name="title_activity_residence_maps">Map</string>
+
+
+
+
+
+
+
+    <string name="label_login">Inicio de sesión</string>
+
+
+    <string name="label_register">Registro</string>
+
+
+    <string name="please_fill_your_register_data">Por favor completa tus datos</string>
+    <string name="btn_create_appointment">Reservar cita</string>
+    <string name="btn_my_appointments">Mis citas</string>
+    <string name="btn_log_out">Cerrar sesión</string>
+    <string name="label_welcome">Bienvenido</string>
+
+
+    <string name="btn_confirm">Confirmar</string>
+
+    <string name="date_format">%1$d-%2$s-%3$s</string>
+    <string name="item_appointment_id">Cita médica %1$d</string>
+    <string name="item_appointment_date">Atención el día %1$s</string>
+    <string name="item_appointment_time">A las %1$s</string>
+    <string name="label_my_appointments">Mis citas médicas</string>
+    <string name="press_back_again">Presiona una vez más para salir</string>
+    <string name="dialog_create_appointment_exit_title">¿Estás seguro que deseas salir?</string>
+    <string name="dialog_create_appointment_exit_message">Si abandonas el registro, los datos que habías ingresado se perderán.</string>
+    <string name="dialog_create_appointment_exit_positive_btn">Sí, salir</string>
+    <string name="dialog_create_appointment_exit_negative_btn">Continuar registro</string>
+    <string name="validate_appointment_description">La descripción es demasiado corta</string>
+    <string name="label_scheduled_time">Hora de la cita</string>
+    <string name="label_confirm_appointment_data">Datos de la cita</string>
+    <string name="validate_appointment_date">Es necesario seleccionar una fecha</string>
+    <string name="validate_appointment_time">Es necesario definir una hora para la cita</string>
+    <string name="error_loading_specialties">Ocurrió un problema al cargar las especialidades</string>
+    <string name="error_loading_doctors">Ocurrió un problema al cargar los médicos</string>
+    <string name="error_loading_hours">No se han podido cargar las horas</string>
+    <string name="label_select_doctor_and_date">Seleccione un médico y una fecha, para ver sus horas disponibles.</string>
+    <string name="label_not_available_hours">No se encontraron horas disponibles para el médico en el día seleccionado.</string>
+
+    <string name="welcome_name">Bienvenido %1$s</string>
+    <string name="item_appointment_created_at">Esta cita se registró el día %1$s con la siguiente descripción:</string>
+    <string name="create_appointment_success">Cita registrada correctamente</string>
+    <string name="create_appointment_error">Ocurrió un error inesperado registrando la cita médica.</string>
+
+
+    <!-- login -->
+    <string name="label_email">Correo</string>
+    <string name="label_password">Clave</string>
+    <string name="btn_login">Ingresar</string>
+    <string name="label_go_to_register">¿No estas registrado?</string>
+    <string name="label_name">Nombre</string>
+    <string name="label_password_confirmation">Confirmar clave</string>
+    <string name="label_access_login">Ó accede con correo</string>
+
+    <string name="btn_register">Registrar</string>
+    <string name="label_go_to_login">¿Estas registrado?</string>
+    <string name="error_login">Ocurrió un error, verifique su correo y clave</string>
+    <string name="error_login_empty_fields">Ingrese su correo y clave</string>
+    <string name="error_register">Ocurrió un error al registrarse</string>
+    <string name="error_register_empty_fields">Ingrese todos los datos solicitados</string>
+    <string name="error_register_passwords_do_not_match">Las claves no coinciden</string>
+
+    <!-- menu -->
+    <string name="navigation_drawer_open">Abrir</string>
+    <string name="navigation_drawer_close">Cerrar</string>
+    <string name="action_search">Buscar</string>
+
+
+    <string name="btn_save">Guardar</string>
+
+
+    <!-- profile -->
+    <string name="label_username">Usuario</string>
+    <string name="label_address">Dirección</string>
+    <string name="label_phone">Teléfono</string>
+
+
+    <!-- search -->
+    <string name="label_search_for">Buscar por</string>
+    <string name="label_province">Provincia</string>
+    <string name="label_town">Municipio</string>
+    <string name="btn_search">Buscar</string>
+    <string name="label_sector_free">Tiene plazas libres</string>
+    <string name="label_price">Precios desde €</string>
+    <string name="label_dependence">Tipo de dependencia</string>
+    <string name="label_sector">Tipo de plaza</string>
+    <string name="label_room">Tipo de habitación</string>
+    <string name="btn_message">Contactar</string>
+    <string name="btn_map">Cómo llegar</string>
+
+    <string name="profile_image">Imagen perfil</string>
+    <string name="label_web">Página web</string>
+    <string name="label_longitude">Longitud</string>
+    <string name="label_latitude">Latitud</string>
+    <string name="label_description">Descripción</string>
+
+    <string name="spinner_province">Selecciona una provincia</string>
+    <string name="spinner_town">Selecciona un municipio</string>
+    <string name="error">Ha ocurrido un error</string>
+    <string name="label_send">Enviar</string>
+    <string name="label_message">Escribe tú mensaje</string>
+
+    <!-- facebook -->
+    <string name="facebook_app_id">448926343078209</string>
+    <string name="fb_login_protocol_scheme">fb448926343078209</string>
+
+    <!-- google maps key -->
+    <string name="google_maps_key">api</string>
+
+</resources>

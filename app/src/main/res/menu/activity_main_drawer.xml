@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/group1" >
+        <item
+            android:id="@+id/nav_search"
+            android:icon="@drawable/ic_baseline_search"
+            android:title="Buscar Residencias" />
+
+        <item
+            android:id="@+id/nav_residence"
+            android:icon="@drawable/ic_menu_home"
+            android:title="Mi Residencia" />
+
+        <item
+            android:id="@+id/nav_mapa"
+            android:icon="@drawable/ic_menu_map"
+            android:title="Residencias en Mapa" />
+
+        <item
+            android:id="@+id/nav_mensaje"
+            android:icon="@drawable/ic_menu_message"
+            android:title="Mis Mensajes" />
+        <item
+            android:id="@+id/nav_foto"
+            android:icon="@drawable/ic_menu_photo"
+            android:title="Mis Fotografías" />
+
+        <item
+            android:id="@+id/nav_publicidad"
+            android:icon="@drawable/ic_menu_campaign"
+            android:title="Contratar Publicidad" />
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/group2" >
+            <item
+                android:id="@+id/nav_perfil"
+                android:icon="@drawable/ic_menu_user"
+                android:title="Mi Perfil" />
+            <item
+                android:id="@+id/nav_cerrar"
+                android:icon="@drawable/ic_menu_exit"
+                android:title="Cerrar Sesión" />
+    </group>
+</menu>

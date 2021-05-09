@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <dimen name="border">25dp</dimen>
+    <dimen name="small_space">5dp</dimen>
+    <dimen name="space">10dp</dimen>
+    <dimen name="double_space">20dp</dimen>
+    <dimen name="triple_space">30dp</dimen>
+
+
+
+    <dimen name="progress_bar_size">30dp</dimen>
+    <dimen name="spinner_size">35dp</dimen>
+    <dimen name="spinner_padding">4dp</dimen>
+
+    <dimen name="btn_margin">100dp</dimen>
+
+    <dimen name="login_image_size">100dp</dimen>
+    <dimen name="profile_image_size">90dp</dimen>
+
+    <!-- Font size-->
+    <dimen name="font_small">14sp</dimen>
+    <dimen name="font_medium">16sp</dimen>
+    <dimen name="font_large">18sp</dimen>
+    <dimen name="line_space">4sp</dimen>
+
+
+
+
+    <!-- Margins-->
+    <dimen name="margin_xsmall">2dp</dimen>
+    <dimen name="margin_small" >4dp</dimen>
+    <dimen name="margin_medium">8dp</dimen>
+    <dimen name="margin_large">16dp</dimen>
+    <dimen name="margin_xlarge">32dp</dimen>
+    <dimen name="margin_xxlarge">100dp</dimen>
+
+    <!-- Padding-->
+    <dimen name="padding_xsmall" >10dp</dimen>
+    <dimen name="padding_small" >10dp</dimen>
+    <dimen name="padding_medium">25dp</dimen>
+    <dimen name="padding_large" >50dp</dimen>
+    <dimen name="padding_xlarge">100dp</dimen>
+
+
+
+
+
+
+    <!-- item_residence 160 240 -->
+    <dimen name="item_residence_image_height">114dp</dimen>
+    <dimen name="item_residence_image_width">150dp</dimen>
+    <dimen name="item_residence_margen">5dp</dimen>
+
+
+    <!-- Menu -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">140dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+
+</resources>

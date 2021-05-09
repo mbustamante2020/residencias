@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient"
+    tools:context=".ui.profile.MyResidenceFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/border"
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="@android:style/Widget.ProgressBar"
+                android:layout_width="@dimen/progress_bar_size"
+                android:layout_height="@dimen/progress_bar_size"
+                android:visibility="gone"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:labelFor="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space"
+                android:layout_weight="1"
+                android:text="@string/label_name"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                style="@style/EditText"
+                android:autofillHints="@string/label_name" />
+
+            <TextView
+                android:labelFor="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space"
+                android:layout_weight="1"
+                android:text="@string/label_address"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                style="@style/EditText"
+                android:autofillHints="@string/label_address" />
+
+            <TextView
+                android:labelFor="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space"
+                android:layout_weight="1"
+                android:text="@string/label_email"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/email"
+                style="@style/EditText"
+                android:shadowRadius="@android:integer/config_longAnimTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:autofillHints="@string/label_email" />
+
+            <TextView
+                android:labelFor="@+id/phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space"
+                android:layout_weight="1"
+                android:text="@string/label_phone"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                style="@style/EditText"
+                android:autofillHints="@string/label_phone" />
+
+
+            <TextView
+                android:labelFor="@+id/web"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space"
+                android:layout_weight="1"
+                android:text="@string/label_web"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/web"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                style="@style/EditText"
+                android:autofillHints="@string/label_web" />
+
+            <!-- provincia -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space"
+                android:text="@string/label_province"
+                style="@style/TextViewSmall" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <Spinner
+                    android:id="@+id/province"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spinner_size"
+                    android:background="@drawable/bg_spinner"
+                    android:padding="@dimen/spinner_padding"
+                    android:spinnerMode="dropdown" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_spinner_arrow" />
+            </RelativeLayout>
+
+            <!-- municipio -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space"
+                android:text="@string/label_town"
+                style="@style/TextViewSmall" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <Spinner
+                    android:id="@+id/town"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spinner_size"
+                    android:background="@drawable/bg_spinner"
+                    android:padding="@dimen/spinner_padding"
+                    android:spinnerMode="dropdown" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_spinner_arrow" />
+            </RelativeLayout>
+
+            <!-- latitud y longitud-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space" >
+
+                <TextView
+                    android:id="@+id/textViewLatitude"
+                    style="@style/TextViewSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/label_latitude" />
+
+
+                <EditText
+                    android:id="@+id/latitude"
+                    style="@style/EditText"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:autofillHints="@string/label_latitude"
+                    android:layout_below="@id/textViewLatitude"
+                    android:inputType="numberDecimal" />
+
+                <TextView
+                    android:id="@+id/textViewLongitude"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/label_longitude"
+                    style="@style/TextViewSmall" />
+
+                <EditText
+                    android:id="@+id/longitude"
+                    style="@style/EditText"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/textViewLongitude"
+                    android:autofillHints="@string/label_longitude"
+                    android:inputType="numberDecimal" />
+            </RelativeLayout>
+
+            <TextView
+                android:labelFor="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space"
+                android:layout_weight="1"
+                android:text="@string/label_description"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:lines="5"
+
+                style="@style/EditText"
+                android:autofillHints="@string/label_description" />
+
+
+
+
+
+            <!-- precios -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space"
+                android:text="@string/label_price"
+                style="@style/TextViewSmall" />
+
+            <EditText
+                android:id="@+id/price"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:inputType="text"
+                style="@style/EditText"
+                android:autofillHints="@string/label_web" />
+
+            <!-- dependencias -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space"
+                android:text="@string/label_dependence"
+                style="@style/TextViewSmall" />
+
+            <LinearLayout
+                android:id="@+id/dependences_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </LinearLayout>
+
+            <!-- sector -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space"
+                android:text="@string/label_sector"
+                style="@style/TextViewSmall" />
+
+            <LinearLayout
+                android:id="@+id/sectors_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </LinearLayout>
+
+            <!-- habitaciones -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space"
+                android:text="@string/label_room"
+                style="@style/TextViewSmall" />
+
+            <LinearLayout
+                android:id="@+id/rooms_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </LinearLayout>
+
+
+
+
+
+
+
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSave"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space"
+                android:layout_marginStart="@dimen/margin_xxlarge"
+                android:layout_marginEnd="@dimen/margin_xxlarge"
+                android:text="@string/btn_save" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</FrameLayout>

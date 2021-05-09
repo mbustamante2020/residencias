@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/itemResidence"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_small"
+    app:cardBackgroundColor="@color/cardView"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true"
+    tools:context=".ui.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_small"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/nombre"
+            style="@style/TextAppearance.MaterialComponents.Headline4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:paddingBottom="5dp"
+            android:textColor="?attr/colorBackgroundFloating"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="Residence" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imagenResidence"
+                android:layout_width="@dimen/item_residence_image_width"
+                android:layout_height="@dimen/item_residence_image_height"
+                app:layout_anchorGravity="bottom|center"
+                app:shapeAppearanceOverlay="@style/circleImageViewStyle"
+                tools:src="@drawable/ic_no_available" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top|start"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/margin_small"
+                android:paddingRight="@dimen/margin_small">
+
+                <TextView
+                    android:id="@+id/caracteristicas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_xsmall"
+                    android:layout_marginTop="0dp"
+                    android:gravity="top"
+                    android:lineSpacingExtra="6sp"
+                    tools:text="caracteristicas" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/descripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_xsmall"
+            android:lineSpacingExtra="4sp"
+            tools:text="descripcion" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
