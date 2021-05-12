@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.residencias.es.R
 import com.residencias.es.data.oauth.AuthenticationRepository
-import com.residencias.es.data.oauth.TokenResponse
+import com.residencias.es.data.oauth.OAuthTokensResponse
 import com.residencias.es.utils.Resource
 
 
@@ -17,8 +17,8 @@ class RegisterViewModel(
     private val repository: AuthenticationRepository
 ) : ViewModel() {
 
-    private val _getToken = MutableLiveData<Resource<TokenResponse>>()
-    val getToken: LiveData<Resource<TokenResponse>>
+    private val _getToken = MutableLiveData<Resource<OAuthTokensResponse>>()
+    val getOAuthTokens: LiveData<Resource<OAuthTokensResponse>>
         get() = _getToken
 
     suspend fun register(name: String, email: String, password: String) {
@@ -29,7 +29,7 @@ class RegisterViewModel(
             response.accessToken.let {
                 repository.saveAccessToken(it)
             }
-            repository.saveUserData(response.id, response.name, response.email)
+            repository.saveUserData(response.id, response.name, response.email, response.role)
 
             Log.i("login", "vm ${response.accessToken}");
 

@@ -2,26 +2,10 @@ package com.residencias.es.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.residencias.es.R
-import com.residencias.es.data.network.UnauthorizedException
-import com.residencias.es.databinding.ActivityLoginBinding
-import com.residencias.es.ui.MainActivity
-import com.residencias.es.utils.Status
-import com.residencias.es.viewmodel.LoginViewModel
-import kotlinx.coroutines.launch
-import org.koin.android.viewmodel.ext.android.viewModel
-
-import android.util.Log
-import android.view.View
-import android.widget.Button
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
-import com.facebook.login.LoginResult
-import com.facebook.login.widget.LoginButton
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -32,9 +16,15 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.residencias.es.R
+import com.residencias.es.data.network.UnauthorizedException
+import com.residencias.es.databinding.ActivityLoginBinding
+import com.residencias.es.ui.MainActivity
+import com.residencias.es.utils.Status
+import com.residencias.es.viewmodel.LoginViewModel
+import kotlinx.coroutines.launch
+import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
-
-
 
 
 class LoginActivity : AppCompatActivity() {
@@ -42,14 +32,12 @@ class LoginActivity : AppCompatActivity() {
     private val loginViewModel: LoginViewModel by viewModel()
     private lateinit var binding: ActivityLoginBinding
 
-    //google
+    // Login con google
     lateinit var mGoogleSignInClient: GoogleSignInClient
-    val Req_Code:Int=123
+    private val reqCode: Int = 123
     private lateinit var firebaseAuth: FirebaseAuth
     private var signInButton: SignInButton? = null
 
-    //facebook
-    lateinit var callbackManager: CallbackManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        /////////////////////////////////////////////////////////////////
+        ///////////////////////// Login con clave y correo //////////////////////////
         observeLogin()
 
         binding.btnLogin.setOnClickListener {
@@ -68,9 +56,7 @@ class LoginActivity : AppCompatActivity() {
             register()
         }
 
-        //////////////////////////////////////////////////////////
-
-        //google
+        ///////////////////////// Login con google /////////////////////////////////
         FirebaseApp.initializeApp(this)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -81,51 +67,11 @@ class LoginActivity : AppCompatActivity() {
 
         firebaseAuth= FirebaseAuth.getInstance()
 
-
         signInButton = findViewById(R.id.signInButton);
 
-        signInButton?.setOnClickListener{ view: View? ->
-            Toast.makeText(this, "Logging In", Toast.LENGTH_SHORT).show()
+        signInButton?.setOnClickListener{
             signInGoogle()
         }
-
-
-
-        //facebook
-        callbackManager = CallbackManager.Factory.create()
-
-
-        val loginButton = findViewById<LoginButton>(R.id.login_button)
-        loginButton.setReadPermissions(listOf("public_profile", "email"))
-        // If you are using in a fragment, call loginButton.setFragment(this)
-
-        // Callback registration
-        loginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
-            override fun onSuccess(loginResult: LoginResult?) {
-                Log.d("TAG", "Success Login")
-                // Get User's Info
-            }
-
-            override fun onCancel() {
-                Toast.makeText(this@LoginActivity, "Login Cancelled", Toast.LENGTH_LONG).show()
-            }
-
-            override fun onError(exception: FacebookException) {
-                Toast.makeText(this@LoginActivity, exception.message, Toast.LENGTH_LONG).show()
-            }
-        })
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     private fun register() {
@@ -149,7 +95,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun observeLogin() {
-        loginViewModel.getToken.observe(this, {
+        loginViewModel.getOAuthTokens.observe(this, {
             when (it.status) {
                 Status.SUCCESS -> {
                     startActivity(Intent(this, MainActivity::class.java))
@@ -166,7 +112,15 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-
+    private fun loginGoogle(account: GoogleSignInAccount) {
+        lifecycleScope.launch {
+            try {
+                loginViewModel.loginGoogle("${account.email.toString()}", "${account.displayName.toString()}")
+            } catch (t: UnauthorizedException) {
+                Toast.makeText(this@LoginActivity, getString(R.string.error_login), Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
 
 
@@ -186,57 +140,45 @@ class LoginActivity : AppCompatActivity() {
 
 
     private  fun signInGoogle(){
-
         val signInIntent: Intent =mGoogleSignInClient.signInIntent
-        startActivityForResult(signInIntent, Req_Code)
+        startActivityForResult(signInIntent, reqCode)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode==Req_Code){
+        if(requestCode==reqCode){
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleResult(task)
 //            firebaseAuthWithGoogle(account!!)
         } else {
-            //facebook
-            callbackManager.onActivityResult(requestCode, resultCode, data)
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
     private fun handleResult(completedTask: Task<GoogleSignInAccount>){
         try {
             val account: GoogleSignInAccount? =completedTask.getResult(ApiException::class.java)
             if (account != null) {
-                UpdateUI(account)
+                updateUI(account)
             }
         } catch (e: ApiException){
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun UpdateUI(account: GoogleSignInAccount){
+    private fun updateUI(account: GoogleSignInAccount){
         val credential= GoogleAuthProvider.getCredential(account.idToken, null)
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task->
             if(task.isSuccessful) {
+                Log.i("google", account.email.toString())
+                Log.i("google", account.displayName.toString())
+                loginGoogle(account)
                 // SavedPreference.setEmail(this,account.email.toString())
                 // SavedPreference.setUsername(this,account.displayName.toString())
                 //val intent = Intent(this, MainActivity::class.java)
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
+                //val intent = Intent(this, MainActivity::class.java)
+                //startActivity(intent)
+                //finish()
             }
         }
     }
@@ -244,10 +186,8 @@ class LoginActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         if(GoogleSignIn.getLastSignedInAccount(this)!=null){
-            //startActivity(Intent(this, MainActivity::class.java))
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
     }
-
 }

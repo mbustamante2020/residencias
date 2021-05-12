@@ -1,4 +1,4 @@
-package com.residencias.es.data
+package com.residencias.es.data.datasource
 
 import android.content.Context
 
@@ -8,10 +8,13 @@ class SessionManager(context: Context) {
     private val sharedPreferencesName = "sessionPreferences"
     private val sharedPreferences = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 
-    private val accessTokenKey = "accessTokenKey"
+    private val accessTokenKey = "accessTokeKey"
+    private val refreshTokenKey = "refreshTokenKey"
+
     private val idKey = "idKey"
     private val nameKey = "nameKey"
     private val emailKey = "emailKey"
+    private val roleKey = "roleKey"
 
     fun isUserAvailable(): Boolean {
         return getAccessToken() != null
@@ -33,23 +36,44 @@ class SessionManager(context: Context) {
         editor.apply()
     }
 
-    fun getIdData(): String? {
+    fun getRefreshToken(): String? {
+        return sharedPreferences.getString(refreshTokenKey, null)
+    }
+
+    fun saveRefreshToken(refreshToken: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString(refreshTokenKey, refreshToken)
+        editor.apply()
+    }
+
+    fun clearRefreshToken() {
+        val editor = sharedPreferences.edit()
+        editor.remove(refreshTokenKey)
+        editor.apply()
+    }
+
+    fun getId(): String? {
         return sharedPreferences.getString(idKey, null)
     }
 
-    fun getNameData(): String? {
+    fun getName(): String? {
         return sharedPreferences.getString(nameKey, null)
     }
 
-    fun getEmailData(): String? {
+    fun getEmail(): String? {
         return sharedPreferences.getString(emailKey, null)
     }
 
-    fun saveUserData(id: String?, name: String?, email: String?) {
+    fun getRole(): String? {
+        return sharedPreferences.getString(roleKey, null)
+    }
+
+    fun saveUserData(id: String?, name: String?, email: String?, role: String?) {
         val editor = sharedPreferences.edit()
         editor.putString(idKey, id)
         editor.putString(nameKey, name)
         editor.putString(emailKey, email)
+        editor.putString(roleKey, role)
         editor.apply()
     }
 
@@ -58,7 +82,7 @@ class SessionManager(context: Context) {
         editor.remove(idKey)
         editor.remove(nameKey)
         editor.remove(emailKey)
+        editor.remove(roleKey)
         editor.apply()
     }
-
 }

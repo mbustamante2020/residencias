@@ -1,6 +1,7 @@
 package com.residencias.es.ui.profile
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,8 @@ import com.residencias.es.R
 import com.residencias.es.data.network.UnauthorizedException
 import com.residencias.es.data.residences.*
 import com.residencias.es.databinding.FragmentMyResidenceBinding
+import com.residencias.es.ui.MainActivity
+import com.residencias.es.ui.login.LoginActivity
 import com.residencias.es.utils.Status
 import com.residencias.es.viewmodel.MyResidenceViewModel
 import kotlinx.coroutines.launch
@@ -178,7 +181,7 @@ class MyResidenceFragment : Fragment() {
         Log.i("Spinner1", "---> prov ${residence.province}" )
         Log.i("Spinner1", "---> mun ${residence.town}" )*/
 
-        binding.name.setText(residence.name ?: "")
+        binding.residenceName.setText(residence.name ?: "")
         binding.email.setText(residence.email ?: "")
         binding.web.setText(residence.web ?: "")
         binding.price.setText(residence.price ?: "")
@@ -189,7 +192,7 @@ class MyResidenceFragment : Fragment() {
        // binding.province.setText(residence.address ?: "")
        // binding.town.setText(residence.address ?: "")
 
-        binding.description.setText(residence.shortDescription ?: "")
+        binding.description.setText(residence.description ?: "")
 
         binding.latitude.setText(residence.latitude ?: "")
         binding.longitude.setText(residence.longitude ?: "")
@@ -201,7 +204,7 @@ class MyResidenceFragment : Fragment() {
     private fun getResidenceInfo(): Residence {
         return Residence(
                 "",
-                "${binding.name.text}",
+                "${binding.residenceName.text}",
                 "${binding.email.text}",
                 "${binding.web.text}",
                 "${binding.price.text}",
@@ -533,11 +536,10 @@ class MyResidenceFragment : Fragment() {
     }
 
     private fun onUnauthorized() {
-        // Clear local access token
         myResidenceViewModel.onUnauthorized()
-        // User was logged out, close screen and all parent screens and open login
-        //finishAffinity()
-        //startActivity(Intent(this, LoginActivity::class.java))
+
+        val intent = Intent(activity, LoginActivity::class.java)
+        (activity as MainActivity?)!!.startActivity(intent)
     }
 }
 

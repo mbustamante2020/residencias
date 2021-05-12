@@ -10,6 +10,7 @@ import com.residencias.es.data.residences.ResidencesRepository
 import com.residencias.es.utils.Resource
 import io.ktor.client.statement.*
 import kotlinx.coroutines.launch
+import java.io.File
 
 
 class PhotoViewModel(
@@ -21,7 +22,7 @@ class PhotoViewModel(
     val photos: LiveData<Resource<HttpResponse?>>
         get() = _photos
 
-    fun updatePhoto(file: ByteArray, headerValue: String) {
+    fun updatePhoto(file: File, headerValue: String) {
         viewModelScope.launch {
             _photos.postValue(Resource.loading(null))
 

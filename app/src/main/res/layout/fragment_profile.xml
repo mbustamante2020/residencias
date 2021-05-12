@@ -26,12 +26,6 @@
                 android:visibility="gone"
                 android:layout_gravity="center" />
 
-            <ImageView
-                android:id="@+id/imageProfile"
-                android:layout_width="@dimen/profile_image_size"
-                android:layout_height="@dimen/profile_image_size"
-                tools:src="@color/black"
-                android:contentDescription="@string/profile_image" />
 
             <TextView
                 android:labelFor="@+id/email"
@@ -52,7 +46,7 @@
                 android:autofillHints="@string/label_email" />
 
             <TextView
-                android:labelFor="@+id/userName"
+                android:labelFor="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space"

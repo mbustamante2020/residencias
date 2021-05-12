@@ -1,11 +1,13 @@
 package com.residencias.es.data.residences
 
+import java.io.File
+
 
 interface ResidencesRepository {
     // Pair<first, second>
     // first: pagina actual
     // second: listado de Residences
-    suspend fun getResidences(pagina: Int?, search: Search?): Pair<Int?, List<Residence>?>
+    suspend fun getResidences(pagina: Int?, search: Search?): Pair<Int?, List<Residence>?>?
 
     suspend fun getProvinces(todas: Boolean?): List<Province>?
 
@@ -16,6 +18,8 @@ interface ResidencesRepository {
     suspend fun getSectors(): List<Sector>?
 
     suspend fun getDependences(): List<Dependence>?
+
+    suspend fun getPrices(): List<Price>?
 
     suspend fun onUnauthorized()
 
@@ -30,5 +34,5 @@ interface ResidencesRepository {
 
     suspend fun getMyResidenceDependences(accessToken: String?): List<Dependence>?
 
-    suspend fun uploadFile(accessToken: String?, file: ByteArray, headerValue: String)//: HttpResponse?
+    suspend fun uploadFile(accessToken: String?, file: File, headerValue: String)//: HttpResponse?
 }

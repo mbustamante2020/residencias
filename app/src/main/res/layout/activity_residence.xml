@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/AppTheme"
     android:background="@drawable/bg_gradient"
     tools:context=".ui.residences.ResidenceActivity">
 
@@ -22,7 +23,7 @@
             android:layout_gravity="center" />
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/residenceName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/TextViewLarge"

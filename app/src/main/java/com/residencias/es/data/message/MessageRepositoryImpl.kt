@@ -1,7 +1,7 @@
 package com.residencias.es.data.message
 
-import com.residencias.es.data.SessionManager
 import com.residencias.es.data.datasource.ApiDataSource
+import com.residencias.es.data.datasource.SessionManager
 
 
 class MessageRepositoryImpl(

@@ -30,7 +30,7 @@ class ResidencesViewModel(
 
         repository.getResidences(pagina, search).let { residences ->
 
-             residences.second?.let {
+             residences?.second?.let {
                  _residences.postValue(Resource.success(residences))
 
              } ?: run {

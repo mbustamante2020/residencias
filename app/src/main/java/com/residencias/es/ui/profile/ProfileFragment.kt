@@ -1,5 +1,6 @@
 package com.residencias.es.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,10 +12,13 @@ import androidx.lifecycle.lifecycleScope
 import com.residencias.es.data.network.UnauthorizedException
 import com.residencias.es.data.user.User
 import com.residencias.es.databinding.FragmentProfileBinding
+import com.residencias.es.ui.MainActivity
+import com.residencias.es.ui.login.LoginActivity
 import com.residencias.es.utils.Status
 import com.residencias.es.viewmodel.ProfileViewModel
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
+
 
 class ProfileFragment : Fragment() {
 
@@ -41,12 +45,12 @@ class ProfileFragment : Fragment() {
         // Update Description Button Listener
         binding.btnSave.setOnClickListener {
             lifecycleScope.launch {
-                val user = User (null,
-                    "${binding.userName.text}",
-                    "${binding.name.text}",
-                    "${binding.email.text}",
-                    "${binding.phone.text}",
-                    "${binding.address.text}"
+                val user = User(null,
+                        "${binding.userName.text}",
+                        "${binding.name.text}",
+                        "${binding.email.text}",
+                        "${binding.phone.text}",
+                        "${binding.address.text}"
                 )
                 updateUserDescription(user)
             }
@@ -55,8 +59,8 @@ class ProfileFragment : Fragment() {
         profileViewModel.user.observe(viewLifecycleOwner, {
             when (it.status) {
                 Status.SUCCESS -> {
-                    it.data?.let {
-                            user -> setUserInfo(user)
+                    it.data?.let { user ->
+                        setUserInfo(user)
                     }
                 }
                 Status.LOADING -> {
@@ -92,8 +96,8 @@ class ProfileFragment : Fragment() {
                      Status.SUCCESS -> {
                          Log.i("profile", "----> SUCCESS ${it.data}")
 
-                         it.data?.let {
-                             user -> setUserInfo(user)
+                         it.data?.let { user ->
+                             setUserInfo(user)
                          }
                          binding.progressBar.visibility = View.GONE
                      }
@@ -149,7 +153,7 @@ class ProfileFragment : Fragment() {
         binding.userName.setText(user.userName ?: "")
         binding.name.setText(user.name ?: "")
         binding.address.setText(user.address ?: "")
-        binding.phone.setText(user.phone ?: "1")
+        binding.phone.setText(user.phone ?: "")
         binding.email.setText(user.email ?: "")
 
 
@@ -165,12 +169,9 @@ class ProfileFragment : Fragment() {
 
 
     private fun onUnauthorized() {
-        // Clear local access token
         profileViewModel.onUnauthorized()
-        // User was logged out, close screen and all parent screens and open login
-        //finishAffinity()
-        //startActivity(Intent(this, LoginActivity::class.java))
+
+        val intent = Intent(activity, LoginActivity::class.java)
+        (activity as MainActivity?)!!.startActivity(intent)
     }
-
-
 }

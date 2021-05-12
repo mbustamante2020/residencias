@@ -4,16 +4,12 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.residencias.es.R
 import com.residencias.es.data.message.Message
 import com.residencias.es.databinding.ItemMessageBinding
 import com.residencias.es.viewmodel.MessageViewModel
-import io.ktor.client.engine.*
 
 
 class MessageAdapter(private val viewModel: MessageViewModel) :

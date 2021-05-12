@@ -2,26 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- NOTIFICACION -->
+    <!-- NOTIFICACION
     <item
         android:id="@+id/action_favorite"
         android:icon="@drawable/ic_baseline_notifications"
         android:title="@string/action_notification"
         app:showAsAction="ifRoom"/>
-
-    <!-- FILTROS PARA BUSCAR RESIDENCIAS -->
-
-
-    <!--
-        <item
-            android:id="@+id/action_search"
-            android:icon="@drawable/ic_baseline_search_24"
-            android:title="@string/action_notification"
-            app:showAsAction="ifRoom"/>
 -->
         <item
             android:id="@+id/action_search"
-            android:icon="@drawable/ic_baseline_more_vert"
+            android:icon="@drawable/ic_baseline_search"
             android:title="@string/action_search"
             app:showAsAction="always" />
     </menu>

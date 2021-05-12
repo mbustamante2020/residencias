@@ -13,27 +13,21 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="@dimen/login_image_size"
-        app:srcCompat="@drawable/ic_logo_h" />
+        app:srcCompat="@drawable/ic_logo_h"
+        android:contentDescription="@string/logo_image" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/signInButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/double_space"
-        android:layout_gravity="center_horizontal" />
-
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/double_space"
+        android:layout_marginTop="@dimen/triple_space"
         android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/double_space"
-        android:layout_marginBottom="@dimen/double_space"
+        android:layout_marginTop="@dimen/triple_space"
+        android:layout_marginBottom="@dimen/triple_space"
         android:text="@string/label_access_login"
         style="@style/TextView"
         android:layout_gravity="center" />
@@ -49,7 +43,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
-        style="@style/EditText" />
+        style="@style/EditText"
+        android:importantForAutofill="no" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -63,7 +58,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
-        style="@style/EditText" />
+        style="@style/EditText"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/btnLogin"

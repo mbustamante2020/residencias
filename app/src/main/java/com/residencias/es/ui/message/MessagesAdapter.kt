@@ -7,9 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.residencias.es.data.message.Message
 import com.residencias.es.databinding.ItemMessagesBinding
-import com.residencias.es.viewmodel.MessageViewModel
 import com.residencias.es.viewmodel.MessagesViewModel
-import com.residencias.es.viewmodel.ResidencesViewModel
 
 class MessagesAdapter(private val viewModel: MessagesViewModel) :
         ListAdapter<Message, MessagesAdapter.MessagesViewHolder>(messagesDiffCallback) {

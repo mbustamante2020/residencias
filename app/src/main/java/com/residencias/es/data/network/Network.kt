@@ -2,17 +2,18 @@ package com.residencias.es.data.network
 
 import android.content.Context
 import android.util.Log
+import com.residencias.es.data.datasource.SessionManager
 import com.residencias.es.data.oauth.Constants
+import com.residencias.es.data.oauth.OAuthTokensResponse
+import edu.uoc.pac4.data.network.OAuthFeature
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
-import io.ktor.client.features.websocket.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import io.ktor.http.cio.websocket.*
 
 object Network {
 
@@ -64,13 +65,61 @@ object Network {
                 if (!headers.contains("client-id"))
                     header("client-id", Constants.clientID)
             }
+
+            // Add OAuth Feature
+            install(OAuthFeature) {
+                getToken = {
+                    val accessToken = SessionManager(context).getAccessToken() ?: ""
+                    Log.d(TAG, "Adding Bearer header with token $accessToken")
+                    accessToken
+                }
+                refreshToken = {
+                    // Remove expired access token
+                    SessionManager(context).clearAccessToken()
+                    // Launch token refresh request
+                    launchTokenRefresh(context)
+                }
+            }
         }
     }
 
     private val json = kotlinx.serialization.json.Json {
         ignoreUnknownKeys = true
         isLenient = true
-        encodeDefaults = false
+        encodeDefaults = true
 
+    }
+
+    private suspend fun launchTokenRefresh(context: Context) {
+        val sessionManager = SessionManager(context)
+        // Get Refresh Token
+        sessionManager.getRefreshToken()?.let { refreshToken ->
+            try {
+                // Launch Refresh Request
+                val response =
+                        createHttpClient(context).post<OAuthTokensResponse>(Endpoints.tokenUrl) {
+                            parameter("token", refreshToken)
+                            parameter("client_id", Constants.clientID)
+                            parameter("client_secret", Constants.clientSecret)
+                            //parameter("refresh_token", refreshToken)
+                            //parameter("token", refreshToken)
+                            parameter("grant_type", "refresh_token")
+                        }
+                Log.d(TAG, "Got new Access token ${response.accessToken}")
+                // Save new Tokens
+                sessionManager.saveAccessToken(response.accessToken)
+                sessionManager.saveRefreshToken(response.accessToken)
+            } catch (t: Throwable) {
+                Log.d(TAG, "Error refreshing tokens", t)
+                // Clear tokens
+                sessionManager.clearAccessToken()
+                sessionManager.clearRefreshToken()
+
+            }
+        } ?: run {
+            Log.e(TAG, "No refresh token available")
+            // Clear token
+            sessionManager.clearAccessToken()
+        }
     }
 }

@@ -63,7 +63,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun observeRegister() {
-        registerViewModel.getToken.observe(this, {
+        registerViewModel.getOAuthTokens.observe(this, {
             when (it.status) {
                 Status.SUCCESS -> {
                     startActivity(Intent(this, MainActivity::class.java))

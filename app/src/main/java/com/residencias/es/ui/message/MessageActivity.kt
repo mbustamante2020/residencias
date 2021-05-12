@@ -1,7 +1,6 @@
 package com.residencias.es.ui.message
 
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -11,13 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.residencias.es.R
 import com.residencias.es.data.message.Message
 import com.residencias.es.data.network.UnauthorizedException
-import com.residencias.es.data.residences.Search
 import com.residencias.es.databinding.ActivityMessageBinding
 import com.residencias.es.utils.Status
 import com.residencias.es.viewmodel.MessageViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
-
 
 
 class MessageActivity : AppCompatActivity() {
@@ -59,10 +57,10 @@ class MessageActivity : AppCompatActivity() {
 
         }
 
-        Handler().postDelayed({
+        lifecycleScope.launch {
+            delay(1000L)
             getMessages()
-        },2000)
-
+        }
 
         binding.btnSend.setOnClickListener {
             sendMessage()

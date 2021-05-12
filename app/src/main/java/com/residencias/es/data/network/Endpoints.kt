@@ -2,49 +2,52 @@ package com.residencias.es.data.network
 
 object Endpoints {
 
-    private const val apiBaseUrl = "https://residenciasysalud.es"
+    private const val urlApiBase = "https://residenciasysalud.es"
 
     // OAuth2 API Endpoints api/register
-    private const val oauthBaseUrl = "$apiBaseUrl/api"
-
-
-    //const val authorizationUrl = "$oauthBaseUrl/authorize"
-    //const val tokenUrl = "$oauthBaseUrl/token"
+    private const val oauthBaseUrl = "$urlApiBase/api"
 
 
 
-    const val login = "$oauthBaseUrl/login"
-    const val register = "$oauthBaseUrl/register"
-    const val user = "$oauthBaseUrl/user"
-    const val updateUser = "$oauthBaseUrl/profile/user"
-    const val residence = "$oauthBaseUrl/residence"
-    const val updateResidence = "$oauthBaseUrl/profile/residence"
 
 
-    const val residenceRooms = "$oauthBaseUrl/rooms"
-    const val residenceSectors = "$oauthBaseUrl/sectors"
-    const val residenceDependences = "$oauthBaseUrl/dependences"
-    const val residenceUploadImage = "$oauthBaseUrl/upload"
+
+    const val urlRegister = "$oauthBaseUrl/register"
+    const val urlLogin = "$oauthBaseUrl/login"
+    const val urlLoginGoogle = "$oauthBaseUrl/login/google"
+    const val tokenUrl = "$oauthBaseUrl/token"
+
+    const val urlUser = "$oauthBaseUrl/user"
+   // const val urlUpdateUser = "$oauthBaseUrl/profile/user"
+    const val urlResidence = "$oauthBaseUrl/residence"
+    //const val urlUpdateResidence = "$oauthBaseUrl/profile/residence"
 
 
-    const val messages = "$oauthBaseUrl/message"                    //hilos de conversaciones
-    const val messagesSend = "$oauthBaseUrl/message/add"            //envia mensaje
-    const val messagesMyMessages = "$oauthBaseUrl/message/messages" //listado de conversaciones
+    const val urlResidenceRooms = "$oauthBaseUrl/rooms"
+    const val urlResidenceSectors = "$oauthBaseUrl/sectors"
+    const val urlResidenceDependences = "$oauthBaseUrl/dependences"
+    const val urlResidenceUploadImage = "$oauthBaseUrl/upload"
 
 
-    // API Endpoints
-    const val imagenUrl = "$apiBaseUrl/img/residencia"
-    const val residencesUrl = "$apiBaseUrl/api/v1/residencias"
+    const val urlMessages = "$oauthBaseUrl/message"                    //hilos de conversaciones
+    const val urlMessagesSend = "$oauthBaseUrl/messages/send"            //envia mensaje
+    const val urlMyMessages = "$oauthBaseUrl/messages" //listado de conversaciones
+
+
+
+    // API imagen
+    const val urlImagen = "$urlApiBase/img/residencia"
+
+    //obtener listado de residencias
+    const val urlResidences = "$urlApiBase/api/v1/residences"
 
 
     //Para el buscador
-    const val provinciasUrl = "$apiBaseUrl/api/v1/provincias" // api/v1/provincias
-    const val townsUrl = "$apiBaseUrl/api/v1/municipios" // api/v1/municipios/{provincia}
-
-    const val pricesUrl         = "$apiBaseUrl/api/v1/precios"          // api/v1/precios
-    const val roomsUrl          = "$apiBaseUrl/api/v1/habitaciones"     // api/v1/habitaciones
-    const val sectorsUrl        = "$apiBaseUrl/api/v1/plazas"           // api/v1/plazas
-    const val dependencesUrl    = "$apiBaseUrl/api/v1/dependencias"     // api/v1/dependencias
-    const val serviciosUrl      = "$apiBaseUrl/api/v1/servicios"        // api/v1/servicios
+    const val urlProvinces      = "$urlApiBase/api/v1/provinces"
+    const val urlTowns          = "$urlApiBase/api/v1/towns"
+    const val urlRooms          = "$urlApiBase/api/v1/rooms"
+    const val urlSectors        = "$urlApiBase/api/v1/sectors"
+    const val urlDependences    = "$urlApiBase/api/v1/dependences"
+    const val urlPrices    = "$urlApiBase/api/v1/prices"
 
 }

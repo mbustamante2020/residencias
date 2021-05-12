@@ -1,7 +1,7 @@
 package com.residencias.es.data.di
 
-import com.residencias.es.data.SessionManager
 import com.residencias.es.data.datasource.ApiDataSource
+import com.residencias.es.data.datasource.SessionManager
 import com.residencias.es.data.message.MessageRepository
 import com.residencias.es.data.message.MessageRepositoryImpl
 import com.residencias.es.data.network.Network

@@ -27,7 +27,7 @@ object ImageUtils {
     }
 
     @Throws(IOException::class)
-    public fun createImageFile(baseDir: File?, bitmap: Bitmap) {
+    public fun createImageFile(baseDir: File?, bitmap: Bitmap) : File {
         Log.d("PAC3", "!!!!!!!!!!!!!!CREATE IMAGE FILE; :::: ")
 
         // Set Folder Path
@@ -42,6 +42,8 @@ object ImageUtils {
         val fos = FileOutputStream(imageFile)
         fos.write(stream.toByteArray())
         fos.close()
+
+        return imageFile
     }
 
 }

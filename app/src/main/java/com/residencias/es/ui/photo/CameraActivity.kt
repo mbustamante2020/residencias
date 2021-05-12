@@ -97,15 +97,7 @@ class CameraActivity : AppCompatActivity() {
 
     }
 
-    private fun updatePhoto(file: ByteArray, headerValue: String) {
-       // binding.progressBar.visibility = View.VISIBLE
-        try {
-            photoViewModel.updatePhoto(file, headerValue)
-        } catch (t: UnauthorizedException) {
-            //onUnauthorized()
-        }
 
-    }
 
     private fun observePhoto() {
         photoViewModel.photos.observe(this, {
@@ -190,7 +182,7 @@ class CameraActivity : AppCompatActivity() {
                 val imageBitmap = data!!.extras?.get("data") as Bitmap
 
                 val baseDir: File? = this.getExternalFilesDir(null);
-                ImageUtils.createImageFile(baseDir, imageBitmap);
+                val file = ImageUtils.createImageFile(baseDir, imageBitmap);
                 binding.imageThumbnail?.setImageBitmap(imageBitmap)
 
 
@@ -204,8 +196,8 @@ class CameraActivity : AppCompatActivity() {
 
 
                 //val imageByteArray = data!!.extras?.get("data") as ByteArray
-                val headerValue = "residencia"
-                updatePhoto(imageByteArray, headerValue)
+                val headerValue = "residencia.jpg"
+                updatePhoto(file, headerValue)
 
 
 
@@ -219,4 +211,23 @@ class CameraActivity : AppCompatActivity() {
         }
     }
 
+    private fun updatePhoto(file: File, headerValue: String) {
+        // binding.progressBar.visibility = View.VISIBLE
+        try {
+            photoViewModel.updatePhoto(file, headerValue)
+        } catch (t: UnauthorizedException) {
+            //onUnauthorized()
+        }
+
+    }
+
+   /* private fun updatePhoto1(file: ByteArray, headerValue: String) {
+        // binding.progressBar.visibility = View.VISIBLE
+        try {
+            photoViewModel.updatePhoto(file, headerValue)
+        } catch (t: UnauthorizedException) {
+            //onUnauthorized()
+        }
+
+    }*/
 }

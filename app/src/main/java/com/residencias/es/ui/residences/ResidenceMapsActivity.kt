@@ -1,5 +1,6 @@
 package com.residencias.es.ui.residences
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -9,20 +10,21 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.residencias.es.R
+import com.residencias.es.data.residences.Residence
+
 
 class ResidenceMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
-    //private lateinit var binding: ActivityResidenceMapsBinding
+
+    private var residence: Residence? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_residence_maps)
 
-        //binding = ActivityResidenceMapsBinding.inflate(layoutInflater)
-        //setContentView(binding.root)
-
-
+        val intent: Intent = intent
+        residence = intent.getParcelableExtra("residence")
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
@@ -41,10 +43,21 @@ class ResidenceMapsActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
+        mMap.uiSettings.isZoomControlsEnabled = true
+        mMap.uiSettings.isMyLocationButtonEnabled = true
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        //zoom: 6,
+        //center: new google.maps.LatLng(40.3, -3.74922),
+
+
+        var latitude = residence?.latitude
+        var longitude = residence?.longitude
+
+        if( !longitude.isNullOrEmpty() && !latitude.isNullOrEmpty()  ) {
+            val residenceMarker = LatLng(latitude.toDouble(), longitude.toDouble())
+            mMap.addMarker(MarkerOptions().position(residenceMarker).title("${residence?.name}").snippet("${residence?.address}\n${residence?.phone}\nlll"))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(residenceMarker, 16.0F))
+        }
     }
 }

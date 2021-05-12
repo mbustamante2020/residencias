@@ -1,7 +1,8 @@
 package com.residencias.es.data.residences
 
-import com.residencias.es.data.SessionManager
 import com.residencias.es.data.datasource.ApiDataSource
+import com.residencias.es.data.datasource.SessionManager
+import java.io.File
 
 
 class ResidencesRepositoryImpl(
@@ -9,7 +10,7 @@ class ResidencesRepositoryImpl(
         private val sharedPreferencesDataSource: SessionManager
 ) : ResidencesRepository {
 
-    override suspend fun getResidences(pagina: Int?, search: Search?): Pair<Int?, List<Residence>?> {
+    override suspend fun getResidences(pagina: Int?, search: Search?): Pair<Int?, List<Residence>?>? {
         return apiDataSource.getResidences(pagina, search)
     }
 
@@ -31,6 +32,10 @@ class ResidencesRepositoryImpl(
 
     override suspend fun getDependences(): List<Dependence>? {
         return apiDataSource.getDependences()
+    }
+
+    override suspend fun getPrices(): List<Price>? {
+        return apiDataSource.getPrices()
     }
 
     override suspend fun onUnauthorized() {
@@ -58,7 +63,7 @@ class ResidencesRepositoryImpl(
         return apiDataSource.getMyResidenceDependences(accessToken)
     }
 
-    override suspend fun uploadFile(accessToken: String?, file: ByteArray, headerValue: String) { //: HttpResponse? {
+    override suspend fun uploadFile(accessToken: String?, file: File, headerValue: String) { //: HttpResponse? {
         apiDataSource.uploadFile(accessToken, file, headerValue)
     }
 }

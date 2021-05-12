@@ -14,12 +14,14 @@ import com.residencias.es.R
 import com.residencias.es.data.network.UnauthorizedException
 import com.residencias.es.data.residences.Search
 import com.residencias.es.databinding.FragmentResidencesBinding
+import com.residencias.es.ui.residences.adapter.ResidencesAdapter
 import com.residencias.es.utils.Status
 import com.residencias.es.viewmodel.ResidencesViewModel
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class ResidencesFragment : Fragment(R.layout.fragment_residences) {
+
+class ResidencesFragment ( private var search: Search?): Fragment(R.layout.fragment_residences) {
 
     private var _binding: FragmentResidencesBinding? = null
     private val binding get() = _binding!!
@@ -28,21 +30,7 @@ class ResidencesFragment : Fragment(R.layout.fragment_residences) {
     private val residencesViewModel: ResidencesViewModel by viewModel()
     private var adapter: ResidencesAdapter? = null
 
-
-
-    private var search: Search? = null
-
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
-
-        val bundle = activity!!.intent.getBundleExtra("Bundle")
-        if (bundle != null) {
-            //val search = bundle.get("search") as Search
-            search = bundle.getParcelable<Search>("search")
-            Log.i("Search", "${search?.search_for}")
-            Log.i("Search", "${search?.province}")
-        }
-        //  Toast.makeText(this, "Item seleccionado $search", Toast.LENGTH_SHORT).show()
-
         _binding = FragmentResidencesBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -58,17 +46,15 @@ class ResidencesFragment : Fragment(R.layout.fragment_residences) {
             adapter = ResidencesAdapter(residencesViewModel)
 
 
-
-
             // Init RecyclerView
             initRecyclerView()
 
             // Swipe to Refresh Listener
             binding.swipeRefreshLayout.setOnRefreshListener {
-                getResidences(nextCursor)
+                getResidences(nextPage)
             }
             // Get Residences
-            getResidences(nextCursor)
+            getResidences(nextPage)
 
             observeResidences()
 
@@ -91,11 +77,11 @@ class ResidencesFragment : Fragment(R.layout.fragment_residences) {
         // Set Pagination Listener
         binding.recyclerView.addOnScrollListener(object : PaginationScrollListener(layoutManager as LinearLayoutManager) {
             override fun loadMoreItems() {
-                getResidences(nextCursor)
+                getResidences(nextPage)
             }
 
             override fun isLastPage(): Boolean {
-                return nextCursor == null
+                return nextPage == null
             }
 
             override fun isLoading(): Boolean {
@@ -104,22 +90,22 @@ class ResidencesFragment : Fragment(R.layout.fragment_residences) {
         })
     }
 
-    private var nextCursor: Int? = 1
+    private var nextPage: Int? = 1
 
-    private fun getResidences(cursor: Int? = null) {
+    private fun getResidences(page: Int? = null) {
         // Show Loading
         binding.swipeRefreshLayout.isRefreshing = true
 
         // Get Residences
         lifecycleScope.launch {
             try {
-                residencesViewModel.getAllResidences(cursor, search)
+                residencesViewModel.getAllResidences(page, search)
 
                 // Hide Loading
                 binding.swipeRefreshLayout.isRefreshing = false
-                Log.i("current_page ----> ", "ResActivity 35 ${nextCursor}")
+                Log.i("current_page ----> ", "ResActivity 35 ${nextPage}")
 
-                nextCursor = nextCursor?.plus(1)
+                //nextPage  //= nextPage?.plus(1)
 
 
             } catch (t: UnauthorizedException) {
@@ -137,6 +123,8 @@ class ResidencesFragment : Fragment(R.layout.fragment_residences) {
             when (it.status) {
                 Status.SUCCESS -> {
                     val residences = it.data?.second.orEmpty()
+                    nextPage = it.data?.first
+
                     Log.i("residencias", " adapter count ${adapter?.itemCount}")
                     // Update UI with Residences
                     if (it.data?.first != null) {
@@ -146,11 +134,11 @@ class ResidencesFragment : Fragment(R.layout.fragment_residences) {
                         // It's the first n items, no pagination yet
                         adapter?.submitList(residences)
                     }
-                    // Save cursor for next request
-                    //nextCursor = it.data?.first
+                    // Save page for next request
+                    //nextPage = it.data?.first
                     //TODO obtener el ultimo valor
                     Log.i("residencias", " adapter count ${adapter?.itemCount}")
-                    Log.i("current_page resAct 114", "$nextCursor")
+                    Log.i("current_page resAct 114", "$nextPage")
                 }
                 Status.LOADING -> {
 
@@ -163,8 +151,8 @@ class ResidencesFragment : Fragment(R.layout.fragment_residences) {
                                 this@ResidencesActivity,
                                 getString(R.string.error_residences), Toast.LENGTH_SHORT
                         ).show()*/
-                        nextCursor = nextCursor?.rem(1)
-                        getResidences(nextCursor)
+                        //nextPage = nextPage?.rem(1)
+                        //getResidences(nextPage)
                     }
                 }
             }
@@ -175,20 +163,10 @@ class ResidencesFragment : Fragment(R.layout.fragment_residences) {
     private fun observeVerResidence() {
         residencesViewModel.verResidence.observe(viewLifecycleOwner, { verResidence ->
             if (verResidence) {
-
                 val intent = Intent(activity, ResidenceActivity::class.java)
                 intent.putExtra("residence", residencesViewModel.residence.value)
                 startActivity(intent)
-                /*
-                val intent = Intent(this, ResidenceActivity::class.java)
-                intent.putExtra("residence", residencesViewModel.residence.value)
-                startActivity(intent)*/
-            } else {
-
-
             }
-
         })
     }
-
 }

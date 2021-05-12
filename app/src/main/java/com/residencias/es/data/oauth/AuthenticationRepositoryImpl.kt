@@ -1,7 +1,7 @@
 package com.residencias.es.data.oauth
 
-import com.residencias.es.data.SessionManager
 import com.residencias.es.data.datasource.ApiDataSource
+import com.residencias.es.data.datasource.SessionManager
 
 
 class AuthenticationRepositoryImpl(
@@ -13,11 +13,15 @@ class AuthenticationRepositoryImpl(
         return sharedPreferencesDataSource.isUserAvailable()
     }
 
-    override suspend fun login(email: String, password: String): TokenResponse? {
+    override suspend fun login(email: String, password: String): OAuthTokensResponse? {
         return apiDataSource.login(email, password)
     }
 
-    override suspend fun register(name: String, email: String, password: String): TokenResponse? {
+    override suspend fun loginGoogle(email: String, name: String): OAuthTokensResponse? {
+        return apiDataSource.loginGoogle(email, name)
+    }
+
+    override suspend fun register(name: String, email: String, password: String): OAuthTokensResponse? {
         return apiDataSource.register(name, email, password)
     }
 
@@ -31,15 +35,32 @@ class AuthenticationRepositoryImpl(
         sharedPreferencesDataSource.clearAccessToken()
     }
 
-    override suspend fun saveAccessToken(accessToken: String) {
+    override fun saveAccessToken(accessToken: String) {
         sharedPreferencesDataSource.saveAccessToken(accessToken)
+        sharedPreferencesDataSource.saveRefreshToken(accessToken)
     }
 
-    override suspend fun saveUserData(id: String?, name: String?, email: String?) {
-        sharedPreferencesDataSource.saveUserData(id, name, email)
+    override fun saveUserData(id: String?, name: String?, email: String?, role: String?) {
+        sharedPreferencesDataSource.saveUserData(id, name, email, role)
     }
 
-    override suspend fun getAccessToken(): String? {
+    override fun getAccessToken(): String? {
         return sharedPreferencesDataSource.getAccessToken()
+    }
+
+    override fun getId(): String? {
+        return sharedPreferencesDataSource.getId()
+    }
+
+    override fun getName(): String? {
+        return sharedPreferencesDataSource.getName()
+    }
+
+    override fun getEmail(): String? {
+        return sharedPreferencesDataSource.getEmail()
+    }
+
+    override fun getRole(): String? {
+        return sharedPreferencesDataSource.getRole()
     }
 }

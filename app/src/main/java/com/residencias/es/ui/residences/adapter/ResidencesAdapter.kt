@@ -1,4 +1,4 @@
-package com.residencias.es.ui.residences
+package com.residencias.es.ui.residences.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -36,7 +36,7 @@ class ResidencesAdapter(private val viewModel: ResidencesViewModel) :
                     viewModel.residenceClicked(residence)
                 }
 
-                nombre.text = residence.name.toString()
+                residenceName.text = residence.name.toString()
 
                 var caracteristicasResumen: String
                 //se muestra el textView del price solo si se obtiene un valor mayor a cero
@@ -51,11 +51,11 @@ class ResidencesAdapter(private val viewModel: ResidencesViewModel) :
                     caracteristicasResumen = caracteristicasResumen.plus("Sectors disponibles: Si\n")
                 }
 
-                caracteristicas.text = caracteristicasResumen.plus("Teléfono: ${residence.phone.toString()}\n")
+                descripcion.text = caracteristicasResumen.plus("Teléfono: ${residence.phone.toString()}\n")
 
                 var descripcionResumen: String = "";
-                if( !residence.shortDescription.isNullOrEmpty() ) {
-                    descripcionResumen = "${residence.shortDescription}\n"
+                if( !residence.description.isNullOrEmpty() ) {
+                    descripcionResumen = "${residence.description}\n"
                 }
 
                 descripcion.text = "${descripcionResumen}Ubicada en ${residence.address.toString()}, ${residence.province.toString()}, ${residence.town.toString()}"
@@ -63,16 +63,16 @@ class ResidencesAdapter(private val viewModel: ResidencesViewModel) :
                 //se muestra la imagen principal de la residence
                 residence.urlImagen?.let {
                     Glide.with(itemView)
-                        .load( "${Endpoints.imagenUrl}/${it}-240x160.webp")
+                        .load( "${Endpoints.urlImagen}/${it}-240x160.webp")
                         .error(R.drawable.ic_no_available)
                         .centerCrop()
-                        .into(imagenResidence)
+                        .into(imageResidence)
 
                 } ?: run {
                     Glide.with(itemView)
                         .load(R.drawable.ic_no_available)
                         .centerCrop()
-                        .into(imagenResidence)
+                        .into(imageResidence)
                 }
 
             }

@@ -21,18 +21,18 @@ class ResidencesSearchViewModel(
         _search.value = true
     }
 
-    private val _provincias = MutableLiveData<Resource<List<Province>?>>()
-    val provincias: LiveData<Resource<List<Province>?>>
-        get() = _provincias
+    private val _provinces = MutableLiveData<Resource<List<Province>?>>()
+    val provinces: LiveData<Resource<List<Province>?>>
+        get() = _provinces
 
-    suspend fun getAllProvinces(todas: Boolean? = null) {
-        _provincias.postValue(Resource.loading(null))
+    suspend fun getAllProvinces(all: Boolean? = null) {
+        _provinces.postValue(Resource.loading(null))
 
-        repository.getProvinces(todas).let { provincias ->
-            provincias?.let {
-                _provincias.postValue(Resource.success(provincias))
+        repository.getProvinces(all).let {
+            it?.let {
+                _provinces.postValue(Resource.success(it))
             } ?: run {
-                _provincias.postValue(Resource.error("Error al intentar cargar las provincias", null))
+                _provinces.postValue(Resource.error("Error al intentar cargar las provincias", null))
             }
         }
     }
@@ -41,14 +41,14 @@ class ResidencesSearchViewModel(
     val towns: LiveData<Resource<List<Town>?>>
         get() = _towns
 
-    suspend fun getAllTowns(idprovincia: Int, todas: Boolean? = null) {
+    suspend fun getAllTowns(idprovince: Int, todas: Boolean? = null) {
         _towns.postValue(Resource.loading(null))
 
-        repository.getTowns(idprovincia, todas).let { towns ->
-            towns?.let {
-                _towns.postValue(Resource.success(towns))
+        repository.getTowns(idprovince, todas).let {
+            it?.let {
+                _towns.postValue(Resource.success(it))
             } ?: run {
-                _towns.postValue(Resource.error("Error al intentar cargar los towns", null))
+                _towns.postValue(Resource.error("Error al intentar cargar los municipios", null))
             }
         }
     }
@@ -60,11 +60,11 @@ class ResidencesSearchViewModel(
     suspend fun getAllRooms() {
         _rooms.postValue(Resource.loading(null))
 
-        repository.getRooms().let { rooms ->
-            rooms?.let {
-                _rooms.postValue(Resource.success(rooms))
+        repository.getRooms().let {
+            it?.let {
+                _rooms.postValue(Resource.success(it))
             } ?: run {
-                _rooms.postValue(Resource.error("Error al intentar cargar las rooms", null))
+                _rooms.postValue(Resource.error("Error al intentar cargar las habitaciones", null))
             }
         }
     }
@@ -76,11 +76,11 @@ class ResidencesSearchViewModel(
     suspend fun getAllSectors() {
         _sectors.postValue(Resource.loading(null))
 
-        repository.getSectors().let { sectors ->
-            sectors?.let {
-                _sectors.postValue(Resource.success(sectors))
+        repository.getSectors().let {
+            it?.let {
+                _sectors.postValue(Resource.success(it))
             } ?: run {
-                _sectors.postValue(Resource.error("Error al intentar cargar las sectors", null))
+                _sectors.postValue(Resource.error("Error al intentar cargar las plazas", null))
             }
         }
     }
@@ -92,11 +92,27 @@ class ResidencesSearchViewModel(
     suspend fun getAllDependences() {
         _dependences.postValue(Resource.loading(null))
 
-        repository.getDependences().let { dependences ->
-            dependences?.let {
-                _dependences.postValue(Resource.success(dependences))
+        repository.getDependences().let {
+            it?.let {
+                _dependences.postValue(Resource.success(it))
             } ?: run {
-                _dependences.postValue(Resource.error("Error al intentar cargar las dependences", null))
+                _dependences.postValue(Resource.error("Error al intentar cargar las dependencias", null))
+            }
+        }
+    }
+
+    private val _prices = MutableLiveData<Resource<List<Price>?>>()
+    val prices: LiveData<Resource<List<Price>?>>
+        get() = _prices
+
+    suspend fun getAllPrices() {
+        _prices.postValue(Resource.loading(null))
+
+        repository.getPrices().let {
+            it?.let {
+                _prices.postValue(Resource.success(it))
+            } ?: run {
+                _prices.postValue(Resource.error("Error al intentar cargar los precios", null))
             }
         }
     }

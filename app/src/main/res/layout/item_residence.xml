@@ -22,7 +22,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/nombre"
+            android:id="@+id/residenceName"
             style="@style/TextAppearance.MaterialComponents.Headline4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imagenResidence"
+                android:id="@+id/imageResidence"
                 android:layout_width="@dimen/item_residence_image_width"
                 android:layout_height="@dimen/item_residence_image_height"
                 app:layout_anchorGravity="bottom|center"
@@ -55,7 +55,7 @@
                 android:paddingRight="@dimen/margin_small">
 
                 <TextView
-                    android:id="@+id/caracteristicas"
+                    android:id="@+id/residenceDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_xsmall"

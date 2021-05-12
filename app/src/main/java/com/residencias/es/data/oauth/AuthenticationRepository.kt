@@ -5,18 +5,27 @@ interface AuthenticationRepository {
 
     suspend fun isUserAvailable(): Boolean
 
-    // Returns true if the user logged in successfully. False otherwise
-    suspend fun login(email: String, password: String): TokenResponse?
+    suspend fun login(email: String, password: String): OAuthTokensResponse?
 
-    suspend fun register(name: String, email: String, password: String): TokenResponse?
+    suspend fun loginGoogle(email: String, name: String): OAuthTokensResponse?
+
+    suspend fun register(name: String, email: String, password: String): OAuthTokensResponse?
 
     fun logout()
 
     fun onUnauthorized()
 
-    suspend fun saveAccessToken(accessToken: String)
+    fun saveAccessToken(accessToken: String)
 
-    suspend fun saveUserData(id: String?, name: String?, email: String?)
+    fun saveUserData(id: String?, name: String?, email: String?, role: String?)
 
-    suspend fun getAccessToken(): String?
+    fun getAccessToken(): String?
+
+    fun getId(): String?
+
+    fun getName(): String?
+
+    fun getEmail(): String?
+
+    fun getRole(): String?
 }

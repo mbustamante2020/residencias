@@ -2,11 +2,13 @@ package com.residencias.es.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.residencias.es.databinding.ActivitySplashBinding
 import com.residencias.es.ui.login.LoginActivity
 import com.residencias.es.viewmodel.SplashViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -23,9 +25,10 @@ class SplashActivity : AppCompatActivity() {
 
         splashViewModel.getUserAvailability()
 
-        Handler().postDelayed({
-           checkUserSession()
-        },500)
+        lifecycleScope.launch {
+            delay(1000L)
+            checkUserSession()
+        }
     }
 
     private fun checkUserSession() {

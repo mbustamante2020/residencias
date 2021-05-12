@@ -18,7 +18,7 @@ data class Residence(
         @SerialName("provincia") val province: String? = null,
         @SerialName("municipio") val town: String? = null,
         @SerialName("imagen_url") val urlImagen: String? = null,
-        @SerialName("descripcion_resumen") val shortDescription: String? = null,
+        @SerialName("descripcion_resumen") val description: String? = null,
         @SerialName("latitud") val latitude: String? = null,
         @SerialName("longitud") val longitude: String? = null,
         @SerialName("provincia_id") val idprovince: String? = null,
@@ -57,7 +57,7 @@ data class Residence(
         parcel.writeString(province)
         parcel.writeString(town)
         parcel.writeString(urlImagen)
-        parcel.writeString(shortDescription)
+        parcel.writeString(description)
         parcel.writeString(latitude)
         parcel.writeString(longitude)
         parcel.writeString(idprovince)
