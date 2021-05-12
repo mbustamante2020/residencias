@@ -21,14 +21,13 @@ import io.ktor.http.content.*
 import io.ktor.utils.io.core.*
 import io.ktor.utils.io.streams.*
 import okhttp3.*
-import okhttp3.Headers
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
 class ApiDataSource( private val httpClient: HttpClient )  {
 
-    val TAG: String = "ApiDataSource"
+    private val TAG: String = "ApiDataSource"
 
     /*********** ACCESO ************/
     suspend fun login(email: String, password: String): OAuthTokensResponse? {
@@ -547,9 +546,7 @@ class ApiDataSource( private val httpClient: HttpClient )  {
             Log.i("mensajes", "getMessages --> ${message.idUserEmitter}")
             val response = httpClient.get<MessageResponse>(Endpoints.urlMessages) {
                 //parameter("token", accessToken)
-                message.let {
-                    parameter("iduseremitter", it.idUserEmitter)
-                }
+                parameter("iduseremitter", message.idUserEmitter)
             }
             Log.i("mensajes", "getMessages --> ${response.data}")
             return response.data

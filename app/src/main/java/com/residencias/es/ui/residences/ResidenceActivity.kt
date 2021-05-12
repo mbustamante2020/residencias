@@ -14,8 +14,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class ResidenceActivity : AppCompatActivity() {
 
-    private val ResidenceViewModel: ResidenceViewModel by viewModel()
-
     private lateinit var binding: ActivityResidenceBinding
     private var residence: Residence? = null
 

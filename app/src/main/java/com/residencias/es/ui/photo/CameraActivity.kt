@@ -156,6 +156,7 @@ class CameraActivity : AppCompatActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int,
                                             permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if(hasPermission(Manifest.permission.CAMERA) && hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             // If request is cancelled, the result arrays are empty.
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
@@ -183,7 +184,7 @@ class CameraActivity : AppCompatActivity() {
 
                 val baseDir: File? = this.getExternalFilesDir(null);
                 val file = ImageUtils.createImageFile(baseDir, imageBitmap);
-                binding.imageThumbnail?.setImageBitmap(imageBitmap)
+                binding.imageThumbnail.setImageBitmap(imageBitmap)
 
 
 

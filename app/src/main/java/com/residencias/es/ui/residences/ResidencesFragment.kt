@@ -103,10 +103,6 @@ class ResidencesFragment ( private var search: Search?): Fragment(R.layout.fragm
 
                 // Hide Loading
                 binding.swipeRefreshLayout.isRefreshing = false
-                Log.i("current_page ----> ", "ResActivity 35 ${nextPage}")
-
-                //nextPage  //= nextPage?.plus(1)
-
 
             } catch (t: UnauthorizedException) {
                 // Clear local access token
@@ -144,16 +140,7 @@ class ResidencesFragment ( private var search: Search?): Fragment(R.layout.fragm
 
                 }
                 Status.ERROR -> {
-                    //Handle Error
-                    // Show Error message to not leave the page empty
-                    if (adapter?.currentList.isNullOrEmpty()) {
-                        /* Toast.makeText(
-                                this@ResidencesActivity,
-                                getString(R.string.error_residences), Toast.LENGTH_SHORT
-                        ).show()*/
-                        //nextPage = nextPage?.rem(1)
-                        //getResidences(nextPage)
-                    }
+
                 }
             }
         })

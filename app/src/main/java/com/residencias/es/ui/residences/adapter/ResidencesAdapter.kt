@@ -38,27 +38,27 @@ class ResidencesAdapter(private val viewModel: ResidencesViewModel) :
 
                 residenceName.text = residence.name.toString()
 
-                var caracteristicasResumen: String
+                var details: String
                 //se muestra el textView del price solo si se obtiene un valor mayor a cero
                 if( !residence.price.isNullOrEmpty() && residence.price != "0" ) {
-                    caracteristicasResumen = "Prices desde: ".plus(residence.price.toString()).plus(" €\n")
+                    details = "Prices desde: ".plus(residence.price.toString()).plus(" €\n")
                 } else {
-                    caracteristicasResumen = "Prices: ".plus("No disponibles  \n")
+                    details = "Prices: ".plus("No disponibles  \n")
                 }
 
                 //se muestra el textView de sectors disponibles solo si se obtiene un valor mayor a cero
                 if( !residence.sectors.isNullOrEmpty() && residence.sectors == "1" ) {
-                    caracteristicasResumen = caracteristicasResumen.plus("Sectors disponibles: Si\n")
+                    details = details.plus("Sectors disponibles: Si\n")
                 }
 
-                descripcion.text = caracteristicasResumen.plus("Teléfono: ${residence.phone.toString()}\n")
+                residenceDetails.text = details.plus("Teléfono: ${residence.phone.toString()}\n")
 
-                var descripcionResumen: String = "";
+                var description = ""
                 if( !residence.description.isNullOrEmpty() ) {
-                    descripcionResumen = "${residence.description}\n"
+                    description = "${residence.description}\n"
                 }
 
-                descripcion.text = "${descripcionResumen}Ubicada en ${residence.address.toString()}, ${residence.province.toString()}, ${residence.town.toString()}"
+                residenceDescription.text = "${description} Ubicada en ${residence.address.toString()}, ${residence.province.toString()}, ${residence.town.toString()}"
 
                 //se muestra la imagen principal de la residence
                 residence.urlImagen?.let {
@@ -66,13 +66,13 @@ class ResidencesAdapter(private val viewModel: ResidencesViewModel) :
                         .load( "${Endpoints.urlImagen}/${it}-240x160.webp")
                         .error(R.drawable.ic_no_available)
                         .centerCrop()
-                        .into(imageResidence)
+                        .into(residenceImage)
 
                 } ?: run {
                     Glide.with(itemView)
                         .load(R.drawable.ic_no_available)
                         .centerCrop()
-                        .into(imageResidence)
+                        .into(residenceImage)
                 }
 
             }

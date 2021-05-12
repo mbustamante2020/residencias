@@ -72,16 +72,6 @@ class MyResidenceViewModel(
         }
     }
 
-
-
-
-
-
-
-
-
-
-
     fun updateMyResidence(residence: Residence?, dependence: String, sector: String, room: String) {
         viewModelScope.launch {
             _user.postValue(Resource.loading(null))
@@ -97,23 +87,20 @@ class MyResidenceViewModel(
     }
 
 
-
-
-
-
-
     private val _rooms = MutableLiveData<Resource<List<Room>?>>()
     val rooms: LiveData<Resource<List<Room>?>>
         get() = _rooms
 
-    suspend fun getAllRooms() {
-        _rooms.postValue(Resource.loading(null))
+    fun getAllRooms() {
+        viewModelScope.launch {
+            _rooms.postValue(Resource.loading(null))
 
-        repository.getMyResidenceRooms(authenticationRepository.getAccessToken()).let { rooms ->
-            rooms?.let {
-                _rooms.postValue(Resource.success(rooms))
-            } ?: run {
-                _rooms.postValue(Resource.error("Error al intentar cargar las rooms", null))
+            repository.getMyResidenceRooms(authenticationRepository.getAccessToken()).let { rooms ->
+                rooms?.let {
+                    _rooms.postValue(Resource.success(rooms))
+                } ?: run {
+                    _rooms.postValue(Resource.error("Error al intentar cargar las rooms", null))
+                }
             }
         }
     }
@@ -122,14 +109,16 @@ class MyResidenceViewModel(
     val sectors: LiveData<Resource<List<Sector>?>>
         get() = _sectors
 
-    suspend fun getAllSectors() {
-        _sectors.postValue(Resource.loading(null))
+    fun getAllSectors() {
+        viewModelScope.launch {
+            _sectors.postValue(Resource.loading(null))
 
-        repository.getMyResidenceSectors(authenticationRepository.getAccessToken()).let { sectors ->
-            sectors?.let {
-                _sectors.postValue(Resource.success(sectors))
-            } ?: run {
-                _sectors.postValue(Resource.error("Error al intentar cargar las sectors", null))
+            repository.getMyResidenceSectors(authenticationRepository.getAccessToken()).let { sectors ->
+                sectors?.let {
+                    _sectors.postValue(Resource.success(sectors))
+                } ?: run {
+                    _sectors.postValue(Resource.error("Error al intentar cargar las sectors", null))
+                }
             }
         }
     }
@@ -138,38 +127,19 @@ class MyResidenceViewModel(
     val dependences: LiveData<Resource<List<Dependence>?>>
         get() = _dependences
 
-    suspend fun getAllDependences() {
-        _dependences.postValue(Resource.loading(null))
+    fun getAllDependences() {
+        viewModelScope.launch {
+            _dependences.postValue(Resource.loading(null))
 
-        repository.getMyResidenceDependences(authenticationRepository.getAccessToken()).let { dependences ->
-            dependences?.let {
-                _dependences.postValue(Resource.success(dependences))
-            } ?: run {
-                _dependences.postValue(Resource.error("Error al intentar cargar las dependences", null))
+            repository.getMyResidenceDependences(authenticationRepository.getAccessToken()).let { dependences ->
+                dependences?.let {
+                    _dependences.postValue(Resource.success(dependences))
+                } ?: run {
+                    _dependences.postValue(Resource.error("Error al intentar cargar las dependences", null))
+                }
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     fun onUnauthorized() {
         authenticationRepository.onUnauthorized()

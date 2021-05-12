@@ -43,7 +43,7 @@ class ResidencesViewModel(
     fun  residenceClicked(residence1: Residence?) {
         viewModelScope.launch {
             //var res: Residence = Residence(id = "", nombre = "$imageUrl")
-            residence.postValue(residence1)
+            residence.postValue(residence1!!)
             verResidence.postValue(true)
         }
     }

@@ -45,7 +45,7 @@ class MessagesViewModel(
 
     fun messageClicked(message1: Message?) {
         viewModelScope.launch {
-            message.postValue(message1)
+            message.postValue(message1!!)
             viewMessage.postValue(true)
         }
     }

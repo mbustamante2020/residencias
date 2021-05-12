@@ -5,7 +5,6 @@ import android.util.Log
 import com.residencias.es.data.datasource.SessionManager
 import com.residencias.es.data.oauth.Constants
 import com.residencias.es.data.oauth.OAuthTokensResponse
-import edu.uoc.pac4.data.network.OAuthFeature
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
 import io.ktor.client.features.*

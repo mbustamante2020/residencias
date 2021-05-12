@@ -99,8 +99,6 @@
     <string name="nav_label_search">Buscar Residencias</string>
     <string name="nav_label_residence">Mi Residencia</string>
 
-
-
     <string name="nav_label_map">Residencias en Mapa</string>
     <string name="nav_label_message">Mis Mensajes</string>
     <string name="nav_label_photo">Mis Fotografías</string>
@@ -110,5 +108,8 @@
     <string name="title_activity_residences_maps">Map</string>
     <string name="spinner_price">Selecciona un rango de precio</string>
 
-
+    <string name="toast_update_my_residence">Se han actualizado correctamente los datos de la residencia</string>
+    <string name="toast_update_my_residence_error">Han ocurrido un error ai intentar actualizar los datos de la residencia</string>
+    <string name="toast_update_profile">Se han actualizado correctamente los datos de su perfil</string>
+    <string name="toast_update_profile_error">Han ocurrido un error ai intentar actualizar los datos su perfil</string>
 </resources>
