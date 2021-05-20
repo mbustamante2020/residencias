@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorBgPrimary"
+    tools:context=".ui.photo.PhotoActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/border"
+            android:orientation="vertical">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_residence"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="250dp"
+                android:background="@color/cardView"
+                android:contentDescription="@string/label_description"
+                app:shapeAppearanceOverlay="@style/circleImageViewStyle"
+                android:layout_gravity="center_horizontal"
+                tools:src="@drawable/ic_no_available" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space"
+                android:text="@string/label_title"
+                style="@style/TextViewSmall" />
+
+            <EditText
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                style="@style/EditText"
+                android:autofillHints="@string/label_name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space"
+                android:text="@string/label_description"
+                style="@style/TextViewSmall" />
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                style="@style/EditText"
+                android:maxLines="5"
+                android:autofillHints="@string/label_description" />
+
+            <CheckBox
+                android:id="@+id/principal_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Imagen principal"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_space"
+                android:padding="@dimen/small_space">
+
+                <Button
+                    android:id="@+id/btn_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_save" />
+
+                <Button
+                    android:id="@+id/btn_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/btn_delete"  />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

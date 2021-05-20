@@ -26,7 +26,7 @@ object Endpoints {
     const val urlResidenceRooms = "$oauthBaseUrl/rooms"
     const val urlResidenceSectors = "$oauthBaseUrl/sectors"
     const val urlResidenceDependences = "$oauthBaseUrl/dependences"
-    const val urlResidenceUploadImage = "$oauthBaseUrl/upload"
+
 
 
     const val urlMessages = "$oauthBaseUrl/message"                    //hilos de conversaciones
@@ -50,4 +50,9 @@ object Endpoints {
     const val urlDependences    = "$urlApiBase/api/v1/dependences"
     const val urlPrices    = "$urlApiBase/api/v1/prices"
 
+    //Imagenes
+    const val urlGetImages   = "$oauthBaseUrl/images"
+    const val urlUpdateImage = "$oauthBaseUrl/image"
+    const val urlUploadImage = "$oauthBaseUrl/image/upload"
+    const val urlDeleteImage = "$oauthBaseUrl/image/delete"
 }

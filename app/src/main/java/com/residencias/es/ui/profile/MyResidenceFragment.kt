@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.residencias.es.R
 import com.residencias.es.data.network.UnauthorizedException
-import com.residencias.es.data.residences.*
+import com.residencias.es.data.residence.*
 import com.residencias.es.databinding.FragmentMyResidenceBinding
 import com.residencias.es.utils.Status
 import com.residencias.es.viewmodel.MyResidenceViewModel

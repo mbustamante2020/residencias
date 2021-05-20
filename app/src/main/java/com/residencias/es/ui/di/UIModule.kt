@@ -15,6 +15,4 @@ val uiModule = module {
     viewModel { MyResidenceViewModel(repository = get(), authenticationRepository = get()) }
     viewModel { ResidencesSearchViewModel(repository = get(), authenticationRepository = get()) }
     viewModel { PhotoViewModel(repository = get(), authenticationRepository = get()) }
-    viewModel { MessageViewModel(repository = get(), authenticationRepository = get()) }
-    viewModel { MessagesViewModel(repository = get(), authenticationRepository = get()) }
 }

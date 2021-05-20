@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.residencias.es">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the "MyLocation" functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -20,6 +18,10 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:name=".ui.App"
@@ -64,23 +66,21 @@
             android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.residences.ResidenceMapsActivity"
+            android:name=".ui.map.ResidenceMapsActivity"
             android:label=""
-            android:parentActivityName=".ui.residences.ResidenceActivity" />
-
+            android:parentActivityName=".ui.residence.ResidenceActivity" />
         <activity
-            android:name=".ui.residences.ResidenceActivity"
+            android:name=".ui.residence.ResidenceActivity"
             android:label=""
             android:parentActivityName=".ui.MainActivity" />
         <activity
-            android:name=".ui.residences.ResidencesSearchActivity"
+            android:name=".ui.residence.ResidencesSearchActivity"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.message.MessageActivity"
+            android:name=".ui.photo.PhotoActivity"
             android:label=""
-            android:parentActivityName=".ui.MainActivity" />
-        <activity android:name=".ui.photo.CameraActivity" />
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

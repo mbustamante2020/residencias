@@ -70,7 +70,7 @@
     <string name="label_dependence">Tipo de dependencia</string>
     <string name="label_sector">Tipo de plaza</string>
     <string name="label_room">Tipo de habitación</string>
-    <string name="btn_message">Contactar</string>
+
     <string name="btn_map">Cómo llegar</string>
 
     <string name="profile_image">Imagen perfil</string>
@@ -112,4 +112,16 @@
     <string name="toast_update_my_residence_error">Han ocurrido un error ai intentar actualizar los datos de la residencia</string>
     <string name="toast_update_profile">Se han actualizado correctamente los datos de su perfil</string>
     <string name="toast_update_profile_error">Han ocurrido un error ai intentar actualizar los datos su perfil</string>
+    <string name="btn_take_picture">Tomar foto</string>
+    <string name="label_title">Título</string>
+    <string name="label_no_image">No ha subido imagen de portada</string>
+    <string name="label_detail">Detalles</string>
+
+    <string name="btn_call">Llamar</string>
+    <string name="btn_whatsapp">Whatsapp</string>
+    <string name="btn_telegram">Telegram</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btn_delete">Eliminar</string>
+
 </resources>

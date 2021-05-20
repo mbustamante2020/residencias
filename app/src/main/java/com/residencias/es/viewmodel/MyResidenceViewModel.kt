@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.residencias.es.R
 import com.residencias.es.data.oauth.AuthenticationRepository
-import com.residencias.es.data.residences.*
+import com.residencias.es.data.residence.*
 import com.residencias.es.utils.Resource
 import kotlinx.coroutines.launch
 

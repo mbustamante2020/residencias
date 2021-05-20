@@ -5,20 +5,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/bg_gradient"
-    tools:context=".ui.residences.ResidencesFragment">
+    tools:context=".ui.residence.ResidencesFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent" >
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+            android:id="@+id/recycler_view_residences"
             tools:listitem="@layout/item_residence"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent" >
 
         </androidx.recyclerview.widget.RecyclerView>
 

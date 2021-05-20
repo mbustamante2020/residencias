@@ -2,7 +2,7 @@
 <resources>
 
 
-    <dimen name="border">25dp</dimen>
+    <dimen name="border">20dp</dimen>
     <dimen name="small_space">5dp</dimen>
     <dimen name="space">10dp</dimen>
     <dimen name="double_space">20dp</dimen>
@@ -61,5 +61,8 @@
     <dimen name="nav_header_height">140dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
+    <!-- Camera -->
+    <dimen name="camera_space">12dp</dimen>
+    <dimen name="camera_btn_space">70dp</dimen>
 
 </resources>

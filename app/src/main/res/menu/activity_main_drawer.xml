@@ -21,10 +21,6 @@
             android:title="@string/nav_label_map" />
 
         <item
-            android:id="@+id/nav_message"
-            android:icon="@drawable/ic_menu_message"
-            android:title="@string/nav_label_message" />
-        <item
             android:id="@+id/nav_photo"
             android:icon="@drawable/ic_menu_photo"
             android:title="@string/nav_label_photo" />

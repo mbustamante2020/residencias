@@ -1,29 +1,16 @@
 package com.residencias.es.data.datasource
 
 import android.util.Log
-import android.webkit.MimeTypeMap
-import com.residencias.es.data.message.Message
-import com.residencias.es.data.message.MessageResponse
 import com.residencias.es.data.network.Endpoints
 import com.residencias.es.data.network.UnauthorizedException
 import com.residencias.es.data.oauth.Constants
 import com.residencias.es.data.oauth.OAuthTokensResponse
-import com.residencias.es.data.residences.*
+import com.residencias.es.data.residence.*
 import com.residencias.es.data.user.User
 import com.residencias.es.data.user.UserResponse
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.request.*
-import io.ktor.client.request.forms.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
-import io.ktor.http.content.*
-import io.ktor.utils.io.core.*
-import io.ktor.utils.io.streams.*
-import okhttp3.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.File
 
 class ApiDataSource( private val httpClient: HttpClient )  {
 
@@ -271,57 +258,7 @@ class ApiDataSource( private val httpClient: HttpClient )  {
         }
     }
 
-    @Throws(UnauthorizedException::class)
-    fun uploadFile(accessToken: String?, sourceFile: File, uploadedFileName: String? = null) {
-        Thread {
-            val mimeType = getMimeType(sourceFile);
-            if (mimeType == null) {
-                Log.e("file error", "Not able to get mime type")
-                return@Thread
-            }
-            val fileName: String = uploadedFileName ?: sourceFile.name
 
-            try {
-                val requestBody: RequestBody =
-                    MultipartBody.Builder().setType(MultipartBody.FORM)
-                        .addFormDataPart("image", fileName, sourceFile.asRequestBody(mimeType.toMediaTypeOrNull()))
-                            .addFormDataPart("token", accessToken.toString())
-                        .build()
-
-                val request: Request = Request.Builder().url(Endpoints.urlResidenceUploadImage).post(requestBody).build()
-
-                val response: Response = OkHttpClient().newCall(request).execute()
-
-
-                Log.e("File upload", "name $uploadedFileName}{ ${sourceFile.name}")
-                Log.e("File upload", "name $fileName")
-                if (response.isSuccessful) {
-                    Log.d("File upload","success, path: $fileName $response")
-                    //showToast("File uploaded successfully at $serverUploadDirectoryPath$fileName")
-                } else {
-                    Log.e("File upload", "failed $response")
-                    //showToast("File uploading failed")
-                }
-                response.close()
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-                Log.e("File upload", "failed")
-                //showToast("File uploading failed")
-            }
-
-
-        }.start()
-    }
-
-    // url = file path or whatever suitable URL you want.
-    fun getMimeType(file: File): String? {
-        var type: String? = null
-        val extension = MimeTypeMap.getFileExtensionFromUrl(file.path)
-        if (extension != null) {
-            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
-        }
-        return type
-    }
 
 
 
@@ -361,7 +298,7 @@ class ApiDataSource( private val httpClient: HttpClient )  {
     // Se obtienen las Residences
     @Throws(UnauthorizedException::class)
     suspend fun getResidences(page: Int? = null, search: Search? = null): Pair<Int?, List<Residence>?>? {
-        Log.i("current_page", "apiservice 42 $page")
+        Log.i("ApiDataSource", "getResidences 364 page $page")
         return try {
             val response = httpClient.get<ResidencesResponse>(Endpoints.urlResidences) {
                 page?.let {
@@ -512,105 +449,72 @@ class ApiDataSource( private val httpClient: HttpClient )  {
     }
 
 
+    /*****************IMAGENES***********************************/
 
-
-    /****************** MENSAJES ********************/
-    suspend fun sendMessage(accessToken: String?, message: Message): List<Message>? {
-        return try {
-            val response = httpClient
-                .post<MessageResponse>(Endpoints.urlMessagesSend) {
-                    parameter("token", accessToken)
-                    message.let {
-                        parameter("message", it.message)
-                        parameter("iduseremitter", it.idUserEmitter)
-                        parameter("iduserreceiver", it.idUserReceiver)
-                    }
-                }
-            response.data
-        } catch (t: Throwable) {
-            return when (t) {
-                is ClientRequestException -> {
-                    if (t.response?.status?.value == 401) {
-                        throw UnauthorizedException
-                    }
-                    null
-                }
-                else -> null
+   /* @Throws(UnauthorizedException::class)
+    fun uploadImage(accessToken: String?, sourceFile: File, uploadedFileName: String? = null) {
+        Thread {
+            val mimeType = getMimeType(sourceFile);
+            if (mimeType == null) {
+                Log.e("file error", "Not able to get mime type")
+                return@Thread
             }
-        }
+            val fileName: String = uploadedFileName ?: sourceFile.name
+
+            try {
+                val requestBody: RequestBody =
+                    MultipartBody.Builder().setType(MultipartBody.FORM)
+                        .addFormDataPart("image", fileName, sourceFile.asRequestBody(mimeType.toMediaTypeOrNull()))
+                        .addFormDataPart("token", accessToken.toString())
+                        .build()
+
+                val request: Request = Request.Builder().url(Endpoints.urlResidenceUploadImage).post(requestBody).build()
+
+                val response: Response = OkHttpClient().newCall(request).execute()
+
+
+                Log.e("File upload", "name $uploadedFileName}{ ${sourceFile.name}")
+                Log.e("File upload", "name $fileName")
+                if (response.isSuccessful) {
+                    Log.d("File upload","success, path: $fileName $response")
+                    //showToast("File uploaded successfully at $serverUploadDirectoryPath$fileName")
+                } else {
+                    Log.e("File upload", "failed $response")
+                    //showToast("File uploading failed")
+                }
+                response.close()
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+                Log.e("File upload", "failed")
+                //showToast("File uploading failed")
+            }
+
+
+        }.start()
     }
 
-    suspend fun getMessages(accessToken: String?, message: Message): List<Message>? {
-        Log.i("mensajes", "getMessages -->")
-        try {
-            Log.i("mensajes", "getMessages --> ${message.idUserEmitter}")
-            val response = httpClient.get<MessageResponse>(Endpoints.urlMessages) {
-                //parameter("token", accessToken)
-                parameter("iduseremitter", message.idUserEmitter)
-            }
-            Log.i("mensajes", "getMessages --> ${response.data}")
-            return response.data
-        } catch (t: Throwable) {
-            return null
-            /* when (t) {
-                 is ClientRequestException -> {
-                     if (t.response?.status?.value == 401) {
-                         throw UnauthorizedException
-                     }
-                     null
-                 }
-                 else -> null
-             }*/
-            return null
+    // url = file path or whatever suitable URL you want.
+    fun getMimeType(file: File): String? {
+        var type: String? = null
+        val extension = MimeTypeMap.getFileExtensionFromUrl(file.path)
+        if (extension != null) {
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
         }
+        return type
     }
 
-    suspend fun getMyMessages(accessToken: String?, message: Message): List<Message>? {
-        return try {
-            val response = httpClient.get<MessageResponse>(Endpoints.urlMyMessages) {
-                parameter("token", accessToken)
-                message.let {
-                    parameter("iduseremitter", it.idUserEmitter)
-                    parameter("iduserreceiver", it.idUserReceiver)
-                }
-            }
-            response.data
-        } catch (t: Throwable) {
-            when (t) {
-                is ClientRequestException -> {
-                    if (t.response?.status?.value == 401) {
-                        throw UnauthorizedException
-                    }
-                    null
-                }
-                else -> null
-            }
-        }
+
+    @Throws(UnauthorizedException::class)
+    fun getImages(accessToken: String?) {
+
     }
-/*
-    suspend fun getChat(accessToken: String?, message: Message) {
-        try {
-            val response = httpClient.webSocket(Endpoints.messagesMyMessages) {
-                send("You are connected!")
-                for(frame in incoming) {
-                    frame as? Frame.Text
-                    continue
-                    val receivedText = frame.readText()
-                    send("You said: $receivedText")
-                }
-            }
-            response
-        } catch (t: Throwable) {
-            when (t) {
-                is ClientRequestException -> {
-                    if (t.response?.status?.value == 401) {
-                        throw UnauthorizedException
-                    }
-                    null
-                }
-                else -> null
-            }
-        }
-    }*/
+
+    @Throws(UnauthorizedException::class)
+    fun updateImage(accessToken: String?, photo: Photo){
+
+    }
+*/
+
+
 
 }

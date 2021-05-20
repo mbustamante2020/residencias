@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.residencias.es.data.oauth.AuthenticationRepository
-import com.residencias.es.data.residences.*
+import com.residencias.es.data.residence.*
 import com.residencias.es.utils.Resource
 
 

@@ -14,16 +14,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.FirebaseApp
 import com.residencias.es.R
-import com.residencias.es.data.residences.Search
+import com.residencias.es.data.residence.Search
 import com.residencias.es.databinding.ActivityMainBinding
 import com.residencias.es.ui.login.LoginActivity
-import com.residencias.es.ui.message.MessagesFragment
-import com.residencias.es.ui.photo.CameraActivity
+import com.residencias.es.ui.map.ResidencesMapsFragment
+import com.residencias.es.ui.photo.PhotosFragment
 import com.residencias.es.ui.profile.MyResidenceFragment
 import com.residencias.es.ui.profile.ProfileFragment
-import com.residencias.es.ui.residences.ResidencesFragment
-import com.residencias.es.ui.residences.ResidencesMapsFragment
-import com.residencias.es.ui.residences.ResidencesSearchActivity
+import com.residencias.es.ui.residence.ResidencesFragment
+import com.residencias.es.ui.residence.ResidencesSearchActivity
 import com.residencias.es.viewmodel.MainViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -100,16 +99,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             R.id.nav_map -> {
-                //startActivity(Intent(this, ResidencesMapsActivity::class.java))
                 supportFragmentManager.beginTransaction().replace(R.id.relativelayout, ResidencesMapsFragment(search)).commit()
             }
 
-            R.id.nav_message -> {
-                supportFragmentManager.beginTransaction().replace(R.id.relativelayout, MessagesFragment()).commit()
-            }
-
             R.id.nav_photo -> {
-                startActivity(Intent(this, CameraActivity::class.java))
+                supportFragmentManager.beginTransaction().replace(R.id.relativelayout, PhotosFragment()).commit()
             }
 
             R.id.nav_profile -> {
