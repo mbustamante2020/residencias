@@ -1,6 +1,5 @@
 package com.residencias.es.ui.photo
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,8 +16,6 @@ import com.residencias.es.databinding.FragmentPhotosBinding
 import com.residencias.es.utils.Status
 import com.residencias.es.viewmodel.PhotoViewModel
 import kotlinx.coroutines.launch
-import okhttp3.internal.notify
-import okhttp3.internal.notifyAll
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class PhotosFragment : Fragment() {

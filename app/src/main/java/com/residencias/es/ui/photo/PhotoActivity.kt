@@ -1,21 +1,15 @@
 package com.residencias.es.ui.photo
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
-import android.view.View
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
@@ -25,13 +19,9 @@ import com.residencias.es.data.network.UnauthorizedException
 import com.residencias.es.data.photo.Photo
 import com.residencias.es.databinding.ActivityPhotoBinding
 import com.residencias.es.utils.ImageUtils
-import com.residencias.es.utils.Status
 import com.residencias.es.viewmodel.PhotoViewModel
-import kotlinx.serialization.SerialName
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileOutputStream
 
 private const val REQUEST_IMAGE_CAPTURE = 1
 private const val cameraRequestCode = 1888
@@ -100,7 +90,52 @@ class PhotoActivity : AppCompatActivity() {
                 }
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+        // check if mobile has camera
+        if(checkCameraHardware(this)) {
+            // check permission
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ),
+                    cameraRequestCode
+                )
+
+
+            } else {
+                // has permission
+                canOpenCamera = true
+            }
+        }
+
     }
+
+
+    /** Check if this device has a camera */
+    private fun checkCameraHardware(context: Context): Boolean {
+        return (context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY));
+    }
+
+
+
+
+
+
+
 
     private fun deleteImage() {
         try {
@@ -167,7 +202,7 @@ class PhotoActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == AppCompatActivity.RESULT_OK) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             try {
                 val imageBitmap = data!!.extras?.get("data") as Bitmap
 

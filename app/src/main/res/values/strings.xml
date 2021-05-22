@@ -1,31 +1,9 @@
 <resources>
     <string name="app_name">Residencias</string>
-    <string name="login_button">Login</string>
-    <string name="activity_login_title">Login</string>
-    <string name="activity_oauth_title">Login</string>
-    <string name="activity_residences_title">Residences</string>
-    <string name="activity_profile_title">Residences</string>
-
-    <string name="menu_user">Profile</string>
-
-    <string name="hint_user_description">Description</string>
-    <string name="button_save_description">Update Description</string>
-    <string name="button_logout">Log out</string>
-    <string name="action_notification">Notificación</string>
 
     <string name="error_oauth">Login with Failed</string>
     <string name="error_residences">Error getting Residences</string>
     <string name="error_profile">Error getting Profile</string>
-    <string name="title_activity_residence_maps">Map</string>
-
-
-    <string name="label_login">Inicio de sesión</string>
-
-
-    <string name="label_register">Registro</string>
-
-
-    <string name="please_fill_your_register_data">Por favor completa tus datos</string>
 
 
     <!-- login -->
@@ -65,7 +43,6 @@
     <string name="label_province">Provincia</string>
     <string name="label_town">Municipio</string>
     <string name="btn_search">Buscar</string>
-    <string name="label_sector_free">Tiene plazas libres</string>
     <string name="label_price">Precios desde €</string>
     <string name="label_dependence">Tipo de dependencia</string>
     <string name="label_sector">Tipo de plaza</string>
@@ -73,7 +50,6 @@
 
     <string name="btn_map">Cómo llegar</string>
 
-    <string name="profile_image">Imagen perfil</string>
     <string name="label_web">Página web</string>
     <string name="label_longitude">Longitud</string>
     <string name="label_latitude">Latitud</string>
@@ -85,13 +61,7 @@
     <string name="spinner_sector">Selecciona un tipo de plaza</string>
     <string name="spinner_room">Selecciona un tipo de habitación</string>
 
-    <string name="error">Ha ocurrido un error</string>
-    <string name="label_send">Enviar</string>
-    <string name="label_message">Escribe tú mensaje</string>
-
     <!-- facebook -->
-    <string name="facebook_app_id">448926343078209</string>
-    <string name="fb_login_protocol_scheme">fb448926343078209</string>
 
     <!-- google maps key -->
     <string name="google_maps_key">AIzaSyB65t2GWQXdRe-aK6qxCKHPnVhM8_pejHM</string>
@@ -100,12 +70,9 @@
     <string name="nav_label_residence">Mi Residencia</string>
 
     <string name="nav_label_map">Residencias en Mapa</string>
-    <string name="nav_label_message">Mis Mensajes</string>
     <string name="nav_label_photo">Mis Fotografías</string>
-    <string name="nav_label_advertising">Contratar Publicidad</string>
     <string name="nav_label_profile">Mi Perfil</string>
     <string name="nav_label_close">Cerrar Sesión</string>
-    <string name="title_activity_residences_maps">Map</string>
     <string name="spinner_price">Selecciona un rango de precio</string>
 
     <string name="toast_update_my_residence">Se han actualizado correctamente los datos de la residencia</string>
@@ -114,14 +81,15 @@
     <string name="toast_update_profile_error">Han ocurrido un error ai intentar actualizar los datos su perfil</string>
     <string name="btn_take_picture">Tomar foto</string>
     <string name="label_title">Título</string>
-    <string name="label_no_image">No ha subido imagen de portada</string>
-    <string name="label_detail">Detalles</string>
 
     <string name="btn_call">Llamar</string>
     <string name="btn_whatsapp">Whatsapp</string>
     <string name="btn_telegram">Telegram</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
     <string name="btn_delete">Eliminar</string>
+    <string name="label_distance">La distancia mínima a la residencia</string>
+    <string name="label_near">Más cercanas</string>
+
 
 </resources>

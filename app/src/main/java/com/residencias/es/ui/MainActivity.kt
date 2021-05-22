@@ -2,12 +2,17 @@ package com.residencias.es.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Switch
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -16,6 +21,7 @@ import com.google.firebase.FirebaseApp
 import com.residencias.es.R
 import com.residencias.es.data.residence.Search
 import com.residencias.es.databinding.ActivityMainBinding
+import com.residencias.es.databinding.SwitchItemBinding
 import com.residencias.es.ui.login.LoginActivity
 import com.residencias.es.ui.map.ResidencesMapsFragment
 import com.residencias.es.ui.photo.PhotosFragment
@@ -74,13 +80,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.activity_main_right, menu)
+
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Log.i("switch", "${item.itemId}")
        return when (item.itemId) {
+
            R.id.action_search -> {
                startActivity(Intent(this, ResidencesSearchActivity::class.java))
+               true
+           }
+           R.id.app_bar_switch -> {
+               val toolbar = findViewById<androidx.appcompat.widget.SwitchCompat>(R.id.near_switch)
+               Log.i("switch", "${toolbar.isChecked}")
                true
            }
             else -> super.onOptionsItemSelected(item)
@@ -88,6 +102,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun displayMenu(id: Int) {
+
         when (id) {
 
             R.id.nav_search -> {
@@ -147,3 +162,4 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         finish()
     }
 }
+
