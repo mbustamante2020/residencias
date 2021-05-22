@@ -16,12 +16,14 @@ class ApiDataSource( private val httpClient: HttpClient )  {
 
     private val TAG: String = "ApiDataSource"
 
-    /*********** ACCESO ************/
+    /*********** AUTENTICACIÓN ************/
     suspend fun login(email: String, password: String): OAuthTokensResponse? {
         return try {
-            httpClient.post<OAuthTokensResponse>(Endpoints.urlLogin) {
-                parameter("email", email)
-                parameter("password", password)
+            httpClient
+                .post<OAuthTokensResponse>(Endpoints.urlAuthLogin) {
+                    parameter("client_secret", Constants.clientSecret)
+                    parameter("email", email)
+                    parameter("password", password)
             }
         } catch (t: Throwable) {
             Log.w(TAG, "Error Getting Access token", t)
@@ -31,27 +33,27 @@ class ApiDataSource( private val httpClient: HttpClient )  {
 
     suspend fun loginGoogle(email: String, name: String): OAuthTokensResponse? {
         return try {
-            httpClient.post<OAuthTokensResponse>(Endpoints.urlLoginGoogle) {
-                parameter("clientsecret", Constants.clientSecret)
-                parameter("email", email)
-                parameter("name", name)
+            httpClient
+                .post<OAuthTokensResponse>(Endpoints.urlAuthLoginGoogle) {
+                    parameter("client_secret", Constants.clientSecret)
+                    parameter("email", email)
+                    parameter("name", name)
             }
         } catch (t: Throwable) {
             Log.w(TAG, "Error Getting Access token", t)
             null
         }
     }
-
-
-
 
     suspend fun register(name: String, email: String, password: String): OAuthTokensResponse? {
         return try {
-            httpClient.post<OAuthTokensResponse>(Endpoints.urlRegister) {
-                parameter("name", name)
-                parameter("email", email)
-                parameter("password", password)
-                parameter("password_confirmation", password)
+            httpClient
+                .post<OAuthTokensResponse>(Endpoints.urlAuthRegister) {
+                    parameter("client_secret", Constants.clientSecret)
+                    parameter("name", name)
+                    parameter("email", email)
+                    parameter("password", password)
+                    parameter("password_confirmation", password)
             }
         } catch (t: Throwable) {
             Log.w(TAG, "Error Getting Access token", t)
@@ -59,21 +61,19 @@ class ApiDataSource( private val httpClient: HttpClient )  {
         }
     }
 
-/*
-    suspend fun getTokens(authorizationCode: String): TokenResponse? {
+    suspend fun refresh(accessToken: String?): OAuthTokensResponse? {
         return try {
-            httpClient.post<TokenResponse>(Endpoints.tokenUrl) {
-                        parameter("client_id", Constants.clientID)
-                        parameter("client_secret", Constants.clientSecret)
-                        parameter("code", authorizationCode)
-                        parameter("grant_type", "authorization_code")
-                        parameter("redirect_uri", Constants.redirectUri)
-                    }
+            httpClient
+                .post<OAuthTokensResponse>(Endpoints.urlAuthRefresh) {
+                    parameter("client_secret", Constants.clientSecret)
+                    parameter("token", accessToken)
+                }
         } catch (t: Throwable) {
             //Log.w(TAG, "Error Getting Access token", t)
             null
         }
-    }*/
+    }
+
 
     /*********** PERFIL ************/
     // se obtienen los datos del usuario

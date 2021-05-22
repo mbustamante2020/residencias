@@ -74,7 +74,7 @@ object Network {
                 }
                 refreshToken = {
                     // Remove expired access token
-                    SessionManager(context).clearAccessToken()
+                    //SessionManager(context).clearAccessToken()
                     // Launch token refresh request
                     launchTokenRefresh(context)
                 }
@@ -91,18 +91,13 @@ object Network {
 
     private suspend fun launchTokenRefresh(context: Context) {
         val sessionManager = SessionManager(context)
-        // Get Refresh Token
-        sessionManager.getRefreshToken()?.let { refreshToken ->
+        sessionManager.getAccessToken()?.let { accessToken ->
             try {
-                // Launch Refresh Request
                 val response =
-                        createHttpClient(context).post<OAuthTokensResponse>(Endpoints.tokenUrl) {
-                            parameter("token", refreshToken)
-                            parameter("client_id", Constants.clientID)
-                            parameter("client_secret", Constants.clientSecret)
-                            //parameter("refresh_token", refreshToken)
-                            //parameter("token", refreshToken)
-                            parameter("grant_type", "refresh_token")
+                        createHttpClient(context)
+                            .post<OAuthTokensResponse>(Endpoints.urlAuthRefresh) {
+                                parameter("client_secret", Constants.clientSecret)
+                                parameter("token", accessToken)
                         }
                 Log.d(TAG, "Got new Access token ${response.accessToken}")
                 // Save new Tokens

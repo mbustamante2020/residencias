@@ -6,9 +6,21 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class OAuthTokensResponse(
-    @SerialName("token") val accessToken: String,
+    @SerialName("access_token") val accessToken: String,
     @SerialName("id") val id: String? = null,
-    @SerialName("name") val name: String? = null,
+    @SerialName("username") val name: String? = null,
     @SerialName("email") val email: String? = null,
     @SerialName("role") val role: String? = null,
 )
+
+/*
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => JWTAuth::factory()->getTTL() * 60,
+            'username' => $name,
+            'email' => $email,
+            'role' => $role,
+            'status' => 200
+
+
+ */

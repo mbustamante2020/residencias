@@ -3,19 +3,22 @@ package com.residencias.es.data.network
 object Endpoints {
 
     private const val urlApiBase = "https://residenciasysalud.es"
-
-    // OAuth2 API Endpoints api/register
+    private const val authBaseUrl = "$urlApiBase/api/auth"
     private const val oauthBaseUrl = "$urlApiBase/api"
 
+    // Autenticación
+    const val urlAuthRegister = "$authBaseUrl/register"
+    const val urlAuthLogin = "$authBaseUrl/login"
+    const val urlAuthLoginGoogle = "$authBaseUrl/login/google"
+    const val urlAuthRefresh = "$authBaseUrl/refresh"
 
 
 
 
 
-    const val urlRegister = "$oauthBaseUrl/register"
-    const val urlLogin = "$oauthBaseUrl/login"
-    const val urlLoginGoogle = "$oauthBaseUrl/login/google"
-    const val tokenUrl = "$oauthBaseUrl/token"
+
+
+
 
     const val urlUser = "$oauthBaseUrl/user"
    // const val urlUpdateUser = "$oauthBaseUrl/profile/user"
