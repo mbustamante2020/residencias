@@ -5,14 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Switch
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
-import androidx.core.view.isVisible
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -21,7 +17,6 @@ import com.google.firebase.FirebaseApp
 import com.residencias.es.R
 import com.residencias.es.data.residence.Search
 import com.residencias.es.databinding.ActivityMainBinding
-import com.residencias.es.databinding.SwitchItemBinding
 import com.residencias.es.ui.login.LoginActivity
 import com.residencias.es.ui.map.ResidencesMapsFragment
 import com.residencias.es.ui.photo.PhotosFragment
@@ -38,7 +33,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private val mainViewModel: MainViewModel by viewModel()
     private lateinit var binding: ActivityMainBinding
 
-    private var search: Search? = null
+    private lateinit var search: Search
+    //private var isMap: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,12 +42,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //campos de busqueda para la busqueda de residencias
-        val intent: Intent = intent
-        search = intent.getParcelableExtra("search")
+        //campos de busqueda para residencias
+        try {
+            val intent: Intent = intent
+            search = intent.getParcelableExtra("search") ?: Search()
+            Log.i("MainActivity", "---> success isMap ${search.is_map}")
+        } catch (e: NullPointerException) {
+            search = Search()
+            search.is_map = 0
+            Log.i("MainActivity", "---> error isMap ${search.is_map}")
+        }
+
+
+
+
+
+
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+
+
 
         val toggle = ActionBarDrawerToggle(this, binding.drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         binding.drawerLayout.addDrawerListener(toggle)
@@ -66,7 +77,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         }
 
-        displayMenu(R.id.nav_search)
+        Log.i("MainActivity", "---> isMap $search.is_map")
+
+        if( search.is_map == 1 ) {
+            displayMenu(R.id.nav_map)
+        } else {
+            displayMenu(R.id.nav_search)
+        }
+
+
     }
 
 
@@ -78,23 +97,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    private var miActionProgressItem: MenuItem? = null
+/*
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        // Store instance of the menu item containing progress
+        miActionProgressItem = menu.findItem(R.menu.activity_main_right)
+
+        // Return to finish
+        return super.onPrepareOptionsMenu(menu)
+    }
+    */
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.activity_main_right, menu)
-
+        miActionProgressItem = menu.findItem(R.menu.activity_main_right)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Log.i("switch", "${item.itemId}")
        return when (item.itemId) {
-
            R.id.action_search -> {
-               startActivity(Intent(this, ResidencesSearchActivity::class.java))
-               true
-           }
-           R.id.app_bar_switch -> {
-               val toolbar = findViewById<androidx.appcompat.widget.SwitchCompat>(R.id.near_switch)
-               Log.i("switch", "${toolbar.isChecked}")
+               val intent = Intent(this, ResidencesSearchActivity::class.java)
+               intent.putExtra("search", search)
+               startActivity(intent)
                true
            }
             else -> super.onOptionsItemSelected(item)
@@ -102,10 +127,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun displayMenu(id: Int) {
-
         when (id) {
-
             R.id.nav_search -> {
+                search.is_map = 0
+                miActionProgressItem?.isVisible = true
                 supportFragmentManager.beginTransaction().replace(R.id.relativelayout, ResidencesFragment(search)).commit()
             }
 
@@ -114,6 +139,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             R.id.nav_map -> {
+                search.is_map = 1
+                miActionProgressItem?.isVisible = false
                 supportFragmentManager.beginTransaction().replace(R.id.relativelayout, ResidencesMapsFragment(search)).commit()
             }
 
@@ -148,7 +175,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .requestIdToken(getString(R.string.default_web_client_id))
                     .requestEmail()
                     .build()
-            var mGoogleSignInClient: GoogleSignInClient = GoogleSignIn.getClient(this, gso)
+            val mGoogleSignInClient: GoogleSignInClient = GoogleSignIn.getClient(this, gso)
             mGoogleSignInClient.signOut().addOnCompleteListener {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)

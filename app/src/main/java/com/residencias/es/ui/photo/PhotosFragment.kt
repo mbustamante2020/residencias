@@ -30,7 +30,7 @@ class PhotosFragment : Fragment() {
     private var photo: Photo? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentPhotosBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -89,7 +89,7 @@ class PhotosFragment : Fragment() {
 
                 }
                 Status.ERROR -> {
-                    Log.i("ResidencesFragment", "error !!!! ${it.toString()}")
+                    Log.i("ResidencesFragment", "error !!!! $it")
                 }
             }
         })

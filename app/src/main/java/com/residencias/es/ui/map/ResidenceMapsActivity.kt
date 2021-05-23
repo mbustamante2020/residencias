@@ -6,17 +6,11 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
-import com.bumptech.glide.load.engine.Resource
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -25,9 +19,10 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.residencias.es.R
 import com.residencias.es.data.residence.Residence
-import org.json.JSONException
-import org.json.JSONObject
 
+const val REQUEST_PERMISSION_LOCATION = 101
+//const val DEFAULT_ZOOM = 12.0f
+const val DEFAULT_ZOOM = 7.5f
 
 class ResidenceMapsActivity : AppCompatActivity(), OnMapReadyCallback,
     GoogleMap.OnMarkerClickListener {
@@ -36,11 +31,7 @@ class ResidenceMapsActivity : AppCompatActivity(), OnMapReadyCallback,
 
      private var residence: Residence? = null
      private var myLocation: Location? = null
-     private val DEFAULT_ZOOM = 12.0f
 
-     // private var mMap: GoogleMap? = null
-     // Request code
-     private val REQUEST_PERMISSION_LOCATION = 101
 
      private var fusedLocationClient: FusedLocationProviderClient? = null
      private var myProgressBarForMaps: ProgressBar? = null
@@ -129,8 +120,6 @@ class ResidenceMapsActivity : AppCompatActivity(), OnMapReadyCallback,
          if (latitude > 0) {
              val residenceMarker = LatLng(latitude, longitude)
 
-             var distance = distanceTo(latitude, longitude) ?: ""
-
              mMap.addMarker(MarkerOptions()
                  .position(residenceMarker)
                  .title("${residence?.name}")
@@ -149,7 +138,7 @@ class ResidenceMapsActivity : AppCompatActivity(), OnMapReadyCallback,
     override fun onMarkerClick(marker : Marker): Boolean {
         // Markers have a z-index that is settable and gettable.
         marker.zIndex += 1.0f
-        var distance = distanceTo(marker.position.latitude, marker.position.longitude) ?: ""
+        val distance = distanceTo(marker.position.latitude, marker.position.longitude)
 
         Toast.makeText(this, "${marker.title} se encuentra a $distance",
             Toast.LENGTH_LONG).show()

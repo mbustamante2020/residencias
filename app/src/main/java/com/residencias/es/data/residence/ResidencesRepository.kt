@@ -5,11 +5,13 @@ interface ResidencesRepository {
     // Pair<first, second>
     // first: pagina actual
     // second: listado de Residences
-    suspend fun getResidences(pagina: Int?, search: Search?): Pair<Int?, List<Residence>?>?
+    suspend fun getResidences(page: Int?, search: Search?): Pair<Int?, List<Residence>?>?
 
-    suspend fun getProvinces(todas: Boolean?): List<Province>?
+    suspend fun getResidencesMap(page: Int?, search: Search?): Pair<Int?, List<Residence>?>?
 
-    suspend fun getTowns(idprovincia: Int, todas: Boolean?): List<Town>?
+    suspend fun getProvinces(all: Boolean?): List<Province>?
+
+    suspend fun getTowns(idProvince: Int, all: Boolean?): List<Town>?
 
     suspend fun getRooms(): List<Room>?
 

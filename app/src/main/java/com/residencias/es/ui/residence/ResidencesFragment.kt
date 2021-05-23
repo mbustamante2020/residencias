@@ -103,7 +103,7 @@ class ResidencesFragment ( private var search: Search?): Fragment(R.layout.fragm
         // Get Residences
         lifecycleScope.launch {
             try {
-                residencesViewModel.getAllResidences(nextPage, search)
+                residencesViewModel.getResidences(nextPage, search)
 
                 // Hide Loading
                 binding.swipeRefreshLayout.isRefreshing = false

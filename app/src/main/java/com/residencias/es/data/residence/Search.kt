@@ -8,44 +8,41 @@ data class Search(
     var province: Int? = null,
     var town: Int? = null,
     var price: Int? = null,
-    var size_residence: Int? = null,
     var room: Int? = null,
     var sector: Int? = null,
     var dependence: Int? = null,
-    var services: Int? = null,
-    var family_respite: Int? = null,
-    var sectors_available: Int? = null,
-    var under_65: Int? = null
-) : Parcelable {
+    var is_map: Int = 0,
+    var near: Boolean = false,
+    var latitude: Double? = null,
+    var longitude: Double? = null
+): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readInt(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readInt()
+        parcel.readByte() != 0.toByte(),
+        parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readValue(Double::class.java.classLoader) as? Double
     ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(search_for)
-        province?.let { parcel.writeInt(it) }
-        town?.let { parcel.writeInt(it) }
-        price?.let { parcel.writeInt(it) }
-        size_residence?.let { parcel.writeInt(it) }
-        room?.let { parcel.writeInt(it) }
-        sector?.let { parcel.writeInt(it) }
-        dependence?.let { parcel.writeInt(it) }
-        services?.let { parcel.writeInt(it) }
-        family_respite?.let { parcel.writeInt(it) }
-        sectors_available?.let { parcel.writeInt(it) }
-        under_65?.let { parcel.writeInt(it) }
+        parcel.writeValue(province)
+        parcel.writeValue(town)
+        parcel.writeValue(price)
+        parcel.writeValue(room)
+        parcel.writeValue(sector)
+        parcel.writeValue(dependence)
+        parcel.writeInt(is_map)
+        parcel.writeByte(if (near) 1 else 0)
+        parcel.writeValue(latitude)
+        parcel.writeValue(longitude)
     }
 
     override fun describeContents(): Int {

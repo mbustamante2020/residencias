@@ -35,20 +35,6 @@ class ResidenceViewModel(
         }
     }
 
-    fun updateUserDescription(description: String) {
-        viewModelScope.launch {
-            _user.postValue(Resource.loading(null))
-
-         /*   repository.updateUser(description)?.let { response ->
-                // Success :)
-                _user.postValue(Resource.success(response))
-            } ?: run {
-                // Failure :(
-                _user.postValue(Resource.error(R.string.error_profile.toString(), null))
-            }*/
-        }
-    }
-
     fun logout() {
         authenticationRepository.logout()
     }

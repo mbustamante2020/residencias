@@ -9,16 +9,20 @@ class ResidencesRepositoryImpl(
         private val localDataSource: SessionManager
 ) : ResidencesRepository {
 
-    override suspend fun getResidences(pagina: Int?, search: Search?): Pair<Int?, List<Residence>?>? {
-        return apiDataSource.getResidences(pagina, search)
+    override suspend fun getResidences(page: Int?, search: Search?): Pair<Int?, List<Residence>?>? {
+        return apiDataSource.getResidences(page, search)
     }
 
-    override suspend fun getProvinces(todas: Boolean?): List<Province>? {
-        return apiDataSource.getProvinces(todas)
+    override suspend fun getResidencesMap(page: Int?, search: Search?): Pair<Int?, List<Residence>?>? {
+        return apiDataSource.getResidencesMap(page, search)
     }
 
-    override suspend fun getTowns(idprovincia: Int, todas: Boolean?): List<Town>? {
-        return apiDataSource.getTowns(idprovincia, todas)
+    override suspend fun getProvinces(all: Boolean?): List<Province>? {
+        return apiDataSource.getProvinces(all)
+    }
+
+    override suspend fun getTowns(idProvince: Int, all: Boolean?): List<Town>? {
+        return apiDataSource.getTowns(idProvince, all)
     }
 
     override suspend fun getRooms(): List<Room>? {

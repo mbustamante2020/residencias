@@ -5,11 +5,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Price(
-        @SerialName("id") val id: Int,
-        @SerialName("precio") var price: String? = null,
+    @SerialName("id") val id: Int,
+    @SerialName("precio") var price: String? = null,
 )
 
 @Serializable
 data class PriceResponse(
-        @SerialName("data") val data: List<Price>? = null,
+    @SerialName("data") val data: List<Price>? = null,
 )

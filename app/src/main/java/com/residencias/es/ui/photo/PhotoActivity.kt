@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -36,7 +35,6 @@ class PhotoActivity : AppCompatActivity() {
 
     private var photo: Photo? = null
     private var imageFile: File? = null
-    private val fileName: String = "residence.jpg"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,9 +56,9 @@ class PhotoActivity : AppCompatActivity() {
 
         binding.btnSave.setOnClickListener { // open camera when click button
 
-            var principal = if(binding.principalImage.isChecked) 1 else 0
+            val principal = if(binding.principalImage.isChecked) 1 else 0
 
-            var auxPhoto = Photo(photo?.id ?: 0, "", binding.title.text.toString(), binding.description.text.toString(), principal)
+            val auxPhoto = Photo(photo?.id ?: 0, "", binding.title.text.toString(), binding.description.text.toString(), principal)
 
             uploadPhoto(auxPhoto)
 
@@ -127,7 +125,7 @@ class PhotoActivity : AppCompatActivity() {
 
     /** Check if this device has a camera */
     private fun checkCameraHardware(context: Context): Boolean {
-        return (context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY));
+        return (context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY))
     }
 
 
@@ -194,7 +192,7 @@ class PhotoActivity : AppCompatActivity() {
     }
 
     private fun hasPermission(perm: String):Boolean {
-        return(PackageManager.PERMISSION_GRANTED== this?.let {
+        return(PackageManager.PERMISSION_GRANTED== this.let {
             ActivityCompat.checkSelfPermission(it, perm)
         })
     }

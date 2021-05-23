@@ -7,6 +7,8 @@
     android:background="@drawable/bg_gradient"
     tools:context=".ui.residence.ResidencesSearchActivity" >
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,8 +20,32 @@
             style="@android:style/Widget.ProgressBar"
             android:layout_width="@dimen/progress_bar_size"
             android:layout_height="@dimen/progress_bar_size"
-            android:visibility="gone"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/small_space"
+            android:visibility="gone" />
+
+
+        <LinearLayout
+            android:id="@+id/map_near"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/double_space"
+                style="@style/TextViewSmall"
+                android:text="@string/label_near" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/near_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false" />
+
+        </LinearLayout>
+
 
         <!-- buscar  -->
         <TextView
@@ -33,7 +59,9 @@
             style="@style/EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:autofillHints="@string/label_search_for"
+            tools:ignore="LabelFor" />
 
         <!-- provincia -->
         <TextView
@@ -59,10 +87,11 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_spinner_arrow" />
+                android:src="@drawable/ic_spinner_arrow"
+                android:contentDescription="@string/image_spinner" />
         </RelativeLayout>
 
         <!-- municipio -->
@@ -89,10 +118,11 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_spinner_arrow" />
+                android:src="@drawable/ic_spinner_arrow"
+                android:contentDescription="@string/image_spinner" />
         </RelativeLayout>
 
         <!-- precios -->
@@ -119,10 +149,11 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_spinner_arrow" />
+                android:src="@drawable/ic_spinner_arrow"
+                android:contentDescription="@string/image_spinner" />
         </RelativeLayout>
 
         <!-- dependencias -->
@@ -149,10 +180,11 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_spinner_arrow" />
+                android:src="@drawable/ic_spinner_arrow"
+                android:contentDescription="@string/image_spinner" />
         </RelativeLayout>
 
         <!-- sector -->
@@ -179,10 +211,11 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_spinner_arrow" />
+                android:src="@drawable/ic_spinner_arrow"
+                android:contentDescription="@string/image_spinner" />
         </RelativeLayout>
 
         <!-- habitaciones -->
@@ -209,10 +242,11 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_spinner_arrow" />
+                android:src="@drawable/ic_spinner_arrow"
+                android:contentDescription="@string/image_spinner" />
         </RelativeLayout>
 
         <Button
@@ -220,7 +254,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/btn_margin"
-            android:layout_marginTop="@dimen/double_space"
+            android:layout_marginTop="@dimen/small_space"
             android:layout_marginEnd="@dimen/btn_margin"
             android:text="@string/btn_search"  />
 

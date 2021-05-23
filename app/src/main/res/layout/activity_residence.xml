@@ -82,21 +82,18 @@
             android:id="@+id/btnCall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:text="@string/btn_call" />
 
         <Button
             android:id="@+id/btnWhatsapp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:text="@string/btn_whatsapp" />
 
         <Button
             android:id="@+id/btnTelegram"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:pointerIcon="hand"
             android:text="@string/btn_telegram" />
 

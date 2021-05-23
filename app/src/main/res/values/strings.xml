@@ -90,6 +90,7 @@
     <string name="btn_delete">Eliminar</string>
     <string name="label_distance">La distancia mínima a la residencia</string>
     <string name="label_near">Más cercanas</string>
+    <string name="image_spinner">flecha</string>
 
 
 </resources>

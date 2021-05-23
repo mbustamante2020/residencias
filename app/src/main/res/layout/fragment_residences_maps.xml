@@ -18,17 +18,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="@android:style/Widget.ProgressBar"
-            android:layout_width="@dimen/progress_bar_size"
-            android:layout_height="@dimen/progress_bar_size"
-            android:visibility="gone"
-            android:layout_gravity="center" />
-
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <LinearLayout
         android:id="@+id/residence_details"
         android:layout_width="match_parent"
         android:layout_height="@dimen/maps_height_details"
@@ -85,7 +80,7 @@
                 android:textColor="@color/colorPrimary" />
 
         </RelativeLayout>
-
-    </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

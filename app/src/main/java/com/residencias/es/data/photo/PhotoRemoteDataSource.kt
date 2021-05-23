@@ -21,18 +21,16 @@ import java.io.File
 
 class PhotoRemoteDataSource(private val httpClient: HttpClient )  {
 
-    private val tag: String = "PhotoRemoteDataSource"
-
     @Throws(UnauthorizedException::class)
     fun uploadImage(accessToken: String?, sourceFile: File, photo: Photo) {
             Thread {
-                val mimeType = getMimeType(sourceFile);
+                val mimeType = getMimeType(sourceFile)
                 if (mimeType == null) {
                     Log.e("file error", "Not able to get mime type")
                     return@Thread
                 }
-                var uploadedFileName = "imagen.jpg"
-                val fileName: String = uploadedFileName ?: sourceFile.name
+                val uploadedFileName = "image.jpg"
+                val fileName: String = uploadedFileName
 
                 try {
                     val requestBody: RequestBody =
@@ -84,7 +82,7 @@ class PhotoRemoteDataSource(private val httpClient: HttpClient )  {
     @Throws(UnauthorizedException::class)
     suspend fun getImages(): Pair<Int?, List<Photo>?>? {
         return try {
-            val response = httpClient.get<PhotoResponse>("${Endpoints.urlGetImages}")
+            val response = httpClient.get<PhotoResponse>(Endpoints.urlGetImages)
             Pair(response.image_count, response.data)
         } catch (t: Throwable) {
             when (t) {

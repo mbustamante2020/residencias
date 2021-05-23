@@ -2,6 +2,7 @@ package com.residencias.es.ui.residence
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
@@ -24,13 +25,18 @@ class ResidencesSearchActivity : AppCompatActivity() {
     private val residencesSearchViewModel: ResidencesSearchViewModel by viewModel()
     private lateinit var binding: ActivityResidencesSearchBinding
 
-    private var search = Search()
+    private var search: Search = Search()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityResidencesSearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val intent: Intent = intent
+        search = intent.getParcelableExtra("search")!!
+
+        Log.i("ResidencesSearchActivity", "isMap = ${search.is_map} ")
 
         binding.progressBar.visibility = View.VISIBLE
 
@@ -42,6 +48,13 @@ class ResidencesSearchActivity : AppCompatActivity() {
         binding.btnSearch.setOnClickListener{
             residencesSearchViewModel.searchResidences()
         }
+
+        search.let {
+            binding.mapNear.visibility = if ( it.is_map == 1 ) View.VISIBLE else View.GONE
+            binding.nearSwitch.isChecked = it.near
+        }
+
+
     }
 
     private fun getSearchFields() {
@@ -71,9 +84,13 @@ class ResidencesSearchActivity : AppCompatActivity() {
     private fun initObservers() {
         residencesSearchViewModel.search.observe(this, {
             search.search_for = "${binding.searchFor.text}"
+            search.near = binding.nearSwitch.isChecked
+
 
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("search", search)
+
+            Log.i("ResidencesSearchActivity", "intent isMap = $search ")
             startActivity(intent)
         })
 
@@ -135,6 +152,7 @@ class ResidencesSearchActivity : AppCompatActivity() {
                         override fun onItemSelected( parent: AdapterView<*>, view: View, position: Int, id: Long ) {
                             if( towns[position].id > 0 ) {
                                 search.town = towns[position].id
+                                Log.i("ResidencesSearchActivity", "item towns ${search.town}")
                             } else {
                                 search.town = null
                             }

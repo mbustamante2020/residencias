@@ -2,13 +2,10 @@ package com.residencias.es.ui.map
 
 import android.Manifest
 import android.app.Activity
-import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.location.Criteria
 import android.location.Location
-import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -16,13 +13,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
@@ -31,17 +23,16 @@ import com.residencias.es.R
 import com.residencias.es.data.network.UnauthorizedException
 import com.residencias.es.data.residence.Residence
 import com.residencias.es.data.residence.Search
-import com.residencias.es.databinding.FragmentPhotosBinding
 import com.residencias.es.databinding.FragmentResidencesMapsBinding
 import com.residencias.es.utils.Status
 import com.residencias.es.viewmodel.ResidencesViewModel
-import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
 //class ResidencesMapsActivity : AppCompatActivity(), OnMapReadyCallback {
+//const val REQUEST_PERMISSION_LOCATION = 101
 
-class ResidencesMapsFragment(private var search: Search?) : Fragment(R.layout.fragment_residences_maps),
+class ResidencesMapsFragment(private var search: Search) : Fragment(R.layout.fragment_residences_maps),
     OnMapReadyCallback, GoogleMap.OnMapClickListener,
     GoogleMap.OnMarkerClickListener {
 
@@ -53,11 +44,11 @@ class ResidencesMapsFragment(private var search: Search?) : Fragment(R.layout.fr
     private var residences: List<Residence>? = null
     private var myLocation: Location? = null
 
-    private val REQUEST_PERMISSION_LOCATION = 101
+
     private var fusedLocationClient: FusedLocationProviderClient? = null
 
 
-    private val DEFAULT_ZOOM = 7.5f
+
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -66,27 +57,13 @@ class ResidencesMapsFragment(private var search: Search?) : Fragment(R.layout.fr
 
         _binding = FragmentResidencesMapsBinding.inflate(inflater, container, false)
         return binding.root
-        //return inflater.inflate(R.layout.fragment_residences_maps, container, false)
     }
 
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
 
-        showProgress(true)
-
-      //  lifecycleScope.launch {
-
-
-            val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-            mapFragment!!.getMapAsync(this@ResidencesMapsFragment)
-
-
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-        //fusedLocationClient =  LocationServices.getFusedLocationProviderClient(this@ResidencesMapsFragment)
-            getResidences()
-            observeResidences()
-        //}
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        mapFragment!!.getMapAsync(this@ResidencesMapsFragment)
 
         binding.btnCall.setOnClickListener {
             try {
@@ -120,13 +97,12 @@ class ResidencesMapsFragment(private var search: Search?) : Fragment(R.layout.fr
     }
 
     private fun getResidences() {
-        lifecycleScope.launch {
-            try {
-                residencesViewModel.getAllResidences(1, search)
-            } catch (t: UnauthorizedException) {
-                residencesViewModel.onUnauthorized()
-            }
+        try {
+            residencesViewModel.getResidencesMap(1, search)
+        } catch (t: UnauthorizedException) {
+            residencesViewModel.onUnauthorized()
         }
+
     }
 
     private fun observeResidences() {
@@ -135,7 +111,6 @@ class ResidencesMapsFragment(private var search: Search?) : Fragment(R.layout.fr
                 Status.SUCCESS -> {
                     residences = it.data?.second.orEmpty()
                     loadResidence()
-                    showProgress(false)
                 }
                 Status.LOADING -> {
 
@@ -149,8 +124,11 @@ class ResidencesMapsFragment(private var search: Search?) : Fragment(R.layout.fr
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         enableLocation()
+
+
+        observeResidences()
 
         mMap.setOnMarkerClickListener(this)
         mMap.setOnMapClickListener(this)
@@ -168,6 +146,7 @@ class ResidencesMapsFragment(private var search: Search?) : Fragment(R.layout.fr
                 Activity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 REQUEST_PERMISSION_LOCATION
             )
+            getResidences()
         } else {
             // Enable location button
             mMap.isMyLocationEnabled = true
@@ -181,12 +160,24 @@ class ResidencesMapsFragment(private var search: Search?) : Fragment(R.layout.fr
                 }
 
         }
+
     }
 
     private fun centerMapToUser(location: Location) {
+        Log.i("search-->", "maps 182 $search")
+        search.latitude = location.latitude
+        search.longitude = location.longitude
         val latLng = LatLng(location.latitude, location.longitude)
+
+        mMap.addMarker(MarkerOptions()
+            .position(latLng)
+            .title("Estoy aquí").snippet("")
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
+
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, DEFAULT_ZOOM))
         myLocation = location
+        getResidences()
+        Log.i("search-->", "maps 188 $search")
     }
 
     private fun loadResidence() {
@@ -237,14 +228,14 @@ class ResidencesMapsFragment(private var search: Search?) : Fragment(R.layout.fr
     override fun onMarkerClick(marker : Marker): Boolean {
         // Markers have a z-index that is settable and gettable.
         marker.zIndex += 1.0f
-        var distance = distanceTo(marker.position.latitude, marker.position.longitude) ?: ""
+        val distance = distanceTo(marker.position.latitude, marker.position.longitude)
 
        // Toast.makeText(context, "${marker.title} se encuentra a $distance", Toast.LENGTH_LONG).show()
 
         binding.residenceDetails.visibility = View.VISIBLE
         binding.mapLayout.layoutParams.height = resources.getDimensionPixelSize(R.dimen.maps_height)
 
-        val residenceDetail: List<String> = (marker.snippet).split("Tel: ")
+        val residenceDetail: List<String> = marker.snippet.split("Tel: ")
 
         binding.residenceName.text = marker.title
         binding.residenceAddress.text = residenceDetail[0]
@@ -267,17 +258,21 @@ class ResidencesMapsFragment(private var search: Search?) : Fragment(R.layout.fr
         binding.mapLayout.layoutParams.height = LinearLayout.LayoutParams.MATCH_PARENT
     }
 
+    var distancePolyline: Polyline? = null
+
     private fun distanceTo(latitude: Double, longitude: Double): String {
         val residenceLoc = Location("")
         residenceLoc.latitude = latitude
         residenceLoc.longitude = longitude
 
+        distancePolyline?.remove()
+
         myLocation?.let {
-            mMap.addPolyline(
+            distancePolyline = mMap.addPolyline(
                 PolylineOptions()
                     .add(LatLng(it.latitude, it.longitude), LatLng(latitude, longitude))
-                    .width(5f)
-                    .color(Color.RED)
+                    .width(10f)
+                    .color(R.color.colorPrimary)
             )
 
             var distance: Float = residenceLoc.distanceTo(it)
@@ -290,9 +285,5 @@ class ResidencesMapsFragment(private var search: Search?) : Fragment(R.layout.fr
             return dist
         }
         return ""
-    }
-
-    private fun showProgress(show: Boolean) {
-        binding.progressBar!!.visibility = if (show) View.VISIBLE else View.GONE
     }
 }

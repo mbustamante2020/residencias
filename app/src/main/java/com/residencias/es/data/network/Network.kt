@@ -16,7 +16,7 @@ import io.ktor.http.*
 
 object Network {
 
-    private const val TAG = "Network"
+    private const val TAG = "NetworkHttpClient"
 
     fun createHttpClient(context: Context): HttpClient {
         return HttpClient(OkHttp) {
@@ -69,13 +69,14 @@ object Network {
             install(OAuthFeature) {
                 getToken = {
                     val accessToken = SessionManager(context).getAccessToken() ?: ""
-                    Log.d(TAG, "Adding Bearer header with token $accessToken")
+                    Log.d(TAG, "-------> getToken $accessToken")
                     accessToken
                 }
                 refreshToken = {
                     // Remove expired access token
                     //SessionManager(context).clearAccessToken()
                     // Launch token refresh request
+                    Log.d(TAG, "-------> refreshToken")
                     launchTokenRefresh(context)
                 }
             }
@@ -99,19 +100,19 @@ object Network {
                                 parameter("client_secret", Constants.clientSecret)
                                 parameter("token", accessToken)
                         }
-                Log.d(TAG, "Got new Access token ${response.accessToken}")
+                Log.d(TAG, "-------> Got new Access token ${response.accessToken}")
                 // Save new Tokens
                 sessionManager.saveAccessToken(response.accessToken)
                 sessionManager.saveRefreshToken(response.accessToken)
             } catch (t: Throwable) {
-                Log.d(TAG, "Error refreshing tokens", t)
+                Log.d(TAG, "-------> Error refreshing tokens", t)
                 // Clear tokens
                 sessionManager.clearAccessToken()
                 sessionManager.clearRefreshToken()
 
             }
         } ?: run {
-            Log.e(TAG, "No refresh token available")
+            Log.e(TAG, "-------> No refresh token available")
             // Clear token
             sessionManager.clearAccessToken()
         }

@@ -26,16 +26,11 @@ class ResidencesViewModel(
     val verResidence = MutableLiveData<Boolean>()
     var residence  = MutableLiveData<Residence>()
 
-    suspend fun getAllResidences(nextPage: Int?, search: Search?) {
+    suspend fun getResidences(nextPage: Int?, search: Search?) {
         _residences.postValue(Resource.loading(null))
-
-        Log.i("ResidencesViewModel", "32")
         repository.getResidences(nextPage, search).let { residences ->
-            Log.i("ResidencesViewModel", "34 ${residences?.first}")
              residences?.second?.let {
-                 Log.i("ResidencesViewModel", "36")
                  _residences.postValue(Resource.success(residences))
-                 Log.i("ResidencesViewModel", "38")
              } ?: run {
                 _residences.postValue(Resource.error(R.string.error_residences.toString(), null))
 
@@ -43,9 +38,28 @@ class ResidencesViewModel(
          }
     }
 
+    fun getResidencesMap(nextPage: Int?, search: Search?) {
+        viewModelScope.launch {
+            _residences.postValue(Resource.loading(null))
+            repository.getResidencesMap(nextPage, search).let { residences ->
+                residences?.second?.let {
+                    _residences.postValue(Resource.success(residences))
+                } ?: run {
+                    _residences.postValue(
+                        Resource.error(
+                            R.string.error_residences.toString(),
+                            null
+                        )
+                    )
+
+                }
+            }
+        }
+    }
+
+
     fun  residenceClicked(residence1: Residence?) {
         viewModelScope.launch {
-            //var res: Residence = Residence(id = "", nombre = "$imageUrl")
             residence.postValue(residence1!!)
             verResidence.postValue(true)
         }

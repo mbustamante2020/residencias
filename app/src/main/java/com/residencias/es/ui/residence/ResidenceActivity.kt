@@ -31,7 +31,7 @@ class ResidenceActivity : AppCompatActivity() {
         binding.residenceName.text = "${residence?.name}"
 
         //se muestra el textView del price solo si se obtiene un valor mayor a cero
-        var detail: String = if( !residence?.price.isNullOrEmpty() && residence?.price != "0" ) {
+        val detail: String = if( !residence?.price.isNullOrEmpty() && residence?.price != "0" ) {
             "Prices desde: ".plus(residence?.price.toString()).plus(" €\n")
         } else {
             "Prices: ".plus("No disponibles  \n")
@@ -57,12 +57,12 @@ class ResidenceActivity : AppCompatActivity() {
         }
 
         binding.btnMap.setOnClickListener {
-            val intent = Intent(this, ResidenceMapsActivity::class.java)
-            intent.putExtra("residence", residence)
-            startActivity(intent)
+            val mapIntent = Intent(this, ResidenceMapsActivity::class.java)
+            mapIntent.putExtra("residence", residence)
+            startActivity(mapIntent)
         }
         binding.btnCall.setOnClickListener {
-            val callIntent: Intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:5551234"))
+            val callIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${residence?.phone}"))
             startActivity(callIntent)
         }
         binding.btnTelegram.setOnClickListener {

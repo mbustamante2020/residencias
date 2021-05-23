@@ -33,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
 
     // Login con google
-    lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
     private val reqCode: Int = 123
     private lateinit var firebaseAuth: FirebaseAuth
     private var signInButton: SignInButton? = null
@@ -115,7 +115,7 @@ class LoginActivity : AppCompatActivity() {
     private fun loginGoogle(account: GoogleSignInAccount) {
         lifecycleScope.launch {
             try {
-                loginViewModel.loginGoogle("${account.email.toString()}", "${account.displayName.toString()}")
+                loginViewModel.loginGoogle(account.email ?: "", account.displayName ?: "")
             } catch (t: UnauthorizedException) {
                 Toast.makeText(this@LoginActivity, getString(R.string.error_login), Toast.LENGTH_SHORT).show()
             }
@@ -170,8 +170,8 @@ class LoginActivity : AppCompatActivity() {
         val credential= GoogleAuthProvider.getCredential(account.idToken, null)
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task->
             if(task.isSuccessful) {
-                Log.i("google", account.email.toString())
-                Log.i("google", account.displayName.toString())
+                Log.i("google", account.email ?: "")
+                Log.i("google", account.displayName ?: "")
                 loginGoogle(account)
                 // SavedPreference.setEmail(this,account.email.toString())
                 // SavedPreference.setUsername(this,account.displayName.toString())
