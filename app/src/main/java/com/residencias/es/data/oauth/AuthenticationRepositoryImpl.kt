@@ -1,27 +1,28 @@
 package com.residencias.es.data.oauth
 
-import com.residencias.es.data.datasource.ApiDataSource
-import com.residencias.es.data.datasource.SessionManager
+import com.residencias.es.data.oauth.datasource.OauthApiDataSource
+import com.residencias.es.data.oauth.datasource.SessionManager
+import com.residencias.es.data.oauth.model.OAuthToken
 
 
 class AuthenticationRepositoryImpl(
-        private val apiDataSource: ApiDataSource,
-        private val sharedPreferencesDataSource: SessionManager
+    private val apiDataSource: OauthApiDataSource,
+    private val sharedPreferencesDataSource: SessionManager
 ) : AuthenticationRepository {
 
     override suspend fun isUserAvailable(): Boolean {
         return sharedPreferencesDataSource.isUserAvailable()
     }
 
-    override suspend fun login(email: String, password: String): OAuthTokensResponse? {
+    override suspend fun login(email: String, password: String): OAuthToken? {
         return apiDataSource.login(email, password)
     }
 
-    override suspend fun loginGoogle(email: String, name: String): OAuthTokensResponse? {
+    override suspend fun loginGoogle(email: String, name: String): OAuthToken? {
         return apiDataSource.loginGoogle(email, name)
     }
 
-    override suspend fun register(name: String, email: String, password: String): OAuthTokensResponse? {
+    override suspend fun register(name: String, email: String, password: String): OAuthToken? {
         return apiDataSource.register(name, email, password)
     }
 

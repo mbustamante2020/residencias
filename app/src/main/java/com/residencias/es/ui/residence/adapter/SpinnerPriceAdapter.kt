@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.annotation.LayoutRes
-import com.residencias.es.data.residence.Price
+import com.residencias.es.data.residence.model.Price
 
 class SpinnerPriceAdapter(context: Context, @LayoutRes private val layoutResource: Int, private val prices: List<Price>):
         ArrayAdapter<Price>(context, layoutResource, prices) {

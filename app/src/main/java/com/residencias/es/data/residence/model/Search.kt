@@ -1,4 +1,4 @@
-package com.residencias.es.data.residence
+package com.residencias.es.data.residence.model
 
 import android.os.Parcel
 import android.os.Parcelable

@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.residencias.es.R
 import com.residencias.es.data.network.UnauthorizedException
 import com.residencias.es.data.residence.*
+import com.residencias.es.data.residence.model.*
 import com.residencias.es.databinding.ActivityResidencesSearchBinding
 import com.residencias.es.ui.MainActivity
 import com.residencias.es.ui.residence.adapter.*
@@ -63,7 +64,7 @@ class ResidencesSearchActivity : AppCompatActivity() {
                 residencesSearchViewModel.getAllProvinces()
                 residencesSearchViewModel.getAllRooms()
                 residencesSearchViewModel.getAllSectors()
-                residencesSearchViewModel.getAllDependences()
+                residencesSearchViewModel.getAllDependencies()
                 residencesSearchViewModel.getAllPrices()
             } catch (t: UnauthorizedException) {
                 //Toast.makeText(this@ResidencesSearchActivity, getString(R.string.error_residences), Toast.LENGTH_SHORT).show()
@@ -97,7 +98,7 @@ class ResidencesSearchActivity : AppCompatActivity() {
         observeProvince()
         observeTown()
         observeRooms()
-        observeDependences()
+        observeDependencies()
         observeSectors()
         observePrices()
     }
@@ -242,28 +243,26 @@ class ResidencesSearchActivity : AppCompatActivity() {
         })
     }
 
-    private fun observeDependences() {
-        residencesSearchViewModel.dependences.observe(this, {
+    private fun observeDependencies() {
+        residencesSearchViewModel.dependencies.observe(this, {
             when (it.status) {
                 Status.SUCCESS -> {
+                    val dependencies = it.data.orEmpty() as ArrayList<Dependence>
+                    dependencies.add(0, Dependence(0, resources.getString(R.string.spinner_dependence)))
 
-                    val dependences = it.data.orEmpty() as ArrayList<Dependence>
-                    dependences.add(0, Dependence(0, resources.getString(R.string.spinner_dependence)))
-
-                    val adapter = SpinnerDependenceAdapter(this, R.layout.simple_spinner_item, dependences)
+                    val adapter = SpinnerDependenceAdapter(this, R.layout.simple_spinner_item, dependencies)
                     binding.dependence.adapter = adapter
 
                     binding.dependence.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                         override fun onItemSelected( parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                            if( dependences[position].id > 0 ) {
-                                search.dependence = dependences[position].id
+                            if( dependencies[position].id > 0 ) {
+                                search.dependence = dependencies[position].id
                             } else {
                                 search.dependence = null
                             }
                         }
 
                         override fun onNothingSelected(parent: AdapterView<*>) {
-                            // Code to perform some action when nothing is selected
                         }
                     }
                     binding.progressBar.visibility = View.GONE
@@ -282,7 +281,6 @@ class ResidencesSearchActivity : AppCompatActivity() {
         residencesSearchViewModel.prices.observe(this, {
             when (it.status) {
                 Status.SUCCESS -> {
-
                     val prices = it.data.orEmpty() as ArrayList<Price>
                     prices.add(0, Price(0, resources.getString(R.string.spinner_price)))
 
@@ -299,7 +297,6 @@ class ResidencesSearchActivity : AppCompatActivity() {
                         }
 
                         override fun onNothingSelected(parent: AdapterView<*>) {
-                            // Code to perform some action when nothing is selected
                         }
                     }
                 }

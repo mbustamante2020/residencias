@@ -15,7 +15,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.FirebaseApp
 import com.residencias.es.R
-import com.residencias.es.data.residence.Search
+import com.residencias.es.data.residence.model.Search
 import com.residencias.es.databinding.ActivityMainBinding
 import com.residencias.es.ui.login.LoginActivity
 import com.residencias.es.ui.map.ResidencesMapsFragment

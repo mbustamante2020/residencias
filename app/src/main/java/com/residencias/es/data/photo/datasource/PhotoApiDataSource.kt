@@ -1,9 +1,10 @@
-package com.residencias.es.data.photo
+package com.residencias.es.data.photo.datasource
 
 import android.util.Log
 import android.webkit.MimeTypeMap
 import com.residencias.es.data.network.Endpoints
-import com.residencias.es.data.network.UnauthorizedException
+import com.residencias.es.data.photo.Photo
+import com.residencias.es.data.photo.PhotoResponse
 import com.residencias.es.data.residence.*
 import io.ktor.client.*
 import io.ktor.client.features.*
@@ -19,14 +20,15 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
-class PhotoRemoteDataSource(private val httpClient: HttpClient )  {
+class PhotoApiDataSource(private val httpClient: HttpClient )  {
 
-    @Throws(UnauthorizedException::class)
+    private val tag: String = "PhotoRemoteDataSource"
+
     fun uploadImage(accessToken: String?, sourceFile: File, photo: Photo) {
             Thread {
                 val mimeType = getMimeType(sourceFile)
                 if (mimeType == null) {
-                    Log.e("file error", "Not able to get mime type")
+                    Log.e(tag, "file error Not able to get mime type")
                     return@Thread
                 }
                 val uploadedFileName = "image.jpg"
@@ -43,27 +45,20 @@ class PhotoRemoteDataSource(private val httpClient: HttpClient )  {
                             .build()
 
                     val request: Request = Request.Builder().url(Endpoints.urlUploadImage).post(requestBody).build()
-
                     val response: Response = OkHttpClient().newCall(request).execute()
 
-
-                    Log.e("File upload", "name $uploadedFileName}{ ${sourceFile.name}")
-                    Log.e("File upload", "name $fileName")
                     if (response.isSuccessful) {
-                        Log.d("File upload","success, path: $fileName $response")
+                        Log.d(tag,"success, path: $fileName $response")
                         //showToast("File uploaded successfully at $serverUploadDirectoryPath$fileName")
                     } else {
-                        Log.e("File upload", "failed $response")
+                        Log.e(tag, "failed $response")
                         //showToast("File uploading failed")
                     }
                     response.close()
                 } catch (ex: Exception) {
                     ex.printStackTrace()
-                    Log.e("File upload", "failed")
-                    //showToast("File uploading failed")
+                    Log.e(tag, "failed")
                 }
-
-
             }.start()
         }
 
@@ -77,32 +72,18 @@ class PhotoRemoteDataSource(private val httpClient: HttpClient )  {
         return type
     }
 
-
-
-    @Throws(UnauthorizedException::class)
     suspend fun getImages(): Pair<Int?, List<Photo>?>? {
         return try {
             val response = httpClient.get<PhotoResponse>(Endpoints.urlGetImages)
             Pair(response.image_count, response.data)
         } catch (t: Throwable) {
-            when (t) {
-                is ClientRequestException -> {
-                    if (t.response?.status?.value == 401) {
-                        throw UnauthorizedException
-                    }
-                    null
-                }
-                else -> null
-            }
+            Log.w(tag, "Error Getting Access token", t)
+            null
         }
     }
 
-    @Throws(UnauthorizedException::class)
     suspend fun updateImage(photo: Photo?): Photo?{
         return try {
-            Log.i("updateImage", "${photo?.id} ${photo?.title}")
-
-
             httpClient.put<Photo>(Endpoints.urlUpdateImage) {
                 photo?.let {
                     parameter("id", it.id)
@@ -112,19 +93,11 @@ class PhotoRemoteDataSource(private val httpClient: HttpClient )  {
                 }
             }
         } catch (t: Throwable) {
-             when (t) {
-                is ClientRequestException -> {
-                    if (t.response?.status?.value == 401) {
-                        throw UnauthorizedException
-                    }
-                    null
-                }
-                else -> null
-            }
+            Log.w(tag, "Error Getting Access token", t)
+            null
         }
     }
 
-    @Throws(UnauthorizedException::class)
     suspend fun deleteImage(photo: Photo?): Photo?{
         return try {
             httpClient.delete<Photo>(Endpoints.urlDeleteImage) {
@@ -133,15 +106,8 @@ class PhotoRemoteDataSource(private val httpClient: HttpClient )  {
                 }
             }
         } catch (t: Throwable) {
-            when (t) {
-                is ClientRequestException -> {
-                    if (t.response?.status?.value == 401) {
-                        throw UnauthorizedException
-                    }
-                    null
-                }
-                else -> null
-            }
+            Log.w(tag, "Error Getting Access token", t)
+            null
         }
     }
 }

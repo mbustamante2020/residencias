@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
@@ -21,8 +20,8 @@ import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import com.residencias.es.R
 import com.residencias.es.data.network.UnauthorizedException
-import com.residencias.es.data.residence.Residence
-import com.residencias.es.data.residence.Search
+import com.residencias.es.data.residence.model.Residence
+import com.residencias.es.data.residence.model.Search
 import com.residencias.es.databinding.FragmentResidencesMapsBinding
 import com.residencias.es.utils.Status
 import com.residencias.es.viewmodel.ResidencesViewModel
@@ -53,7 +52,7 @@ class ResidencesMapsFragment(private var search: Search) : Fragment(R.layout.fra
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentResidencesMapsBinding.inflate(inflater, container, false)
         return binding.root
@@ -264,6 +263,8 @@ class ResidencesMapsFragment(private var search: Search) : Fragment(R.layout.fra
         val residenceLoc = Location("")
         residenceLoc.latitude = latitude
         residenceLoc.longitude = longitude
+
+
 
         distancePolyline?.remove()
 

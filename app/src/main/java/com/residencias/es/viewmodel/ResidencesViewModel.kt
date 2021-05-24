@@ -1,15 +1,14 @@
 package com.residencias.es.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.residencias.es.R
 import com.residencias.es.data.oauth.AuthenticationRepository
-import com.residencias.es.data.residence.Residence
+import com.residencias.es.data.residence.model.Residence
 import com.residencias.es.data.residence.ResidencesRepository
-import com.residencias.es.data.residence.Search
+import com.residencias.es.data.residence.model.Search
 import com.residencias.es.utils.Resource
 import kotlinx.coroutines.launch
 

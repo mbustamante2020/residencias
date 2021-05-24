@@ -1,15 +1,17 @@
 package com.residencias.es.data.oauth
 
+import com.residencias.es.data.oauth.model.OAuthToken
+
 
 interface AuthenticationRepository {
 
     suspend fun isUserAvailable(): Boolean
 
-    suspend fun login(email: String, password: String): OAuthTokensResponse?
+    suspend fun login(email: String, password: String): OAuthToken?
 
-    suspend fun loginGoogle(email: String, name: String): OAuthTokensResponse?
+    suspend fun loginGoogle(email: String, name: String): OAuthToken?
 
-    suspend fun register(name: String, email: String, password: String): OAuthTokensResponse?
+    suspend fun register(name: String, email: String, password: String): OAuthToken?
 
     fun logout()
 

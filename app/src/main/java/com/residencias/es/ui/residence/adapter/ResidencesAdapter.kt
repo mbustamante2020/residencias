@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.residencias.es.R
 import com.residencias.es.data.network.Endpoints
-import com.residencias.es.data.residence.Residence
+import com.residencias.es.data.residence.model.Residence
 import com.residencias.es.databinding.ItemResidenceBinding
 import com.residencias.es.viewmodel.ResidencesViewModel
 

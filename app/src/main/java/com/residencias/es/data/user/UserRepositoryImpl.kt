@@ -1,9 +1,9 @@
 package com.residencias.es.data.user
 
-import com.residencias.es.data.datasource.ApiDataSource
+import com.residencias.es.data.user.datasource.UserApiDataSource
 
 class UserRepositoryImpl(
-    private val apiDataSource: ApiDataSource
+    private val apiDataSource: UserApiDataSource
 ) : UserRepository {
 
     override suspend fun getUser(accessToken: String?): User? {

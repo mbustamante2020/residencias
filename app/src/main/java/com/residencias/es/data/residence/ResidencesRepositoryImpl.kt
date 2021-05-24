@@ -1,12 +1,13 @@
 package com.residencias.es.data.residence
 
-import com.residencias.es.data.datasource.ApiDataSource
-import com.residencias.es.data.datasource.SessionManager
+import com.residencias.es.data.oauth.datasource.SessionManager
+import com.residencias.es.data.residence.datasource.ResidenceApiDataSource
+import com.residencias.es.data.residence.model.*
 
 
 class ResidencesRepositoryImpl(
-        private val apiDataSource: ApiDataSource,
-        private val localDataSource: SessionManager
+    private val apiDataSource: ResidenceApiDataSource,
+    private val localDataSource: SessionManager
 ) : ResidencesRepository {
 
     override suspend fun getResidences(page: Int?, search: Search?): Pair<Int?, List<Residence>?>? {
@@ -33,8 +34,8 @@ class ResidencesRepositoryImpl(
         return apiDataSource.getSectors()
     }
 
-    override suspend fun getDependences(): List<Dependence>? {
-        return apiDataSource.getDependences()
+    override suspend fun getDependencies(): List<Dependence>? {
+        return apiDataSource.getDependencies()
     }
 
     override suspend fun getPrices(): List<Price>? {
@@ -62,7 +63,7 @@ class ResidencesRepositoryImpl(
         return apiDataSource.getMyResidenceSectors(accessToken)
     }
 
-    override suspend fun getMyResidenceDependences(accessToken: String?): List<Dependence>? {
-        return apiDataSource.getMyResidenceDependences(accessToken)
+    override suspend fun getMyResidenceDependencies(accessToken: String?): List<Dependence>? {
+        return apiDataSource.getMyResidenceDependencies(accessToken)
     }
 }

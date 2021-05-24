@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.annotation.LayoutRes
-import com.residencias.es.data.residence.Sector
+import com.residencias.es.data.residence.model.Sector
 
 class SpinnerSectorAdapter(context: Context, @LayoutRes private val layoutResource: Int, private val sectors: List<Sector>):
         ArrayAdapter<Sector>(context, layoutResource, sectors) {

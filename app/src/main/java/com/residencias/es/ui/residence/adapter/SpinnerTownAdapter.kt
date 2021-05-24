@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.annotation.LayoutRes
-import com.residencias.es.data.residence.Town
+import com.residencias.es.data.residence.model.Town
 
 class SpinnerTownAdapter(context: Context, @LayoutRes private val layoutResource: Int, private val towns: List<Town>):
         ArrayAdapter<Town>(context, layoutResource, towns) {

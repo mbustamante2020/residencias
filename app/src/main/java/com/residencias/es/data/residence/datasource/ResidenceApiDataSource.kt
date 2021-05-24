@@ -1,115 +1,14 @@
-package com.residencias.es.data.datasource
+package com.residencias.es.data.residence.datasource
 
 import android.util.Log
 import com.residencias.es.data.network.Endpoints
-import com.residencias.es.data.network.UnauthorizedException
-import com.residencias.es.data.oauth.Constants
-import com.residencias.es.data.oauth.OAuthTokensResponse
-import com.residencias.es.data.residence.*
-import com.residencias.es.data.user.User
-import com.residencias.es.data.user.UserResponse
+import com.residencias.es.data.residence.model.*
 import io.ktor.client.*
-import io.ktor.client.features.*
 import io.ktor.client.request.*
 
-class ApiDataSource( private val httpClient: HttpClient )  {
+class ResidenceApiDataSource(private val httpClient: HttpClient) {
 
-    private val TAG: String = "ApiDataSource"
-
-    /*********** AUTENTICACIÓN ************/
-    suspend fun login(email: String, password: String): OAuthTokensResponse? {
-        return try {
-            httpClient
-                .post<OAuthTokensResponse>(Endpoints.urlAuthLogin) {
-                    parameter("client_secret", Constants.clientSecret)
-                    parameter("email", email)
-                    parameter("password", password)
-            }
-        } catch (t: Throwable) {
-            Log.w(TAG, "Error Getting Access token", t)
-            null
-        }
-    }
-
-    suspend fun loginGoogle(email: String, name: String): OAuthTokensResponse? {
-        return try {
-            httpClient
-                .post<OAuthTokensResponse>(Endpoints.urlAuthLoginGoogle) {
-                    parameter("client_secret", Constants.clientSecret)
-                    parameter("email", email)
-                    parameter("name", name)
-            }
-        } catch (t: Throwable) {
-            Log.w(TAG, "Error Getting Access token", t)
-            null
-        }
-    }
-
-    suspend fun register(name: String, email: String, password: String): OAuthTokensResponse? {
-        return try {
-            httpClient
-                .post<OAuthTokensResponse>(Endpoints.urlAuthRegister) {
-                    parameter("client_secret", Constants.clientSecret)
-                    parameter("name", name)
-                    parameter("email", email)
-                    parameter("password", password)
-                    parameter("password_confirmation", password)
-            }
-        } catch (t: Throwable) {
-            Log.w(TAG, "Error Getting Access token", t)
-            null
-        }
-    }
-
-    suspend fun refresh(accessToken: String?): OAuthTokensResponse? {
-        return try {
-            httpClient
-                .post<OAuthTokensResponse>(Endpoints.urlAuthRefresh) {
-                    parameter("client_secret", Constants.clientSecret)
-                    parameter("token", accessToken)
-                }
-        } catch (t: Throwable) {
-            //Log.w(TAG, "Error Getting Access token", t)
-            null
-        }
-    }
-
-
-    /*********** PERFIL ************/
-    // se obtienen los datos del usuario
-    suspend fun getUser(accessToken: String?): User? {
-        return try {
-            val response = httpClient.get<UserResponse>(Endpoints.urlUser){
-                accessToken?.let {
-                    parameter("token", it)
-                }
-            }
-            //response.data?.firstOrNull()
-            response.data
-        } catch (t: Throwable) {
-            Log.w(TAG, "Error Getting Access token", t)
-            null
-        }
-    }
-
-    suspend fun updateUser(accessToken: String?, user: User?): User? {
-        try {
-            val response = httpClient
-                .put<UserResponse>(Endpoints.urlUser) {
-                    parameter("token", accessToken)
-                    user?.let {
-                        parameter("username", it.userName)
-                        parameter("name", it.name)
-                        parameter("address", it.address)
-                        parameter("phone", it.phone)
-                    }
-                }
-            return response.data//?.firstOrNull()
-        } catch (t: Throwable) {
-            Log.w(TAG, "Error Getting Access token", t)
-            return null
-        }
-    }
+    private val tag: String = "ResidenceRemoteDataSource"
 
     /*********** MI RESIDENCIA ************/
     // se obtienen los datos del usuario
@@ -123,7 +22,7 @@ class ApiDataSource( private val httpClient: HttpClient )  {
             //response.data?.firstOrNull()
             response.data
         } catch (t: Throwable) {
-            Log.w(TAG, "Error Getting Access token", t)
+            Log.w(tag, "Error Getting Access token", t)
             null
         }
     }
@@ -153,21 +52,20 @@ class ApiDataSource( private val httpClient: HttpClient )  {
                 }
             return response.data//?.firstOrNull()
         } catch (t: Throwable) {
-            Log.w(TAG, "Error Getting Access token", t)
+            Log.w(tag, "Error Getting Access token", t)
             return null
         }
     }
 
-
     // se obtienen todas las habitaciones
     suspend fun getMyResidenceRooms(accessToken: String?): List<Room>? {
         return try {
-            val response = httpClient.get<RoomResponse>("${Endpoints.urlResidenceRooms}") {
+            val response = httpClient.get<RoomResponse>(Endpoints.urlResidenceRooms) {
                 parameter("token", accessToken)
             }
             response.data
         } catch (t: Throwable) {
-            Log.w(TAG, "Error Getting Access token", t)
+            Log.w(tag, "Error Getting Access token", t)
             null
         }
     }
@@ -175,53 +73,26 @@ class ApiDataSource( private val httpClient: HttpClient )  {
     // se obtienen todas los tipos de plazas
     suspend fun getMyResidenceSectors(accessToken: String?): List<Sector>? {
         return try {
-            val response = httpClient.get<SectorResponse>("${Endpoints.urlResidenceSectors}") {
+            val response = httpClient.get<SectorResponse>(Endpoints.urlResidenceSectors) {
                 parameter("token", accessToken)
             }
             response.data
         } catch (t: Throwable) {
-            Log.w(TAG, "Error Getting Access token", t)
+            Log.w(tag, "Error Getting Access token", t)
             return null
         }
     }
 
     // se obtienen todos los tipos de dependencias
-    suspend fun getMyResidenceDependences(accessToken: String?): List<Dependence>? {
+    suspend fun getMyResidenceDependencies(accessToken: String?): List<Dependence>? {
         return try {
-            val response = httpClient.get<DependenceResponse>("${Endpoints.urlResidenceDependences}") {
+            val response = httpClient.get<DependenceResponse>(Endpoints.urlResidenceDependencies) {
                 parameter("token", accessToken)
             }
             response.data
         } catch (t: Throwable) {
-            Log.w(TAG, "Error Getting Access token", t)
+            Log.w(tag, "Error Getting Access token", t)
             return null
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-    /*********** RESIDENCIA ************/
-    suspend fun getResidence(accessToken: String?): Residence? {
-        return try {
-            val response = httpClient.get<ResidenceResponse>(Endpoints.urlResidence){
-                accessToken?.let {
-                    parameter("token", it)
-                }
-            }
-            //response.data?.firstOrNull()
-            response.data
-        } catch (t: Throwable) {
-            Log.w(TAG, "Error Getting Access token", t)
-            null
         }
     }
 
@@ -229,7 +100,6 @@ class ApiDataSource( private val httpClient: HttpClient )  {
     /*********** RESIDENCIAS ************/
     // Se obtienen las residencias
     suspend fun getResidences(page: Int? = null, search: Search? = null): Pair<Int?, List<Residence>?>? {
-        Log.i("ApiDataSource", "getResidences 364 page $page")
         return try {
             val response = httpClient.get<ResidencesResponse>(Endpoints.urlResidences) {
                 page?.let {
@@ -248,14 +118,13 @@ class ApiDataSource( private val httpClient: HttpClient )  {
             val nextPage = response.current_page?.plus(1)
             Pair(nextPage, response.data)
         } catch (t: Throwable) {
-            Log.w(TAG, "Error Getting Access token", t)
+            Log.w(tag, "Error Getting Access token", t)
             null
         }
     }
 
     // Se obtienen las residencias a ser mostradas en el mapa
     suspend fun getResidencesMap(page: Int? = null, search: Search? = null): Pair<Int?, List<Residence>?>? {
-        Log.i("search-->", "api $search")
         return try {
             val response = httpClient.get<ResidencesResponse>(Endpoints.urlResidencesMap) {
                 page?.let {
@@ -279,10 +148,11 @@ class ApiDataSource( private val httpClient: HttpClient )  {
             val nextPage = response.current_page?.plus(1)
             Pair(nextPage, response.data)
         } catch (t: Throwable) {
-            Log.w(TAG, "Error Getting Access token", t)
+            Log.w(tag, "Error Getting Access token", t)
             null
         }
     }
+
 
     /*********** BUSCAR ************/
     // se obtienen todas las provincias
@@ -293,7 +163,7 @@ class ApiDataSource( private val httpClient: HttpClient )  {
             }
             response.data
         } catch (t: Throwable) {
-            Log.w(TAG, "Error Getting Access token", t)
+            Log.w(tag, "Error Getting Access token", t)
             null
         }
     }
@@ -306,7 +176,7 @@ class ApiDataSource( private val httpClient: HttpClient )  {
             }
             response.data
         } catch (t: Throwable) {
-            Log.w(TAG, "Error Getting Access token", t)
+            Log.w(tag, "Error Getting Access token", t)
             null
         }
     }
@@ -314,10 +184,10 @@ class ApiDataSource( private val httpClient: HttpClient )  {
     // se obtienen todas las habitaciones
     suspend fun getRooms(): List<Room>? {
         return try {
-            val response = httpClient.get<RoomResponse>("${Endpoints.urlRooms}")
+            val response = httpClient.get<RoomResponse>(Endpoints.urlRooms)
             response.data
         } catch (t: Throwable) {
-            Log.w(TAG, "Error Getting Access token", t)
+            Log.w(tag, "Error Getting Access token", t)
             null
         }
     }
@@ -325,21 +195,21 @@ class ApiDataSource( private val httpClient: HttpClient )  {
     // se obtienen todas los tipos de plazas
     suspend fun getSectors(): List<Sector>? {
         return try {
-            val response = httpClient.get<SectorResponse>("${Endpoints.urlSectors}")
+            val response = httpClient.get<SectorResponse>(Endpoints.urlSectors)
             response.data
         } catch (t: Throwable) {
-            Log.w(TAG, "Error Getting Access token", t)
+            Log.w(tag, "Error Getting Access token", t)
             null
         }
     }
 
     // se obtienen todos los tipos de dependencias
-    suspend fun getDependences(): List<Dependence>? {
+    suspend fun getDependencies(): List<Dependence>? {
         return try {
-            val response = httpClient.get<DependenceResponse>("${Endpoints.urlDependences}")
+            val response = httpClient.get<DependenceResponse>(Endpoints.urlDependencies)
             response.data
         } catch (t: Throwable) {
-            Log.w(TAG, "Error Getting Access token", t)
+            Log.w(tag, "Error Getting Access token", t)
             null
         }
     }
@@ -347,11 +217,12 @@ class ApiDataSource( private val httpClient: HttpClient )  {
     // se obtienen todos los tipos de dependencias
     suspend fun getPrices(): List<Price>? {
         return try {
-            val response = httpClient.get<PriceResponse>("${Endpoints.urlPrices}")
+            val response = httpClient.get<PriceResponse>(Endpoints.urlPrices)
             response.data
         } catch (t: Throwable) {
-            Log.w(TAG, "Error Getting Access token", t)
+            Log.w(tag, "Error Getting Access token", t)
             null
         }
     }
+
 }

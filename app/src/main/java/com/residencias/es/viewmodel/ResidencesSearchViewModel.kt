@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.residencias.es.data.oauth.AuthenticationRepository
 import com.residencias.es.data.residence.*
+import com.residencias.es.data.residence.model.*
 import com.residencias.es.utils.Resource
 
 
@@ -85,18 +86,18 @@ class ResidencesSearchViewModel(
         }
     }
 
-    private val _dependences = MutableLiveData<Resource<List<Dependence>?>>()
-    val dependences: LiveData<Resource<List<Dependence>?>>
-        get() = _dependences
+    private val _dependencies = MutableLiveData<Resource<List<Dependence>?>>()
+    val dependencies: LiveData<Resource<List<Dependence>?>>
+        get() = _dependencies
 
-    suspend fun getAllDependences() {
-        _dependences.postValue(Resource.loading(null))
+    suspend fun getAllDependencies() {
+        _dependencies.postValue(Resource.loading(null))
 
-        repository.getDependences().let {
+        repository.getDependencies().let {
             it?.let {
-                _dependences.postValue(Resource.success(it))
+                _dependencies.postValue(Resource.success(it))
             } ?: run {
-                _dependences.postValue(Resource.error("Error al intentar cargar las dependencias", null))
+                _dependencies.postValue(Resource.error("Error al intentar cargar las dependencias", null))
             }
         }
     }

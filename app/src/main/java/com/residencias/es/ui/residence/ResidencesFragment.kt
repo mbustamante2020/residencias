@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.residencias.es.R
 import com.residencias.es.data.network.UnauthorizedException
-import com.residencias.es.data.residence.Search
+import com.residencias.es.data.residence.model.Search
 import com.residencias.es.databinding.FragmentResidencesBinding
 import com.residencias.es.ui.residence.adapter.ResidencesAdapter
 import com.residencias.es.utils.Status
@@ -32,7 +32,12 @@ class ResidencesFragment ( private var search: Search?): Fragment(R.layout.fragm
 
     private var nextPage: Int? = 1
 
-    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+
         _binding = FragmentResidencesBinding.inflate(inflater, container, false)
         return binding.root
     }

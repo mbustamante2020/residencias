@@ -1,11 +1,11 @@
-package com.residencias.es.data.oauth
+package com.residencias.es.data.oauth.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 
 @Serializable
-data class OAuthTokensResponse(
+data class OAuthToken(
     @SerialName("access_token") val accessToken: String,
     @SerialName("id") val id: String? = null,
     @SerialName("username") val name: String? = null,
@@ -14,13 +14,11 @@ data class OAuthTokensResponse(
 )
 
 /*
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => JWTAuth::factory()->getTTL() * 60,
-            'username' => $name,
-            'email' => $email,
-            'role' => $role,
-            'status' => 200
-
-
+    'access_token' => $token,
+    'token_type' => 'bearer',
+    'expires_in' => JWTAuth::factory()->getTTL() * 60,
+    'username' => $name,
+    'email' => $email,
+    'role' => $role,
+    'status' => 200
  */

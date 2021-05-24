@@ -18,7 +18,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.residencias.es.R
-import com.residencias.es.data.residence.Residence
+import com.residencias.es.data.residence.model.Residence
 
 const val REQUEST_PERMISSION_LOCATION = 101
 //const val DEFAULT_ZOOM = 12.0f

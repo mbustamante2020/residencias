@@ -2,10 +2,10 @@ package com.residencias.es
 
 import android.content.Context
 import android.util.Log
-import com.residencias.es.data.datasource.ApiDataSource
-import com.residencias.es.data.datasource.SessionManager
+import com.residencias.es.data.oauth.datasource.OauthApiDataSource
+import com.residencias.es.data.oauth.datasource.SessionManager
 import com.residencias.es.data.network.Network
-import com.residencias.es.data.oauth.OAuthTokensResponse
+import com.residencias.es.data.oauth.model.OAuthToken
 import io.ktor.client.*
 import io.ktor.client.request.*
 import kotlinx.coroutines.delay
@@ -17,18 +17,7 @@ object TestData {
 
     // Network
     fun provideHttpClient(context: Context): HttpClient = Network.createHttpClient(context)
-    fun provideApiService(context: Context): ApiDataSource = ApiDataSource(provideHttpClient(context))
-
-    // Tokens
-    const val dummyAccessToken = "access_12345"
-    const val dummyRefreshToken = "refresh_12345"
-    const val refreshToken = "9my1jw1yczwvvrfcod6esdeacxyto41xz5wz4iimjrdwaq6pir"
-
-    // User
-    const val userName = "tareasuoc2020"
-    const val userDescription = "Stream de Mario"
-    const val updatedUserDescription = userDescription.plus("!")
-
+    fun provideApiService(context: Context): OauthApiDataSource = OauthApiDataSource(provideHttpClient(context))
 
     suspend fun clearAccessToken(context: Context) {
         SessionManager(context).clearAccessToken()
@@ -39,7 +28,7 @@ object TestData {
 
     suspend fun setAccessToken(context: Context) {
         val response =
-            provideHttpClient(context).post<OAuthTokensResponse>("https://residenciasysalud.es/api/auth/login") {
+            provideHttpClient(context).post<OAuthToken>("https://residenciasysalud.es/api/auth/login") {
                 // parameter("client_id", OAuthConstants.clientID)
                 // parameter("client_secret", OAuthConstants.clientSecret)
                 parameter("email", "mbustama1@uoc.edu")
@@ -53,11 +42,11 @@ object TestData {
     // Token Refresh
     suspend fun loginAccessToken(context: Context) {
         val response =
-            provideHttpClient(context).post<OAuthTokensResponse>("https://residenciasysalud.es/api/auth/login") {
+            provideHttpClient(context).post<OAuthToken>("https://residenciasysalud.es/api/auth/login") {
                 // parameter("client_id", OAuthConstants.clientID)
                 // parameter("client_secret", OAuthConstants.clientSecret)
                 parameter("email", "a@gmail.com")
-                parameter("password", "parra21*")
+                parameter("password", "")
             }
         // Save new access token
         SessionManager(context).saveAccessToken(response.accessToken)
@@ -67,7 +56,7 @@ object TestData {
 
     suspend fun refreshAccessToken(context: Context, refreshToken1: String) {
         val response =
-            provideHttpClient(context).post<OAuthTokensResponse>("https://residenciasysalud.es/api/auth/refresh") {
+            provideHttpClient(context).post<OAuthToken>("https://residenciasysalud.es/api/auth/refresh") {
                 // parameter("client_id", OAuthConstants.clientID)
                 // parameter("client_secret", OAuthConstants.clientSecret)
                 parameter("token", refreshToken1)

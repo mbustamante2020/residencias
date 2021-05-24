@@ -2,15 +2,10 @@ package com.residencias.es
 
 import android.content.Context
 import android.util.Log
-import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.assertion.ViewAssertions
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import com.residencias.es.data.datasource.SessionManager
-import com.residencias.es.ui.MainActivity
+import com.residencias.es.data.oauth.datasource.SessionManager
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before

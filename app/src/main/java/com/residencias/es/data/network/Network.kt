@@ -2,9 +2,9 @@ package com.residencias.es.data.network
 
 import android.content.Context
 import android.util.Log
-import com.residencias.es.data.datasource.SessionManager
+import com.residencias.es.data.oauth.datasource.SessionManager
 import com.residencias.es.data.oauth.Constants
-import com.residencias.es.data.oauth.OAuthTokensResponse
+import com.residencias.es.data.oauth.model.OAuthToken
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
 import io.ktor.client.features.*
@@ -27,11 +27,6 @@ object Network {
                 }
             }
 
-
-         //   install(WebSockets)
-
-
-
             // Json
             install(JsonFeature) {
                 serializer = KotlinxSerializer(json)
@@ -43,8 +38,6 @@ object Network {
                         Log.v(TAG, message)
                     }
                 }
-                //level = LogLevel.BODY // FAILS to submit
-                //level = LogLevel.INFO // OK
                 level = LogLevel.ALL
             }
             // Timeout
@@ -96,7 +89,7 @@ object Network {
             try {
                 val response =
                         createHttpClient(context)
-                            .post<OAuthTokensResponse>(Endpoints.urlAuthRefresh) {
+                            .post<OAuthToken>(Endpoints.urlAuthRefresh) {
                                 parameter("client_secret", Constants.clientSecret)
                                 parameter("token", accessToken)
                         }
@@ -109,7 +102,6 @@ object Network {
                 // Clear tokens
                 sessionManager.clearAccessToken()
                 sessionManager.clearRefreshToken()
-
             }
         } ?: run {
             Log.e(TAG, "-------> No refresh token available")

@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.residencias.es.R
 import com.residencias.es.data.network.UnauthorizedException
-import com.residencias.es.data.residence.*
+import com.residencias.es.data.residence.model.*
 import com.residencias.es.databinding.FragmentMyResidenceBinding
 import com.residencias.es.utils.Status
 import com.residencias.es.viewmodel.MyResidenceViewModel
@@ -64,7 +64,7 @@ class MyResidenceFragment : Fragment() {
                 myResidenceViewModel.getMyResidence()
                 myResidenceViewModel.getAllRooms()
                 myResidenceViewModel.getAllSectors()
-                myResidenceViewModel.getAllDependences()
+                myResidenceViewModel.getAllDependencies()
             } catch (t: UnauthorizedException) {
                 onUnauthorized()
             }
@@ -167,7 +167,7 @@ class MyResidenceFragment : Fragment() {
         observeProvince()
         observeTown()
         observeRooms()
-        observeDependences()
+        observeDependencies()
         observeSectors()
     }
 
@@ -345,14 +345,14 @@ class MyResidenceFragment : Fragment() {
         })
     }
 
-    private fun observeDependences() {
-        myResidenceViewModel.dependences.observe(viewLifecycleOwner, {
+    private fun observeDependencies() {
+        myResidenceViewModel.dependencies.observe(viewLifecycleOwner, {
             when (it.status) {
                 Status.SUCCESS -> {
 
-                    val dependences = it.data.orEmpty() as ArrayList<Dependence>
+                    val dependencies = it.data.orEmpty() as ArrayList<Dependence>
 
-                    for (position in dependences.indices) {
+                    for (position in dependencies.indices) {
 
                         val tv1 = CheckBox(context)
                         val params1: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
@@ -364,19 +364,19 @@ class MyResidenceFragment : Fragment() {
 
                         tv1.id = View.generateViewId()
                         tv1.layoutParams = params1
-                        tv1.text = dependences[position].dependence
+                        tv1.text = dependencies[position].dependence
                         tv1.setTextColor(resources.getColor(R.color.colorPrimary, null))
                         tv1.textSize = 14.0F
                         tv1.setTypeface(tv1.typeface, Typeface.BOLD)
 
                         tv1.isChecked = false
-                        dependences[position].idResidence?.let {
+                        dependencies[position].idResidence?.let {
                             tv1.isChecked = true
                         }
 
-                        binding.dependencesList.addView(tv1)
+                        binding.dependenciesList.addView(tv1)
 
-                        listDependence[tv1.id] = dependences[position].id
+                        listDependence[tv1.id] = dependencies[position].id
                     }
                     binding.progressBar.visibility = View.GONE
                 }

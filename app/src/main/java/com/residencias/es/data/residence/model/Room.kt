@@ -1,16 +1,16 @@
-package com.residencias.es.data.residence
+package com.residencias.es.data.residence.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Sector(
+data class Room(
     @SerialName("id") val id: Int,
-    @SerialName("plaza") var sector: String? = null,
+    @SerialName("habitacion") var room: String? = null,
     @SerialName("residencias_id") var idResidence: Int? = null,
 )
 
 @Serializable
-data class SectorResponse(
-    @SerialName("data") val data: List<Sector>? = null,
+data class RoomResponse(
+    @SerialName("data") val data: List<Room>? = null,
 )

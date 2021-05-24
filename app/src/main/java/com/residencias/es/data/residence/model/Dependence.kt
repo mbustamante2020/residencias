@@ -1,4 +1,4 @@
-package com.residencias.es.data.residence
+package com.residencias.es.data.residence.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

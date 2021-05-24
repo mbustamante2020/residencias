@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.residencias.es.R
 import com.residencias.es.data.oauth.AuthenticationRepository
 import com.residencias.es.data.residence.*
+import com.residencias.es.data.residence.model.*
 import com.residencias.es.utils.Resource
 import kotlinx.coroutines.launch
 
@@ -123,19 +124,19 @@ class MyResidenceViewModel(
         }
     }
 
-    private val _dependences = MutableLiveData<Resource<List<Dependence>?>>()
-    val dependences: LiveData<Resource<List<Dependence>?>>
-        get() = _dependences
+    private val _dependencies = MutableLiveData<Resource<List<Dependence>?>>()
+    val dependencies: LiveData<Resource<List<Dependence>?>>
+        get() = _dependencies
 
-    fun getAllDependences() {
+    fun getAllDependencies() {
         viewModelScope.launch {
-            _dependences.postValue(Resource.loading(null))
+            _dependencies.postValue(Resource.loading(null))
 
-            repository.getMyResidenceDependences(authenticationRepository.getAccessToken()).let { dependences ->
-                dependences?.let {
-                    _dependences.postValue(Resource.success(dependences))
+            repository.getMyResidenceDependencies(authenticationRepository.getAccessToken()).let { dependencies ->
+                dependencies?.let {
+                    _dependencies.postValue(Resource.success(dependencies))
                 } ?: run {
-                    _dependences.postValue(Resource.error("Error al intentar cargar las dependences", null))
+                    _dependencies.postValue(Resource.error("Error al intentar cargar las dependencies", null))
                 }
             }
         }

@@ -23,7 +23,7 @@ object Endpoints {
     //Campos perfil de la residencia
     const val urlResidenceRooms       = "$urlBaseApi/rooms"
     const val urlResidenceSectors     = "$urlBaseApi/sectors"
-    const val urlResidenceDependences = "$urlBaseApi/dependences"
+    const val urlResidenceDependencies = "$urlBaseApi/dependencies"
 
     //obtener listado de residencias
     const val urlResidences = "$urlBaseApi/residences"
@@ -34,7 +34,7 @@ object Endpoints {
     const val urlTowns          = "$urlBaseApi/residences/towns"
     const val urlRooms          = "$urlBaseApi/residences/rooms"
     const val urlSectors        = "$urlBaseApi/residences/sectors"
-    const val urlDependences    = "$urlBaseApi/residences/dependences"
+    const val urlDependencies   = "$urlBaseApi/residences/dependencies"
     const val urlPrices         = "$urlBaseApi/residences/prices"
 
     //Imagenes

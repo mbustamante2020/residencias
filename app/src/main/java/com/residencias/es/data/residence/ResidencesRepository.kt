@@ -1,5 +1,7 @@
 package com.residencias.es.data.residence
 
+import com.residencias.es.data.residence.model.*
+
 
 interface ResidencesRepository {
     // Pair<first, second>
@@ -17,7 +19,7 @@ interface ResidencesRepository {
 
     suspend fun getSectors(): List<Sector>?
 
-    suspend fun getDependences(): List<Dependence>?
+    suspend fun getDependencies(): List<Dependence>?
 
     suspend fun getPrices(): List<Price>?
 
@@ -32,6 +34,6 @@ interface ResidencesRepository {
 
     suspend fun getMyResidenceSectors(accessToken: String?): List<Sector>?
 
-    suspend fun getMyResidenceDependences(accessToken: String?): List<Dependence>?
+    suspend fun getMyResidenceDependencies(accessToken: String?): List<Dependence>?
 
 }

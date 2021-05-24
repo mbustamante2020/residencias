@@ -1,12 +1,13 @@
 package com.residencias.es.data.photo
 
-import com.residencias.es.data.datasource.SessionManager
+import com.residencias.es.data.oauth.datasource.SessionManager
+import com.residencias.es.data.photo.datasource.PhotoApiDataSource
 import java.io.File
 
 
 class PhotoRepositoryImpl(
-        private val apiDataSource: PhotoRemoteDataSource,
-        private val localDataSource: SessionManager
+    private val apiDataSource: PhotoApiDataSource,
+    private val localDataSource: SessionManager
 ) : PhotoRepository {
 
     override suspend fun getImages(): Pair<Int?, List<Photo>?>? {

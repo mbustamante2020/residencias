@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.annotation.LayoutRes
-import com.residencias.es.data.residence.Room
+import com.residencias.es.data.residence.model.Room
 
 class SpinnerRoomAdapter(context: Context, @LayoutRes private val layoutResource: Int, private val rooms: List<Room>):
         ArrayAdapter<Room>(context, layoutResource, rooms) {
