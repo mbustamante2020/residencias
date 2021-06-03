@@ -3,8 +3,8 @@ package com.residencias.es.data.network
 import android.content.Context
 import android.util.Log
 import com.residencias.es.data.oauth.datasource.SessionManager
-import com.residencias.es.data.oauth.Constants
 import com.residencias.es.data.oauth.model.OAuthToken
+import com.residencias.es.utils.OAuthConstants
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
 import io.ktor.client.features.*
@@ -55,7 +55,7 @@ object Network {
 
                 // Client ID Header
                 if (!headers.contains("client-id"))
-                    header("client-id", Constants.clientID)
+                    header("client-id", OAuthConstants.clientID)
             }
 
             // Add OAuth Feature
@@ -90,7 +90,7 @@ object Network {
                 val response =
                         createHttpClient(context)
                             .post<OAuthToken>(Endpoints.urlAuthRefresh) {
-                                parameter("client_secret", Constants.clientSecret)
+                                parameter("client_secret", OAuthConstants.clientSecret)
                                 parameter("token", accessToken)
                         }
                 Log.d(TAG, "-------> Got new Access token ${response.accessToken}")

@@ -2,8 +2,8 @@ package com.residencias.es.data.oauth.datasource
 
 import android.util.Log
 import com.residencias.es.data.network.Endpoints
-import com.residencias.es.data.oauth.Constants
 import com.residencias.es.data.oauth.model.OAuthToken
+import com.residencias.es.utils.OAuthConstants
 import io.ktor.client.*
 import io.ktor.client.request.*
 
@@ -16,7 +16,7 @@ class OauthApiDataSource(private val httpClient: HttpClient )  {
         return try {
             httpClient
                 .post<OAuthToken>(Endpoints.urlAuthLogin) {
-                    parameter("client_secret", Constants.clientSecret)
+                    parameter("client_secret", OAuthConstants.clientSecret)
                     parameter("email", email)
                     parameter("password", password)
             }
@@ -30,7 +30,7 @@ class OauthApiDataSource(private val httpClient: HttpClient )  {
         return try {
             httpClient
                 .post<OAuthToken>(Endpoints.urlAuthLoginGoogle) {
-                    parameter("client_secret", Constants.clientSecret)
+                    parameter("client_secret", OAuthConstants.clientSecret)
                     parameter("email", email)
                     parameter("name", name)
             }
@@ -44,7 +44,7 @@ class OauthApiDataSource(private val httpClient: HttpClient )  {
         return try {
             httpClient
                 .post<OAuthToken>(Endpoints.urlAuthRegister) {
-                    parameter("client_secret", Constants.clientSecret)
+                    parameter("client_secret", OAuthConstants.clientSecret)
                     parameter("name", name)
                     parameter("email", email)
                     parameter("password", password)
@@ -60,7 +60,7 @@ class OauthApiDataSource(private val httpClient: HttpClient )  {
         return try {
             httpClient
                 .post<OAuthToken>(Endpoints.urlAuthRefresh) {
-                    parameter("client_secret", Constants.clientSecret)
+                    parameter("client_secret", OAuthConstants.clientSecret)
                     parameter("token", accessToken)
                 }
         } catch (t: Throwable) {

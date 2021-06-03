@@ -1,4 +1,4 @@
-package com.residencias.es.data.photo
+package com.residencias.es.data.photo.model
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -7,28 +7,26 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Photo(
-    @SerialName("id") val id: Int,
+    @SerialName("id") val id: Int? = null,
     @SerialName("path") val path: String? = null,
     @SerialName("title") var title: String? = null,
     @SerialName("description") var description: String? = null,
     @SerialName("principal") var principal: Int? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readInt(),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readInt()
+        parcel.readValue(Int::class.java.classLoader) as? Int
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(id)
+        parcel.writeValue(id)
         parcel.writeString(path)
         parcel.writeString(title)
         parcel.writeString(description)
-        if (principal != null) {
-            parcel.writeInt(principal!!)
-        }
+        parcel.writeValue(principal)
     }
 
     override fun describeContents(): Int {

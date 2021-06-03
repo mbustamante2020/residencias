@@ -1,6 +1,7 @@
 package com.residencias.es.ui.residence
 
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -34,10 +35,20 @@ class ResidencesSearchActivity : AppCompatActivity() {
         binding = ActivityResidencesSearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val intent: Intent = intent
-        search = intent.getParcelableExtra("search")!!
+        try {
+            val intent: Intent = intent
+            search = intent.getParcelableExtra("search")!!
+        } catch (e: Exception) {
 
-        Log.i("ResidencesSearchActivity", "isMap = ${search.is_map} ")
+        }
+
+        val actionBar = supportActionBar
+        actionBar?.title = "Campos Búsqueda"
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorPrimary, null)))
+
+
 
         binding.progressBar.visibility = View.VISIBLE
 
@@ -86,12 +97,9 @@ class ResidencesSearchActivity : AppCompatActivity() {
         residencesSearchViewModel.search.observe(this, {
             search.search_for = "${binding.searchFor.text}"
             search.near = binding.nearSwitch.isChecked
-
-
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("search", search)
 
-            Log.i("ResidencesSearchActivity", "intent isMap = $search ")
             startActivity(intent)
         })
 
@@ -308,5 +316,10 @@ class ResidencesSearchActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

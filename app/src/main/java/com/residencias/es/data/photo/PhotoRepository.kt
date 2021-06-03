@@ -1,5 +1,6 @@
 package com.residencias.es.data.photo
 
+import com.residencias.es.data.photo.model.Photo
 import java.io.File
 
 

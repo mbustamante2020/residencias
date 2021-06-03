@@ -13,14 +13,9 @@ class UserApiDataSource( private val httpClient: HttpClient) {
 
     /*********** PERFIL ************/
     // se obtienen los datos del usuario
-    suspend fun getUser(accessToken: String?): User? {
+    suspend fun getUser(): User? {
         return try {
-            val response = httpClient.get<UserResponse>(Endpoints.urlUser){
-                accessToken?.let {
-                    parameter("token", it)
-                }
-            }
-            //response.data?.firstOrNull()
+            val response = httpClient.get<UserResponse>(Endpoints.urlUser)
             response.data
         } catch (t: Throwable) {
             Log.w(tag, "Error Getting Access token", t)
@@ -28,11 +23,10 @@ class UserApiDataSource( private val httpClient: HttpClient) {
         }
     }
 
-    suspend fun updateUser(accessToken: String?, user: User?): User? {
-        try {
+    suspend fun updateUser(user: User?): User? {
+        return try {
             val response = httpClient
                 .put<UserResponse>(Endpoints.urlUser) {
-                    parameter("token", accessToken)
                     user?.let {
                         parameter("username", it.userName)
                         parameter("name", it.name)
@@ -40,10 +34,10 @@ class UserApiDataSource( private val httpClient: HttpClient) {
                         parameter("phone", it.phone)
                     }
                 }
-            return response.data//?.firstOrNull()
+            response.data
         } catch (t: Throwable) {
             Log.w(tag, "Error Getting Access token", t)
-            return null
+            null
         }
     }
 }

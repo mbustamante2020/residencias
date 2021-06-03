@@ -5,16 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.residencias.es.R
-import com.residencias.es.data.oauth.AuthenticationRepository
-import com.residencias.es.data.residence.*
+import com.residencias.es.data.residence.ResidencesRepository
 import com.residencias.es.data.residence.model.*
 import com.residencias.es.utils.Resource
 import kotlinx.coroutines.launch
 
 
 class MyResidenceViewModel(
-    private val repository: ResidencesRepository,
-    private val authenticationRepository: AuthenticationRepository
+    private val residencesRepository: ResidencesRepository
+    //private val oAuthRepository: OAuthRepository
 ) : ViewModel() {
 
     private val _user = MutableLiveData<Resource<Residence?>>()
@@ -40,7 +39,7 @@ class MyResidenceViewModel(
     private suspend fun getResidence() {
         _user.postValue(Resource.loading(null))
 
-        repository.getMyResidence(authenticationRepository.getAccessToken())?.let { response ->
+        residencesRepository.getMyResidence()?.let { response ->
             _user.postValue(Resource.success(response))
         } ?: run {
             _user.postValue(Resource.error(R.string.error_profile.toString(), null))
@@ -50,7 +49,7 @@ class MyResidenceViewModel(
     private suspend fun getProvinces(all: Boolean? = null) {
         _provinces.postValue(Resource.loading(null))
 
-        repository.getProvinces(all).let { response ->
+        residencesRepository.getProvinces(all).let { response ->
             response?.let {
                 _provinces.postValue(Resource.success(response))
             } ?: run {
@@ -63,7 +62,7 @@ class MyResidenceViewModel(
         viewModelScope.launch {
             _towns.postValue(Resource.loading(null))
 
-            repository.getTowns(idProvince, all).let { response ->
+            residencesRepository.getTowns(idProvince, all).let { response ->
                 response?.let {
                     _towns.postValue(Resource.success(response))
                 } ?: run {
@@ -77,7 +76,7 @@ class MyResidenceViewModel(
         viewModelScope.launch {
             _user.postValue(Resource.loading(null))
 
-            repository.updateMyResidence(authenticationRepository.getAccessToken(), residence, dependence, sector, room)?.let { response ->
+            residencesRepository.updateMyResidence(residence, dependence, sector, room)?.let { response ->
                 // Success :)
                 _user.postValue(Resource.success(response))
             } ?: run {
@@ -96,7 +95,7 @@ class MyResidenceViewModel(
         viewModelScope.launch {
             _rooms.postValue(Resource.loading(null))
 
-            repository.getMyResidenceRooms(authenticationRepository.getAccessToken()).let { rooms ->
+            residencesRepository.getMyResidenceRooms().let { rooms ->
                 rooms?.let {
                     _rooms.postValue(Resource.success(rooms))
                 } ?: run {
@@ -114,7 +113,7 @@ class MyResidenceViewModel(
         viewModelScope.launch {
             _sectors.postValue(Resource.loading(null))
 
-            repository.getMyResidenceSectors(authenticationRepository.getAccessToken()).let { sectors ->
+            residencesRepository.getMyResidenceSectors().let { sectors ->
                 sectors?.let {
                     _sectors.postValue(Resource.success(sectors))
                 } ?: run {
@@ -132,7 +131,7 @@ class MyResidenceViewModel(
         viewModelScope.launch {
             _dependencies.postValue(Resource.loading(null))
 
-            repository.getMyResidenceDependencies(authenticationRepository.getAccessToken()).let { dependencies ->
+            residencesRepository.getMyResidenceDependencies().let { dependencies ->
                 dependencies?.let {
                     _dependencies.postValue(Resource.success(dependencies))
                 } ?: run {
@@ -142,7 +141,5 @@ class MyResidenceViewModel(
         }
     }
 
-    fun onUnauthorized() {
-        authenticationRepository.onUnauthorized()
-    }
+
 }

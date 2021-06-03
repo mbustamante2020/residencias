@@ -38,7 +38,7 @@ class Test3 : ResidencesTest() {
         Thread.sleep(TestData.networkWaitingMillis)
 
         Espresso.onView(withId(R.id.province)).perform(click())
-        Espresso.onData(CoreMatchers.anything()).atPosition(3).perform(click())
+        Espresso.onData(CoreMatchers.anything()).atPosition(4).perform(click())
 
         Thread.sleep(TestData.networkWaitingMillis)
         Espresso.onView(withId(R.id.province)).check(matches(withSpinnerText(containsString("Almería"))))

@@ -1,7 +1,7 @@
-package com.residencias.es.data.oauth
+package com.residencias.es.utils
 
 
-object Constants {
+object OAuthConstants {
 
     const val clientID = ""
     const val clientSecret = "7agwmvQK9IvMonQEHi8xOBEGPiJFm9KjnP6LB2qBQgXzJYcSkPMwR2QuZigGkMCn"

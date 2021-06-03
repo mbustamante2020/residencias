@@ -28,21 +28,23 @@
         <LinearLayout
             android:id="@+id/map_near"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="27dp"
             android:orientation="horizontal">
 
             <TextView
+                style="@style/TextViewSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/double_space"
-                style="@style/TextViewSmall"
                 android:text="@string/label_near" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/near_switch"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false" />
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:checked="false"
+                android:padding="0dp" />
 
         </LinearLayout>
 
@@ -67,7 +69,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space"
+            android:layout_marginTop="@dimen/small_space"
             android:text="@string/label_province"
             style="@style/TextViewSmall" />
 
@@ -98,7 +100,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space"
+            android:layout_marginTop="@dimen/small_space"
             android:text="@string/label_town"
             style="@style/TextViewSmall" />
 
@@ -129,7 +131,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space"
+            android:layout_marginTop="@dimen/small_space"
             android:text="@string/label_price"
             style="@style/TextViewSmall" />
 
@@ -160,7 +162,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space"
+            android:layout_marginTop="@dimen/small_space"
             android:text="@string/label_dependence"
             style="@style/TextViewSmall" />
 
@@ -191,7 +193,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space"
+            android:layout_marginTop="@dimen/small_space"
             android:text="@string/label_sector"
             style="@style/TextViewSmall" />
 
@@ -222,7 +224,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space"
+            android:layout_marginTop="@dimen/small_space"
             android:text="@string/label_room"
             style="@style/TextViewSmall" />
 

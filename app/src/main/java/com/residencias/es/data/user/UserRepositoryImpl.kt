@@ -6,11 +6,11 @@ class UserRepositoryImpl(
     private val apiDataSource: UserApiDataSource
 ) : UserRepository {
 
-    override suspend fun getUser(accessToken: String?): User? {
-        return apiDataSource.getUser(accessToken)
+    override suspend fun getUser(): User? {
+        return apiDataSource.getUser()
     }
 
-    override suspend fun updateUser(accessToken: String?, user: User?): User? {
-        return apiDataSource.updateUser(accessToken, user)
+    override suspend fun updateUser(user: User?): User? {
+        return apiDataSource.updateUser(user)
     }
 }

@@ -12,14 +12,9 @@ class ResidenceApiDataSource(private val httpClient: HttpClient) {
 
     /*********** MI RESIDENCIA ************/
     // se obtienen los datos del usuario
-    suspend fun getMyResidence(accessToken: String?): Residence? {
+    suspend fun getMyResidence(): Residence? {
         return try {
-            val response = httpClient.get<ResidenceResponse>(Endpoints.urlResidence){
-                accessToken?.let {
-                    parameter("token", it)
-                }
-            }
-            //response.data?.firstOrNull()
+            val response = httpClient.get<ResidenceResponse>(Endpoints.urlResidence)
             response.data
         } catch (t: Throwable) {
             Log.w(tag, "Error Getting Access token", t)
@@ -27,12 +22,9 @@ class ResidenceApiDataSource(private val httpClient: HttpClient) {
         }
     }
 
-    suspend fun updateMyResidence(accessToken: String?, user: Residence?, dependence: String, sector: String, room: String): Residence? {
+    suspend fun updateMyResidence(user: Residence?, dependence: String, sector: String, room: String): Residence? {
         try {
-            val response = httpClient
-                .put<ResidenceResponse>(Endpoints.urlResidence) {
-                    parameter("token", accessToken)
-
+            val response = httpClient.put<ResidenceResponse>(Endpoints.urlResidence) {
                     parameter("dependence", dependence)
                     parameter("sector", sector)
                     parameter("room", room)
@@ -58,11 +50,9 @@ class ResidenceApiDataSource(private val httpClient: HttpClient) {
     }
 
     // se obtienen todas las habitaciones
-    suspend fun getMyResidenceRooms(accessToken: String?): List<Room>? {
+    suspend fun getMyResidenceRooms(): List<Room>? {
         return try {
-            val response = httpClient.get<RoomResponse>(Endpoints.urlResidenceRooms) {
-                parameter("token", accessToken)
-            }
+            val response = httpClient.get<RoomResponse>(Endpoints.urlResidenceRooms)
             response.data
         } catch (t: Throwable) {
             Log.w(tag, "Error Getting Access token", t)
@@ -71,11 +61,9 @@ class ResidenceApiDataSource(private val httpClient: HttpClient) {
     }
 
     // se obtienen todas los tipos de plazas
-    suspend fun getMyResidenceSectors(accessToken: String?): List<Sector>? {
+    suspend fun getMyResidenceSectors(): List<Sector>? {
         return try {
-            val response = httpClient.get<SectorResponse>(Endpoints.urlResidenceSectors) {
-                parameter("token", accessToken)
-            }
+            val response = httpClient.get<SectorResponse>(Endpoints.urlResidenceSectors)
             response.data
         } catch (t: Throwable) {
             Log.w(tag, "Error Getting Access token", t)
@@ -84,11 +72,9 @@ class ResidenceApiDataSource(private val httpClient: HttpClient) {
     }
 
     // se obtienen todos los tipos de dependencias
-    suspend fun getMyResidenceDependencies(accessToken: String?): List<Dependence>? {
+    suspend fun getMyResidenceDependencies(): List<Dependence>? {
         return try {
-            val response = httpClient.get<DependenceResponse>(Endpoints.urlResidenceDependencies) {
-                parameter("token", accessToken)
-            }
+            val response = httpClient.get<DependenceResponse>(Endpoints.urlResidenceDependencies)
             response.data
         } catch (t: Throwable) {
             Log.w(tag, "Error Getting Access token", t)
@@ -125,6 +111,7 @@ class ResidenceApiDataSource(private val httpClient: HttpClient) {
 
     // Se obtienen las residencias a ser mostradas en el mapa
     suspend fun getResidencesMap(page: Int? = null, search: Search? = null): Pair<Int?, List<Residence>?>? {
+        Log.i("nearSwitch", "dataSource = ${search?.near} ")
         return try {
             val response = httpClient.get<ResidencesResponse>(Endpoints.urlResidencesMap) {
                 page?.let {

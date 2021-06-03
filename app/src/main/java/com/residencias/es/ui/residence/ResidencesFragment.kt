@@ -115,7 +115,6 @@ class ResidencesFragment ( private var search: Search?): Fragment(R.layout.fragm
 
             } catch (t: UnauthorizedException) {
                 // Clear local access token
-                residencesViewModel.onUnauthorized()
                 // User was logged out, close screen and open login
                 //finish()
                 //startActivity(Intent(this@ResidencesActivity, LoginActivity::class.java))
@@ -130,7 +129,6 @@ class ResidencesFragment ( private var search: Search?): Fragment(R.layout.fragm
                     val residences = it.data?.second.orEmpty()
                     nextPage = it.data?.first
 
-                    Log.i("ResidencesFragment", " adapter count ${adapter?.itemCount}")
                     // Update UI with Residences
                     if (it.data?.first != null) {
                         // We are adding more items to the list
@@ -139,16 +137,12 @@ class ResidencesFragment ( private var search: Search?): Fragment(R.layout.fragm
                         // It's the first n items, no pagination yet
                         adapter?.submitList(residences)
                     }
-                    // Save page for next request
-                    //nextPage = it.data?.first
-                    Log.i("ResidencesFragment", "adapter count ${adapter?.itemCount}")
-                    Log.i("ResidencesFragment", "current_page $nextPage")
                 }
                 Status.LOADING -> {
 
                 }
                 Status.ERROR -> {
-                    Log.i("ResidencesFragment", "error !!!! ${it.toString()}")
+
                 }
             }
         })

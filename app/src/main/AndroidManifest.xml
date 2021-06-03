@@ -66,20 +66,16 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.map.ResidenceMapsActivity"
-            android:label=""
-            android:theme="@style/AppTheme.NoActionBar"  />
+            android:label="" />
         <activity
             android:name=".ui.residence.ResidenceActivity"
-            android:label=""
-            android:parentActivityName=".ui.MainActivity" />
+            android:label="" />
         <activity
             android:name=".ui.residence.ResidencesSearchActivity"
-            android:label=""
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="" />
         <activity
             android:name=".ui.photo.PhotoActivity"
-            android:label=""
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="" />
     </application>
 
 </manifest>

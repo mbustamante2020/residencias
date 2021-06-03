@@ -1,20 +1,20 @@
 package com.residencias.es.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.residencias.es.data.oauth.AuthenticationRepository
-import com.residencias.es.data.oauth.Constants
+import com.residencias.es.data.oauth.OAuthRepository
+import com.residencias.es.utils.OAuthConstants
 
 
 class MainViewModel(
-        private val authenticationRepository: AuthenticationRepository
+        private val oAuthRepository: OAuthRepository
 ) : ViewModel() {
 
     fun logout() {
-        authenticationRepository.logout()
+        oAuthRepository.logout()
     }
 
     fun isResidence(): Boolean {
-        return authenticationRepository.getRole() == Constants.roleResidence
+        return oAuthRepository.getRole() == OAuthConstants.roleResidence
     }
 
 }

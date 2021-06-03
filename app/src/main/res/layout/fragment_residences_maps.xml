@@ -51,35 +51,35 @@
             android:layout_height="wrap_content"
             android:text="@string/label_distance" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/double_space" >
-
-            <Button
-                android:id="@+id/btn_call"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/ic_baseline_call"
-                android:padding="0dp"
-                android:text="@string/btn_call"
-                android:textAllCaps="false"
-                android:textColor="@color/colorPrimary" />
+                android:layout_marginEnd="@dimen/double_space" >
 
-            <Button
-                android:id="@+id/btn_whatsapp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/ic_whatsapp"
-                android:padding="0dp"
-                android:text="@string/btn_whatsapp"
-                android:textAllCaps="false"
-                android:textColor="@color/colorPrimary" />
+                <Button
+                    android:id="@+id/btn_call"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:drawableLeft="@drawable/ic_baseline_call"
+                    android:padding="0dp"
+                    android:text="@string/btn_call"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimary" />
 
-        </RelativeLayout>
+                <Button
+                    android:id="@+id/btn_whatsapp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@android:color/transparent"
+                    android:drawableLeft="@drawable/ic_whatsapp"
+                    android:padding="0dp"
+                    android:text="@string/btn_whatsapp"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimary" />
+
+            </RelativeLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

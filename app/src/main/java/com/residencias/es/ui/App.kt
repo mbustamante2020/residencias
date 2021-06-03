@@ -2,7 +2,7 @@ package com.residencias.es.ui
 
 import android.app.Application
 import com.residencias.es.data.di.dataModule
-import com.residencias.es.ui.di.uiModule
+import com.residencias.es.viewmodel.di.vmModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -13,7 +13,7 @@ class App : Application() {
 
         startKoin {
             androidContext(this@App)
-            modules(listOf(dataModule, uiModule))
+            modules(listOf(dataModule, vmModule))
         }
     }
 }

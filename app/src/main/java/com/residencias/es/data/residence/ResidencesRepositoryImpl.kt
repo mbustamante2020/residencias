@@ -47,23 +47,23 @@ class ResidencesRepositoryImpl(
     }
 
     //////////////// MI RESIDENCIA ////////////////////////
-    override suspend fun getMyResidence(accessToken: String?): Residence? {
-        return apiDataSource.getMyResidence(accessToken)
+    override suspend fun getMyResidence(): Residence? {
+        return apiDataSource.getMyResidence()
     }
 
-    override suspend fun updateMyResidence(accessToken: String?, residence: Residence?, dependence: String, sector: String, room: String): Residence? {
-        return apiDataSource.updateMyResidence(accessToken, residence, dependence, sector, room)
+    override suspend fun updateMyResidence(residence: Residence?, dependence: String, sector: String, room: String): Residence? {
+        return apiDataSource.updateMyResidence(residence, dependence, sector, room)
     }
 
-    override suspend fun getMyResidenceRooms(accessToken: String?): List<Room>? {
-        return apiDataSource.getMyResidenceRooms(accessToken)
+    override suspend fun getMyResidenceRooms(): List<Room>? {
+        return apiDataSource.getMyResidenceRooms()
     }
 
-    override suspend fun getMyResidenceSectors(accessToken: String?): List<Sector>? {
-        return apiDataSource.getMyResidenceSectors(accessToken)
+    override suspend fun getMyResidenceSectors(): List<Sector>? {
+        return apiDataSource.getMyResidenceSectors()
     }
 
-    override suspend fun getMyResidenceDependencies(accessToken: String?): List<Dependence>? {
-        return apiDataSource.getMyResidenceDependencies(accessToken)
+    override suspend fun getMyResidenceDependencies(): List<Dependence>? {
+        return apiDataSource.getMyResidenceDependencies()
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var search: Search
+    private var actionBar: ActionBar? = null
     //private var isMap: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +64,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
+        actionBar = supportActionBar
 
 
         val toggle = ActionBarDrawerToggle(this, binding.drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -129,26 +132,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun displayMenu(id: Int) {
         when (id) {
             R.id.nav_search -> {
+                actionBar?.title = "Buscar Residencias"
                 search.is_map = 0
                 miActionProgressItem?.isVisible = true
                 supportFragmentManager.beginTransaction().replace(R.id.relativelayout, ResidencesFragment(search)).commit()
             }
 
             R.id.nav_residence -> {
+                actionBar?.title = "Mi Residencia"
                 supportFragmentManager.beginTransaction().replace(R.id.relativelayout, MyResidenceFragment()).commit()
             }
 
             R.id.nav_map -> {
+                actionBar?.title = "Residencias en Mapa"
                 search.is_map = 1
                 miActionProgressItem?.isVisible = false
                 supportFragmentManager.beginTransaction().replace(R.id.relativelayout, ResidencesMapsFragment(search)).commit()
             }
 
             R.id.nav_photo -> {
+                actionBar?.title = "Mi Fotografías"
                 supportFragmentManager.beginTransaction().replace(R.id.relativelayout, PhotosFragment()).commit()
             }
 
             R.id.nav_profile -> {
+                actionBar?.title = "Mi Perfil"
                 supportFragmentManager.beginTransaction().replace(R.id.relativelayout, ProfileFragment()).commit()
             }
 

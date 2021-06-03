@@ -3,15 +3,13 @@ package com.residencias.es.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.residencias.es.data.oauth.AuthenticationRepository
-import com.residencias.es.data.residence.*
+import com.residencias.es.data.residence.ResidencesRepository
 import com.residencias.es.data.residence.model.*
 import com.residencias.es.utils.Resource
 
 
 class ResidencesSearchViewModel(
-        private val repository: ResidencesRepository,
-        private val authenticationRepository: AuthenticationRepository
+        private val residencesRepository: ResidencesRepository
 ) : ViewModel() {
 
     private val _search = MutableLiveData<Boolean?>()
@@ -29,7 +27,7 @@ class ResidencesSearchViewModel(
     suspend fun getAllProvinces(all: Boolean? = null) {
         _provinces.postValue(Resource.loading(null))
 
-        repository.getProvinces(all).let {
+        residencesRepository.getProvinces(all).let {
             it?.let {
                 _provinces.postValue(Resource.success(it))
             } ?: run {
@@ -45,7 +43,7 @@ class ResidencesSearchViewModel(
     suspend fun getAllTowns(idprovince: Int, todas: Boolean? = null) {
         _towns.postValue(Resource.loading(null))
 
-        repository.getTowns(idprovince, todas).let {
+        residencesRepository.getTowns(idprovince, todas).let {
             it?.let {
                 _towns.postValue(Resource.success(it))
             } ?: run {
@@ -61,7 +59,7 @@ class ResidencesSearchViewModel(
     suspend fun getAllRooms() {
         _rooms.postValue(Resource.loading(null))
 
-        repository.getRooms().let {
+        residencesRepository.getRooms().let {
             it?.let {
                 _rooms.postValue(Resource.success(it))
             } ?: run {
@@ -77,7 +75,7 @@ class ResidencesSearchViewModel(
     suspend fun getAllSectors() {
         _sectors.postValue(Resource.loading(null))
 
-        repository.getSectors().let {
+        residencesRepository.getSectors().let {
             it?.let {
                 _sectors.postValue(Resource.success(it))
             } ?: run {
@@ -93,7 +91,7 @@ class ResidencesSearchViewModel(
     suspend fun getAllDependencies() {
         _dependencies.postValue(Resource.loading(null))
 
-        repository.getDependencies().let {
+        residencesRepository.getDependencies().let {
             it?.let {
                 _dependencies.postValue(Resource.success(it))
             } ?: run {
@@ -109,7 +107,7 @@ class ResidencesSearchViewModel(
     suspend fun getAllPrices() {
         _prices.postValue(Resource.loading(null))
 
-        repository.getPrices().let {
+        residencesRepository.getPrices().let {
             it?.let {
                 _prices.postValue(Resource.success(it))
             } ?: run {
@@ -117,8 +115,8 @@ class ResidencesSearchViewModel(
             }
         }
     }
-
+/*
     fun onUnauthorized() {
-        authenticationRepository.onUnauthorized()
-    }
+        oAuthRepository.onUnauthorized()
+    }*/
 }

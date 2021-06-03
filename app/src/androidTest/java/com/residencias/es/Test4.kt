@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import com.residencias.es.data.oauth.datasource.SessionManager
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
@@ -21,7 +20,7 @@ class Test4 : ResidencesTest() {
     fun initAccessToken() {
         val context: Context = ApplicationProvider.getApplicationContext()
         runBlocking {
-            TestData.clearAccessToken(context)
+            clearAccessToken()
         }
     }
 
@@ -29,53 +28,51 @@ class Test4 : ResidencesTest() {
     fun restoreCorrectAccessToken() {
         val context: Context = ApplicationProvider.getApplicationContext()
         runBlocking {
-            //TestData.setAccessToken(context)
-            //TestData.loginAccessToken(context)
-            TestData.clearAccessToken(context)
+            clearAccessToken()
         }
     }
 
     @Test
     fun sessionManagerSavesOAuthTokens() {
-        val context: Context = ApplicationProvider.getApplicationContext()
-        val sessionManager = SessionManager(context)
-
-        val initAccessToken = sessionManager.getAccessToken()
+        val initAccessToken = getAccessToken()
 
         //access_token se inicializa en initAccessToken() y se comprueba que sea null
         assert(initAccessToken == null)
 
         runBlocking {
             //se ingresa el correo y la clave para autenticarse
-            TestData.loginAccessToken(context)
+            //TestData.loginAccessToken(context)
+            login()
             Thread.sleep(TestData.sharedPrefsWaitingMillis)
-            val loginAccessToken = sessionManager.getAccessToken()
+            val loginAccessToken = getAccessToken()
+
 
             //access_token no debe ser null
             assert(loginAccessToken !== null)
-            Log.i("login access-token", sessionManager.getAccessToken().toString())
+            Log.i("login access-token", getAccessToken().toString())
 
             //access_token se actualiza
-            TestData.refreshAccessToken(context, sessionManager.getAccessToken().toString())
+            refreshToken()
             Thread.sleep(TestData.sharedPrefsWaitingMillis)
-            val firstAccessToken = sessionManager.getAccessToken()
+            val firstAccessToken = oauthLocalService.getAccessToken()
 
             //el nuevo access_token no debe ser null
             assert(firstAccessToken !== null)
-            Log.i("first access-token", sessionManager.getAccessToken().toString())
+            Log.i("first access-token", oauthLocalService.getAccessToken().toString())
 
             //finalmente loginAccessToken y refreshAccessToken deben ser distintos
             assert(loginAccessToken !== firstAccessToken)
 
 
             //access_token se actualiza
-            TestData.refreshAccessToken(context, sessionManager.getAccessToken().toString())
+            refreshToken()
+
             Thread.sleep(TestData.sharedPrefsWaitingMillis)
-            val secondAccessToken = sessionManager.getAccessToken()
+            val secondAccessToken = oauthLocalService.getAccessToken()
 
             //el nuevo access_token no debe ser null
             assert(secondAccessToken !== null)
-            Log.i("second access-token", sessionManager.getAccessToken().toString())
+            Log.i("second access-token", oauthLocalService.getAccessToken().toString())
 
             //finalmente loginAccessToken y refreshAccessToken deben ser distintos
             assert(firstAccessToken !== secondAccessToken)

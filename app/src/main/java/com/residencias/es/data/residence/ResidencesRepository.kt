@@ -26,14 +26,14 @@ interface ResidencesRepository {
     suspend fun onUnauthorized()
 
     //////////////// MI RESIDENCIA ////////////////////////
-    suspend fun getMyResidence(accessToken: String?): Residence?
+    suspend fun getMyResidence(): Residence?
 
-    suspend fun updateMyResidence(accessToken: String?, residence: Residence?, dependence: String, sector: String, room: String): Residence?
+    suspend fun updateMyResidence(residence: Residence?, dependence: String, sector: String, room: String): Residence?
 
-    suspend fun getMyResidenceRooms(accessToken: String?): List<Room>?
+    suspend fun getMyResidenceRooms(): List<Room>?
 
-    suspend fun getMyResidenceSectors(accessToken: String?): List<Sector>?
+    suspend fun getMyResidenceSectors(): List<Sector>?
 
-    suspend fun getMyResidenceDependencies(accessToken: String?): List<Dependence>?
+    suspend fun getMyResidenceDependencies(): List<Dependence>?
 
 }

@@ -3,8 +3,8 @@ package com.residencias.es.data.photo.datasource
 import android.util.Log
 import android.webkit.MimeTypeMap
 import com.residencias.es.data.network.Endpoints
-import com.residencias.es.data.photo.Photo
-import com.residencias.es.data.photo.PhotoResponse
+import com.residencias.es.data.photo.model.Photo
+import com.residencias.es.data.photo.model.PhotoResponse
 import com.residencias.es.data.residence.*
 import io.ktor.client.*
 import io.ktor.client.features.*

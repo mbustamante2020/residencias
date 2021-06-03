@@ -5,13 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.residencias.es.R
-import com.residencias.es.data.oauth.AuthenticationRepository
+import com.residencias.es.data.oauth.OAuthRepository
 import com.residencias.es.data.oauth.model.OAuthToken
 import com.residencias.es.utils.Resource
 
 
 class LoginViewModel(
-        private val repository: AuthenticationRepository
+        private val oAuthRepository: OAuthRepository
 ) : ViewModel() {
 
     private val _getToken = MutableLiveData<Resource<OAuthToken>>()
@@ -21,12 +21,12 @@ class LoginViewModel(
     suspend fun login(email: String, password: String) {
         _getToken.postValue(Resource.loading(null))
 
-        repository.login(email, password)?.let { response ->
+        oAuthRepository.login(email, password)?.let { response ->
             // Success :)
             response.accessToken.let {
-                repository.saveAccessToken(it)
+                oAuthRepository.saveAccessToken(it)
             }
-            repository.saveUserData(response.id, response.name, response.email, response.role)
+            oAuthRepository.saveUserData(response.id, response.name, response.email, response.role)
 
             Log.i("login", "vm ${response.accessToken}")
 
@@ -40,12 +40,12 @@ class LoginViewModel(
     suspend fun loginGoogle(email: String, name: String) {
         _getToken.postValue(Resource.loading(null))
 
-        repository.loginGoogle(email, name)?.let { response ->
+        oAuthRepository.loginGoogle(email, name)?.let { response ->
             // Success :)
             response.accessToken.let {
-                repository.saveAccessToken(it)
+                oAuthRepository.saveAccessToken(it)
             }
-            repository.saveUserData(response.id, response.name, response.email, response.role)
+            oAuthRepository.saveUserData(response.id, response.name, response.email, response.role)
 
             Log.i("login", "vm ${response.accessToken}")
 

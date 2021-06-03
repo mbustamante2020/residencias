@@ -67,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
 
         firebaseAuth= FirebaseAuth.getInstance()
 
-        signInButton = findViewById(R.id.signInButton);
+        signInButton = findViewById(R.id.signInButton)
 
         signInButton?.setOnClickListener{
             signInGoogle()

@@ -18,4 +18,7 @@
     <color name="colorOnBackground">@color/black</color>
     <color name="colorOnError">@color/white</color>
     <color name="colorHint">@android:color/darker_gray</color>
+
+    <color name="colorLink">#0F9D58</color>
+
 </resources>

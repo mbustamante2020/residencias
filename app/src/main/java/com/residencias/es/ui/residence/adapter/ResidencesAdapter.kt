@@ -1,5 +1,6 @@
 package com.residencias.es.ui.residence.adapter
 
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -56,7 +57,9 @@ class ResidencesAdapter(private val viewModel: ResidencesViewModel) :
 
                 var description = ""
                 if( !residence.description.isNullOrEmpty() ) {
-                    description = "${residence.description}\n"
+                    description =
+                        Html.fromHtml("${residence.description}\n", Html.FROM_HTML_MODE_LEGACY).toString()
+
                 }
 
                 residenceDescription.text = description.plus(" Ubicada en ").

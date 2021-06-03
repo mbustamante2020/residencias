@@ -23,12 +23,12 @@ class Test2: ResidencesTest() {
     fun retrievesNextPage() {
         //se verifica que la paginación funcione correctamente
         runBlocking {
-            val firstPage = apiService.getResidences()
+            val firstPage = residenceApiService.getResidences()
             val page = firstPage?.first
             assert(page != null) {
                 "El número de la página no puede ser null"
             }
-            val nextPage = apiService.getResidences(page)
+            val nextPage = residenceApiService.getResidences(page)
             assert(firstPage?.first != nextPage?.first) {
                 "La siguiente página no puede ser igual a la anterior ${firstPage?.first} ${nextPage?.first}"
             }

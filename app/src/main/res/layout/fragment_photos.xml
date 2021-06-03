@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/small_space"
     android:background="@drawable/bg_gradient"
     tools:context=".ui.photo.PhotosFragment">
 
@@ -11,29 +12,22 @@
         android:id="@+id/btn_take_picture"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/camera_space"
-        android:layout_margin="@dimen/camera_space"
+
+        android:layout_margin="@dimen/small_space"
         android:text="@string/btn_take_picture"  />
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_marginTop="@dimen/camera_btn_space"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_photos"
+            tools:listitem="@layout/item_photo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/small_space"
-            android:orientation="vertical">
+            android:layout_height="match_parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_photos"
-                tools:listitem="@layout/item_photo"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </FrameLayout>

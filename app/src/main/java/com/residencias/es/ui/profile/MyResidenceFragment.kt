@@ -66,7 +66,7 @@ class MyResidenceFragment : Fragment() {
                 myResidenceViewModel.getAllSectors()
                 myResidenceViewModel.getAllDependencies()
             } catch (t: UnauthorizedException) {
-                onUnauthorized()
+
             }
         }
     }
@@ -106,7 +106,6 @@ class MyResidenceFragment : Fragment() {
             Toast.makeText(context, resources.getString(R.string.toast_update_my_residence), Toast.LENGTH_SHORT ).show()
         } catch (t: UnauthorizedException) {
             Toast.makeText(context,resources.getString(R.string.toast_update_my_residence_error), Toast.LENGTH_SHORT ).show()
-            onUnauthorized()
         }
     }
 
@@ -390,9 +389,6 @@ class MyResidenceFragment : Fragment() {
         })
     }
 
-    private fun onUnauthorized() {
-        myResidenceViewModel.onUnauthorized()
-    }
 }
 
 class ProvincesAdapterMyResidence(context: Context, private var idProvince: Int, private var provinces: List<Province>) :

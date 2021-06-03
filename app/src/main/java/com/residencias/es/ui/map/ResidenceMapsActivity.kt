@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.location.Location
 import android.os.Bundle
 import android.view.View
@@ -53,6 +54,16 @@ class ResidenceMapsActivity : AppCompatActivity(), OnMapReadyCallback,
          // Create an instance of GoogleAPIClient.
          fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
          myProgressBarForMaps = findViewById<View>(R.id.myProgressBarForMaps) as ProgressBar
+
+
+
+         val actionBar = supportActionBar
+         actionBar?.title = "${residence?.name}"
+         actionBar?.setDisplayHomeAsUpEnabled(true)
+         actionBar?.setDisplayHomeAsUpEnabled(true)
+         //val colorDrawable = ColorDrawable(Color.parseColor("#0F9D58")
+         actionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorPrimary, null)))
+
      }
 
 
@@ -169,6 +180,11 @@ class ResidenceMapsActivity : AppCompatActivity(), OnMapReadyCallback,
             return dist
         }
         return ""
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun showProgress(show: Boolean) {

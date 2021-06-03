@@ -6,9 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.residencias.es.R
-import com.residencias.es.data.oauth.AuthenticationRepository
-import com.residencias.es.data.photo.Photo
 import com.residencias.es.data.photo.PhotoRepository
+import com.residencias.es.data.photo.model.Photo
 import com.residencias.es.utils.Resource
 import io.ktor.client.statement.*
 import kotlinx.coroutines.launch
@@ -16,8 +15,7 @@ import java.io.File
 
 
 class PhotoViewModel(
-    private val repository: PhotoRepository,
-    private val authenticationRepository: AuthenticationRepository
+    private val photoRepository: PhotoRepository
 ) : ViewModel() {
 /*
     private val _uploadPhotos = MutableLiveData<Resource<HttpResponse?>>()
@@ -48,7 +46,7 @@ class PhotoViewModel(
             _photos2.postValue(Resource.loading(null))
 
             file?.let {
-                repository.uploadImage(it, photo).let {
+                photoRepository.uploadImage(it, photo).let {
                     // Success :)
                     //  _photos2.postValue(Resource.success(it))
                 }
@@ -90,7 +88,7 @@ class PhotoViewModel(
         _photos.postValue(Resource.loading(null))
 
         Log.i("ResidencesViewModel", "32")
-        repository.getImages().let {
+        photoRepository.getImages().let {
             if (it != null) {
                 Log.i("ResidencesViewModel", "34 ${it.second}")
             }
@@ -125,7 +123,7 @@ class PhotoViewModel(
         viewModelScope.launch {
             _photos1.postValue(Resource.loading(null))
 
-            repository.updateImage(photo)?.let {
+            photoRepository.updateImage(photo)?.let {
                 // Success :)
                 _photos1.postValue(Resource.success(it))
             } ?: run {
@@ -139,7 +137,7 @@ class PhotoViewModel(
         viewModelScope.launch {
             _photos1.postValue(Resource.loading(null))
 
-            repository.deleteImage(photo)?.let {
+            photoRepository.deleteImage(photo)?.let {
                 // Success :)
                 _photos1.postValue(Resource.success(it))
             } ?: run {
@@ -148,8 +146,9 @@ class PhotoViewModel(
             }
         }
     }
-
+/*
     fun onUnauthorized() {
-        authenticationRepository.onUnauthorized()
+        oAuthRepository.onUnauthorized()
     }
+    */
 }

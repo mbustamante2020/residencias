@@ -1,4 +1,4 @@
-package com.residencias.es.ui.photo
+package com.residencias.es.ui.photo.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.residencias.es.R
 import com.residencias.es.data.network.Endpoints
-import com.residencias.es.data.photo.Photo
+import com.residencias.es.data.photo.model.Photo
 import com.residencias.es.databinding.ItemPhotoBinding
 import com.residencias.es.viewmodel.PhotoViewModel
 

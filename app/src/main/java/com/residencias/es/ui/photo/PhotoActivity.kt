@@ -5,9 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide
 import com.residencias.es.R
 import com.residencias.es.data.network.Endpoints
 import com.residencias.es.data.network.UnauthorizedException
-import com.residencias.es.data.photo.Photo
+import com.residencias.es.data.photo.model.Photo
 import com.residencias.es.databinding.ActivityPhotoBinding
 import com.residencias.es.utils.ImageUtils
 import com.residencias.es.viewmodel.PhotoViewModel
@@ -45,8 +45,13 @@ class PhotoActivity : AppCompatActivity() {
         val intent: Intent = intent
         photo = intent.getParcelableExtra("photo")
 
-        Log.i("updateImage", "${photo?.id} ${photo?.title}")
-        //loadImage()
+        val actionBar = supportActionBar
+        actionBar?.title = "Fotografía"
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorPrimary, null)))
+
+
 
         binding.btnDelete.setOnClickListener{
             deleteImage()
@@ -55,13 +60,7 @@ class PhotoActivity : AppCompatActivity() {
         }
 
         binding.btnSave.setOnClickListener { // open camera when click button
-
-            val principal = if(binding.principalImage.isChecked) 1 else 0
-
-            val auxPhoto = Photo(photo?.id ?: 0, "", binding.title.text.toString(), binding.description.text.toString(), principal)
-
-            uploadPhoto(auxPhoto)
-
+            uploadPhoto()
             onBackPressed()
             finish()
         }
@@ -81,8 +80,8 @@ class PhotoActivity : AppCompatActivity() {
 
                     Glide.with(this@PhotoActivity)
                         .load( "${Endpoints.urlImagen}/${it}-240x160.webp")
-                        .fitCenter()
-                        //.centerCrop()
+                        //.fitCenter()
+                        .centerCrop()
                         .error(R.drawable.ic_no_available)
                         .into(imageResidence)
                 }
@@ -128,13 +127,6 @@ class PhotoActivity : AppCompatActivity() {
         return (context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY))
     }
 
-
-
-
-
-
-
-
     private fun deleteImage() {
         try {
             photo?.let {
@@ -146,8 +138,10 @@ class PhotoActivity : AppCompatActivity() {
         }
     }
 
-    private fun uploadPhoto(photo: Photo) {
-        // binding.progressBar.visibility = View.VISIBLE
+    private fun uploadPhoto() {
+        val principal = if(binding.principalImage.isChecked) 1 else 0
+        val photo = Photo(photo?.id ?: 0, "", binding.title.text.toString(), binding.description.text.toString(), principal)
+
         if (imageFile?.exists() == true) {
             try {
                 photoViewModel.uploadPhoto(imageFile, photo)
@@ -159,14 +153,6 @@ class PhotoActivity : AppCompatActivity() {
             photoViewModel.updatePhoto(photo)
             Toast.makeText(this, "Imagen actualizada", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    private fun onUnauthorized() {
-        // Clear local access token
-        photoViewModel.onUnauthorized()
-        // User was logged out, close screen and all parent screens and open login
-        //finishAffinity()
-        //startActivity(Intent(this, LoginActivity::class.java))
     }
 
     private fun openCamera() {
@@ -220,5 +206,10 @@ class PhotoActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

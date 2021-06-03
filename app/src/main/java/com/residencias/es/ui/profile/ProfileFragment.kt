@@ -137,8 +137,6 @@ class ProfileFragment : Fragment() {
     }
 
     private fun onUnauthorized() {
-        profileViewModel.onUnauthorized()
-
         val intent = Intent(activity, LoginActivity::class.java)
         (activity as MainActivity?)!!.startActivity(intent)
     }

@@ -5,17 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.residencias.es.R
-import com.residencias.es.data.oauth.AuthenticationRepository
-import com.residencias.es.data.residence.model.Residence
 import com.residencias.es.data.residence.ResidencesRepository
+import com.residencias.es.data.residence.model.Residence
 import com.residencias.es.data.residence.model.Search
 import com.residencias.es.utils.Resource
 import kotlinx.coroutines.launch
 
 
 class ResidencesViewModel(
-        private val repository: ResidencesRepository,
-        private val authenticationRepository: AuthenticationRepository
+        private val residencesRepository: ResidencesRepository
 ) : ViewModel() {
 
     private val _residences = MutableLiveData<Resource<Pair<Int?, List<Residence>?>>>()
@@ -27,7 +25,7 @@ class ResidencesViewModel(
 
     suspend fun getResidences(nextPage: Int?, search: Search?) {
         _residences.postValue(Resource.loading(null))
-        repository.getResidences(nextPage, search).let { residences ->
+        residencesRepository.getResidences(nextPage, search).let { residences ->
              residences?.second?.let {
                  _residences.postValue(Resource.success(residences))
              } ?: run {
@@ -40,7 +38,7 @@ class ResidencesViewModel(
     fun getResidencesMap(nextPage: Int?, search: Search?) {
         viewModelScope.launch {
             _residences.postValue(Resource.loading(null))
-            repository.getResidencesMap(nextPage, search).let { residences ->
+            residencesRepository.getResidencesMap(nextPage, search).let { residences ->
                 residences?.second?.let {
                     _residences.postValue(Resource.success(residences))
                 } ?: run {
@@ -56,15 +54,10 @@ class ResidencesViewModel(
         }
     }
 
-
     fun  residenceClicked(residence1: Residence?) {
         viewModelScope.launch {
             residence.postValue(residence1!!)
             verResidence.postValue(true)
         }
-    }
-
-    fun onUnauthorized() {
-        authenticationRepository.onUnauthorized()
     }
 }

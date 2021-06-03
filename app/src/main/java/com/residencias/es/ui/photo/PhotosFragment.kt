@@ -11,8 +11,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.residencias.es.data.network.UnauthorizedException
-import com.residencias.es.data.photo.Photo
+import com.residencias.es.data.photo.model.Photo
 import com.residencias.es.databinding.FragmentPhotosBinding
+import com.residencias.es.ui.photo.adapter.PhotosAdapter
+import com.residencias.es.ui.residence.PaginationScrollListener
 import com.residencias.es.utils.Status
 import com.residencias.es.viewmodel.PhotoViewModel
 import kotlinx.coroutines.launch
@@ -62,18 +64,36 @@ class PhotosFragment : Fragment() {
 
         binding.recyclerViewPhotos.layoutManager = layoutManager
         binding.recyclerViewPhotos.adapter = adapter
+
+        binding.recyclerViewPhotos.addOnScrollListener(object : PaginationScrollListener(layoutManager as LinearLayoutManager) {
+            override fun loadMoreItems() {
+                getImages()
+                //binding.swipeRefreshLayout.isRefreshing = false
+            }
+
+            override fun isLastPage(): Boolean {
+                //binding.swipeRefreshLayout.isRefreshing = false
+                return true
+            }
+
+            override fun isLoading(): Boolean {
+                return false
+            }
+        })
     }
 
     private fun getImages() {
+        //binding.swipeRefreshLayout.isRefreshing = true
         lifecycleScope.launch {
             try {
                 photoViewModel.getImages()
+                //binding.swipeRefreshLayout.isRefreshing = false
             } catch (t: UnauthorizedException) {
                 // Clear local access token
-                photoViewModel.onUnauthorized()
                 // User was logged out, close screen and open login
                 //finish()
                 //startActivity(Intent(this@ResidencesActivity, LoginActivity::class.java))
+                //binding.swipeRefreshLayout.isRefreshing = false
             }
         }
     }
@@ -84,6 +104,9 @@ class PhotosFragment : Fragment() {
                 Status.SUCCESS -> {
                     val photos = it.data?.second.orEmpty()
                     adapter?.submitList(photos)
+
+                    binding.recyclerViewPhotos.adapter?.notifyDataSetChanged()
+
                 }
                 Status.LOADING -> {
 
@@ -108,6 +131,9 @@ class PhotosFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
+        Log.i("Photo", "onStart")
+        //initRecyclerView()
         getImages()
     }
 }

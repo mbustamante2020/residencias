@@ -5,13 +5,13 @@ import com.residencias.es.data.oauth.datasource.SessionManager
 import com.residencias.es.data.oauth.model.OAuthToken
 
 
-class AuthenticationRepositoryImpl(
+class OAuthRepositoryImpl(
     private val apiDataSource: OauthApiDataSource,
-    private val sharedPreferencesDataSource: SessionManager
-) : AuthenticationRepository {
+    private val localDataSource: SessionManager
+) : OAuthRepository {
 
     override suspend fun isUserAvailable(): Boolean {
-        return sharedPreferencesDataSource.isUserAvailable()
+        return localDataSource.isUserAvailable()
     }
 
     override suspend fun login(email: String, password: String): OAuthToken? {
@@ -27,41 +27,41 @@ class AuthenticationRepositoryImpl(
     }
 
     override fun logout() {
-        sharedPreferencesDataSource.cleaUserData()
-        sharedPreferencesDataSource.clearAccessToken()
+        localDataSource.cleaUserData()
+        localDataSource.clearAccessToken()
     }
 
     override fun onUnauthorized() {
-        sharedPreferencesDataSource.cleaUserData()
-        sharedPreferencesDataSource.clearAccessToken()
+        localDataSource.cleaUserData()
+        localDataSource.clearAccessToken()
     }
 
     override fun saveAccessToken(accessToken: String) {
-        sharedPreferencesDataSource.saveAccessToken(accessToken)
-        sharedPreferencesDataSource.saveRefreshToken(accessToken)
+        localDataSource.saveAccessToken(accessToken)
+        localDataSource.saveRefreshToken(accessToken)
     }
 
     override fun saveUserData(id: String?, name: String?, email: String?, role: String?) {
-        sharedPreferencesDataSource.saveUserData(id, name, email, role)
+        localDataSource.saveUserData(id, name, email, role)
     }
 
     override fun getAccessToken(): String? {
-        return sharedPreferencesDataSource.getAccessToken()
+        return localDataSource.getAccessToken()
     }
 
     override fun getId(): String? {
-        return sharedPreferencesDataSource.getId()
+        return localDataSource.getId()
     }
 
     override fun getName(): String? {
-        return sharedPreferencesDataSource.getName()
+        return localDataSource.getName()
     }
 
     override fun getEmail(): String? {
-        return sharedPreferencesDataSource.getEmail()
+        return localDataSource.getEmail()
     }
 
     override fun getRole(): String? {
-        return sharedPreferencesDataSource.getRole()
+        return localDataSource.getRole()
     }
 }

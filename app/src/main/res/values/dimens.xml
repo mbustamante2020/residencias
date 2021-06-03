@@ -47,7 +47,7 @@
 
     <!-- Camera -->
     <dimen name="camera_space">12dp</dimen>
-    <dimen name="camera_btn_space">70dp</dimen>
+    <dimen name="camera_btn_space">50dp</dimen>
 
     <!-- Maps -->
     <dimen name="maps_height">410dp</dimen>

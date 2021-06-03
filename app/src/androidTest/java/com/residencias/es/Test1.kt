@@ -20,7 +20,7 @@ class Test1 : ResidencesTest() {
     fun retrievesResidences() {
         //se prueba que el listado de residencias no este vacio
         runBlocking {
-            val residences = apiService.getResidences()
+            val residences = residenceApiService.getResidences()
             assert(!residences?.second.isNullOrEmpty()) {
                 "El listado de residencias no debe estar vacío"
             }
@@ -33,7 +33,7 @@ class Test1 : ResidencesTest() {
         val scenario = ActivityScenario.launch(MainActivity::class.java)
 
           val residences = runBlocking {
-              apiService.getResidences()?.second.orEmpty()
+              residenceApiService.getResidences()?.second.orEmpty()
           }
 
           Thread.sleep(TestData.networkWaitingMillis)

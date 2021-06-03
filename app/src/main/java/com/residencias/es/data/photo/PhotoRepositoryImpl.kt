@@ -2,6 +2,7 @@ package com.residencias.es.data.photo
 
 import com.residencias.es.data.oauth.datasource.SessionManager
 import com.residencias.es.data.photo.datasource.PhotoApiDataSource
+import com.residencias.es.data.photo.model.Photo
 import java.io.File
 
 

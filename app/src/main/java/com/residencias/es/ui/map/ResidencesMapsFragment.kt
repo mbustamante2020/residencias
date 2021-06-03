@@ -99,9 +99,8 @@ class ResidencesMapsFragment(private var search: Search) : Fragment(R.layout.fra
         try {
             residencesViewModel.getResidencesMap(1, search)
         } catch (t: UnauthorizedException) {
-            residencesViewModel.onUnauthorized()
-        }
 
+        }
     }
 
     private fun observeResidences() {

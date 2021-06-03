@@ -3,7 +3,7 @@ package com.residencias.es.data.oauth
 import com.residencias.es.data.oauth.model.OAuthToken
 
 
-interface AuthenticationRepository {
+interface OAuthRepository {
 
     suspend fun isUserAvailable(): Boolean
 
